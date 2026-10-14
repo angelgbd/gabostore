@@ -165,6 +165,24 @@ Las consultas individuales devuelven `null` si el registro no existe o no es vis
 
 El modelo final no incluye anticipos, `APARTADO`, `PAGADO`, reservas de 48 horas, ventas, devoluciones, `activo` ni `requiereConsulta`. Las reglas del documento que dependen de esos datos no quedan implementadas en este esquema simplificado. Para incorporarlas después se necesitaría una ampliación explícita del modelo; `CONFIRMADO` no se interpreta automáticamente como un pago.
 
+## Demo en terminal
+
+Para una presentación rápida, sin interfaz gráfica, credenciales ni conexión a Supabase:
+
+```powershell
+npm run demo
+```
+
+Para avanzar manualmente con Enter entre cada paso:
+
+```powershell
+npm run demo -- --paso-a-paso
+```
+
+La demo crea productos ficticios y un cliente, llena un carrito, calcula subtotales, genera un pedido, cambia su estado y comprueba que sus precios históricos se conserven. También demuestra el bloqueo del carrito cerrado, la creación de otro para la siguiente compra y los permisos públicos. Cada paso muestra sus resultados y verifica que sean correctos.
+
+Se utilizan las mismas migraciones y funciones SQL de GaboStore en PostgreSQL temporal mediante PGlite. Solo se simula la identidad del personal. La base se guarda en memoria y se descarta al terminar; no se lee `.env`, no se modifica Supabase y cada ejecución empieza desde cero. Esta demo muestra el esquema y sus operaciones SQL; `npm test` verifica además los repositorios TypeScript.
+
 ## Verificación
 
 `npm test` aplica la migración en PostgreSQL mediante PGlite, con roles y `auth.jwt()` de prueba. Verifica permisos públicos e internos, subtotales, restricciones, rollback, cierre del carrito, conservación del pedido, repetición sin duplicados y apertura de un carrito nuevo. Otras pruebas utilizan el cliente real de Supabase con HTTP simulado para comprobar las llamadas de los repositorios.
