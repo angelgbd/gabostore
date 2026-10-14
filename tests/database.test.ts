@@ -195,3 +195,25 @@ test('solo se guardan estados del modelo aprobado y se conserva la fecha de crea
     assert.deepEqual(posterior.rows[0]?.fecha_creacion, anterior.rows[0]?.fecha_creacion);
   });
 });
+
+test('la demo persistente deja sus datos y repetir la carga no los duplica', async () => {
+  const sql = await readFile(new URL('../supabase/demo/cargar.sql', import.meta.url), 'utf8');
+  const anteriores = await db.query<{ total: number }>('select count(*)::integer as total from public.articulos');
+  await db.exec(sql);
+  await db.exec(sql);
+  const articulos = await db.query<{ total: number }>('select count(*)::integer as total from public.articulos');
+  assert.equal(articulos.rows[0]?.total, Number(anteriores.rows[0]?.total) + 2);
+  const resumen = await db.query<{ id: number; estado: string; total: string }>(`
+    select p.id,p.estado,sum(i.subtotal) as total from public.pedidos p
+    join public.clientes c on c.id=p.cliente_id join public.items_pedido i on i.pedido_id=p.id
+    where c.nombre='DEMO GaboStore - Cliente' group by p.id
+  `);
+  assert.equal(resumen.rows.length, 1);
+  assert.equal(resumen.rows[0]?.estado, 'CONFIRMADO');
+  assert.equal(Number(resumen.rows[0]?.total), 498.8);
+  const carritos = await db.query<{ cerrado: boolean }>(`
+    select ca.cerrado from public.carritos ca join public.clientes c on c.id=ca.cliente_id
+    where c.nombre='DEMO GaboStore - Cliente' order by ca.id
+  `);
+  assert.deepEqual(carritos.rows.map(c => c.cerrado), [true, false]);
+});

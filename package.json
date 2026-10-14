@@ -13,8 +13,7 @@
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.test.json",
     "test": "node --import tsx --test tests/*.test.ts",
-    "verificar:conexion": "node --env-file=.env scripts/verificar-conexion.mjs",
-    "demo": "node scripts/demo-datos.mjs"
+    "verificar:conexion": "node --env-file=.env scripts/verificar-conexion.mjs"
   },
   "dependencies": { "@supabase/supabase-js": "2.117.3" },
   "devDependencies": {

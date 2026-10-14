@@ -165,23 +165,25 @@ Las consultas individuales devuelven `null` si el registro no existe o no es vis
 
 El modelo final no incluye anticipos, `APARTADO`, `PAGADO`, reservas de 48 horas, ventas, devoluciones, `activo` ni `requiereConsulta`. Las reglas del documento que dependen de esos datos no quedan implementadas en este esquema simplificado. Para incorporarlas después se necesitaría una ampliación explícita del modelo; `CONFIRMADO` no se interpreta automáticamente como un pago.
 
-## Demo en terminal
+## Demo en Supabase
 
-Para una presentación rápida, sin interfaz gráfica, credenciales ni conexión a Supabase:
+La demo se muestra en la base real de **GaboStore**, desde el Table Editor o SQL Editor de Supabase. La demo temporal de terminal fue eliminada.
 
-```powershell
-npm run demo
-```
+- `supabase/demo/cargar.sql`: carga los datos ficticios de manera transaccional y sin duplicarlos si se ejecuta otra vez.
+- `supabase/demo/consultas.sql`: consultas de lectura listas para explicar cada parte de la demo.
 
-Para avanzar manualmente con Enter entre cada paso:
+Para presentarla:
 
-```powershell
-npm run demo -- --paso-a-paso
-```
+1. Abrir GaboStore en Supabase y entrar en **Table Editor**.
+2. En `articulos` y `variantes`, mostrar los dos productos marcados `DEMO GaboStore`, sus tallas y existencias.
+3. En `clientes` y `carritos`, mostrar el cliente ficticio, su carrito cerrado y el nuevo carrito abierto.
+4. En `items_carrito`, mostrar dos camisas a 149,90 y una gorra a 199,00: total 498,80.
+5. En `pedidos` e `items_pedido`, mostrar el pedido `CONFIRMADO` y la copia de esas cantidades y precios.
+6. Comparar la camisa en `articulos` (169,90) con `items_pedido` (149,90): el precio histórico se conserva.
 
-La demo crea productos ficticios y un cliente, llena un carrito, calcula subtotales, genera un pedido, cambia su estado y comprueba que sus precios históricos se conserven. También demuestra el bloqueo del carrito cerrado, la creación de otro para la siguiente compra y los permisos públicos. Cada paso muestra sus resultados y verifica que sean correctos.
+Los datos quedan guardados en Supabase. Para cargar esta demo en otra base con las mismas migraciones, ejecutar `cargar.sql` en SQL Editor como administrador del proyecto. No elimina datos, no modifica usuarios de Auth y no cambia las políticas RLS. La identidad interna se simula únicamente dentro de esa transacción administrativa para ejecutar las funciones existentes; no genera una sesión ni un token utilizable en la aplicación.
 
-Se utilizan las mismas migraciones y funciones SQL de GaboStore en PostgreSQL temporal mediante PGlite. Solo se simula la identidad del personal. La base se guarda en memoria y se descarta al terminar; no se lee `.env`, no se modifica Supabase y cada ejecución empieza desde cero. Esta demo muestra el esquema y sus operaciones SQL; `npm test` verifica además los repositorios TypeScript.
+Esta demo presenta la persistencia de datos. El estado `CONFIRMADO` no registra un pago ni descuenta existencias. `npm test` conserva sus pruebas locales independientes y `verificar:conexion` consulta el proyecto real.
 
 ## Verificación
 
@@ -191,6 +193,6 @@ Se utilizan las mismas migraciones y funciones SQL de GaboStore en PostgreSQL te
 
 `npm run verificar:conexion` consulta el catálogo real y comprueba que la clave pública no pueda leer clientes ni generar pedidos. No inserta datos ni necesita credenciales de empleados.
 
-Además se verificó la base real de GaboStore con una transacción de prueba y `ROLLBACK`: creación del artículo, subtotal, pedido sin duplicados, conservación del precio histórico, bloqueo del carrito cerrado, siguiente carrito nuevo y ajuste de existencias. No quedaron registros de prueba guardados.
+La verificación inicial de GaboStore se hizo con una transacción de prueba y `ROLLBACK`, sin guardar registros. La demo actual es distinta: sus datos marcados `DEMO GaboStore` sí se conservan en el proyecto para la presentación.
 
 La revisión de seguridad de Supabase no reportó alertas. La revisión de rendimiento solo señaló [índices aún sin uso](https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index), una observación informativa esperable en una base recién creada y vacía. El índice señalado como faltante se añadió en la segunda migración.
