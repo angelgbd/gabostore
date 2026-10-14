@@ -1,0 +1,25 @@
+{
+  "name": "gabostore-datos",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Capa de datos de GaboStore: Supabase y repositorios TypeScript.",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
+  "files": ["dist", "supabase", "README.md", ".env.example"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.test.json",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "verificar:conexion": "node --env-file=.env scripts/verificar-conexion.mjs"
+  },
+  "dependencies": { "@supabase/supabase-js": "2.117.3" },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.9",
+    "@types/node": "26.6.5",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  }
+}
