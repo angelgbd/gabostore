@@ -8,6 +8,7 @@ Implementación independiente de la capa de persistencia con **Supabase/PostgreS
 - Datos de contacto de clientes, capturados por el personal; no se crean cuentas de clientes.
 - Un carrito abierto por cliente y carritos anteriores conservados como historial.
 - Un pedido por carrito, con copia independiente de cantidades y precios.
+- `PedidoRepository.guardar(pedido)`: recibe un objeto con toda la cabecera y las líneas; persiste el conjunto de manera atómica.
 - Estados de la última imagen: `PENDIENTE`, `ENVIADO`, `ENTREGADO`, `CANCELADO` y `CONFIRMADO`.
 - Catálogo público de solo lectura: oculta artículos completamente agotados y conserva las tallas agotadas de los artículos que aún tienen otra talla disponible.
 - Permisos de acceso para el personal y protección de datos de clientes, carritos y pedidos.
@@ -23,9 +24,10 @@ Esta entrega contiene persistencia y acceso a datos. La interfaz, los controlado
 - `src/supabase.ts`: configuración del cliente de Supabase.
 - `src/repositories/`: los tres repositorios.
 - `src/index.ts`: exportaciones y función `crearCapaDatos`.
-- `supabase/migrations/`: las dos migraciones aplicadas, con versiones sincronizadas con Supabase.
+- `supabase/migrations/`: migraciones aplicadas, con versiones sincronizadas con Supabase.
 - `tests/`: pruebas de la migración y del acceso desde TypeScript.
 - `scripts/verificar-conexion.mjs`: prueba de conexión y permisos públicos sobre Supabase real.
+- `scripts/demo-pedido.ts`: ejecuta los repositorios TypeScript y deja un pedido completo en Supabase real.
 
 ## Preparación local
 
@@ -44,12 +46,13 @@ npm run verificar:conexion
 
 ## Preparación de Supabase
 
-La carpeta ya está configurada para el proyecto **GaboStore** (`nugyfjtbfhtllgomlnob`). Las migraciones se aplicaron por MCP y `.env` contiene la URL y la clave pública activa del proyecto. No contiene contraseñas, claves secretas ni tokens de empleados.
+La carpeta ya está configurada para el proyecto **GaboStore** (`nugyfjtbfhtllgomlnob`). Las migraciones se aplicaron por MCP. `.env`, ignorado por Git, contiene la configuración local. La URL y la clave pública bastan para leer el catálogo; para ejecutar la demo de escritura se necesita además la autenticación descrita abajo.
 
 Migraciones aplicadas:
 
 - `20261014031557_datos_gabostore.sql`: modelo, permisos y funciones.
 - `20261014032020_ajustar_integridad_pedidos.sql`: índice de la relación compuesta y subtotales obligatorios.
+- `20261017191819_guardar_objeto_pedido.sql`: guardado atómico de un objeto de pedido y permisos explícitos para un backend con `service_role`.
 
 **No volver a ejecutar estas migraciones en GaboStore:** ya están registradas en su historial. Para preparar otro proyecto vacío, ejecutar los archivos de `supabase/migrations/` en orden y configurar su URL y clave pública.
 
@@ -72,7 +75,7 @@ Para un empleado se utiliza `EMPLEADO`. Después de cambiar el rol, renovar la s
 
 Sin un JWT interno válido, la clave pública permite consultar el catálogo mediante `obtener_catalogo`, pero no acceder a los datos privados ni realizar escrituras. Las políticas requieren una identidad autenticada y el rol en `app_metadata`, que el usuario no puede editar, según la [documentación de RLS de Supabase](https://supabase.com/docs/guides/database/postgres/row-level-security). Las funciones con privilegios elevados están en el esquema interno `private`; la API pública expone funciones que delegan en operaciones concretas.
 
-El backend debe crear una instancia del cliente por petición si recibe el JWT del empleado. Esto evita compartir la identidad de un empleado entre peticiones. No poner claves secretas o `service_role` en el navegador; este paquete trabaja con clave pública y JWT del personal.
+El backend debe crear una instancia del cliente por petición si recibe el JWT del empleado. Esto evita compartir la identidad de un empleado entre peticiones. El cliente público usa clave pública y JWT del personal. Para la demo de terminal también se admite una clave secreta de servidor mediante un cliente independiente; nunca poner claves secretas o `service_role` en un navegador.
 
 ## Uso desde TypeScript
 
@@ -108,8 +111,10 @@ function datosDelPersonal(tokenUsuario: string) {
 // const datos = datosDelPersonal(jwtDelEmpleado);
 // const cliente = await datos.carritos.crearCliente({ nombre: 'Ana', telefono: '6621234567' });
 // const carrito = await datos.carritos.abrir(cliente.id, 'ana@example.com');
-// await datos.carritos.guardarItem(carrito.id, varianteId, 2);
-// const pedido = await datos.pedidos.crearDesdeCarrito(carrito.id);
+// const pedido = await datos.pedidos.guardar({
+//   clienteId: cliente.id, carritoId: carrito.id, correoCliente: 'ana@example.com',
+//   items: [{ varianteId, cantidad: 2, precioUnitario: 149.90 }],
+// });
 // La compra siguiente obtiene un carrito nuevo:
 // const siguiente = await datos.carritos.abrir(cliente.id, 'ana@example.com');
 ```
@@ -142,12 +147,15 @@ Al añadir una variante sin indicar precio, se toma el precio base del artículo
 
 ### PedidoRepository
 
+- `guardar(pedido: PedidoNuevo)`: recibe cliente, carrito, correo, estado opcional (por defecto `PENDIENTE`) y todas las líneas `{ varianteId, cantidad, precioUnitario }`. Guarda cabecera y detalle en una transacción, sincroniza y cierra el carrito, y recupera el `Pedido` persistido. PostgreSQL asigna el ID, la fecha y los subtotales. No hay que insertar los detalles por separado.
 - `crearDesdeCarrito(carritoId)`: genera un pedido `PENDIENTE`, copia las líneas y cierra el carrito. Repetir la llamada devuelve el mismo pedido.
 - `obtenerPorId(id)`.
 - `listar({ clienteId?, estado?, limite?, desde? })`: consultas paginadas, con los pedidos más recientes primero.
 - `actualizarEstado(id, estado)`: persiste uno de los cinco estados válidos. La capa de control debe decidir cuándo corresponde una transición.
 
 Las consultas individuales devuelven `null` si el registro no existe o no es visible para el usuario. Las escrituras fallidas lanzan `ErrorDatos`, con `codigo`, `message` y `detalle`.
+
+`PedidoNuevo` es la forma de un pedido antes de guardarlo: omite los valores generados por la base. `guardar` también acepta una variable de tipo `Pedido`, pero utiliza únicamente los datos de entrada; no importa su ID, fecha ni subtotales calculados en memoria. No es un método para modificar pedidos existentes. Reintentar el mismo carrito y contenido devuelve el pedido guardado, sin duplicarlo ni restablecer su estado. Un contenido distinto para ese carrito se rechaza. Si falla la lectura después del guardado, se puede reintentar con el mismo objeto.
 
 ## Decisiones de persistencia
 
@@ -165,34 +173,54 @@ Las consultas individuales devuelven `null` si el registro no existe o no es vis
 
 El modelo final no incluye anticipos, `APARTADO`, `PAGADO`, reservas de 48 horas, ventas, devoluciones, `activo` ni `requiereConsulta`. Las reglas del documento que dependen de esos datos no quedan implementadas en este esquema simplificado. Para incorporarlas después se necesitaría una ampliación explícita del modelo; `CONFIRMADO` no se interpreta automáticamente como un pago.
 
-## Demo en Supabase
+## Demo de la capa de datos en Supabase real
 
-La demo se muestra en la base real de **GaboStore**, desde el Table Editor o SQL Editor de Supabase. La demo temporal de terminal fue eliminada.
+Se ejecuta desde la terminal y muestra el resultado en las tablas reales de Supabase. No tiene interfaz gráfica y no utiliza SQL Editor, PGlite ni respuestas HTTP simuladas.
 
-- `supabase/demo/cargar.sql`: carga los datos ficticios de manera transaccional y sin duplicarlos si se ejecuta otra vez.
-- `supabase/demo/consultas.sql`: consultas de lectura listas para explicar cada parte de la demo.
+**En esta carpeta la conexión de la demo ya quedó configurada en `.env` usando la CLI autorizada. Basta ejecutar `npm run demo:datos`.** Los pasos siguientes sirven para configurar otra copia del proyecto; las credenciales no se incluyen en GitHub.
 
-Para presentarla:
+1. Copiar `.env.example` a `.env` solo si todavía no existe. Configurar `SUPABASE_URL` y `SUPABASE_PUBLISHABLE_KEY`.
+2. En GaboStore, ir a **Settings > API Keys > Secret keys** y guardar la clave de servidor como `SUPABASE_SECRET_KEY` en `.env`. Es una credencial privada con privilegios de backend: no compartirla ni subirla a Git. Como alternativa, usar la clave pública y `SUPABASE_USER_TOKEN` de un ADMIN/EMPLEADO autenticado. La sesión MCP o la sesión del navegador no autentican automáticamente este script.
+3. Ejecutar:
 
-1. Abrir GaboStore en Supabase y entrar en **Table Editor**.
-2. En `articulos` y `variantes`, mostrar los dos productos marcados `DEMO GaboStore`, sus tallas y existencias.
-3. En `clientes` y `carritos`, mostrar el cliente ficticio, su carrito cerrado y el nuevo carrito abierto.
-4. En `items_carrito`, mostrar dos camisas a 149,90 y una gorra a 199,00: total 498,80.
-5. En `pedidos` e `items_pedido`, mostrar el pedido `CONFIRMADO` y la copia de esas cantidades y precios.
-6. Comparar la camisa en `articulos` (169,90) con `items_pedido` (149,90): el precio histórico se conserva.
+```powershell
+cd C:\Users\angel\OneDrive\Documents\GaboStoreDatos
+npm ci
+npm run demo:datos
+```
 
-Los datos quedan guardados en Supabase. Para cargar esta demo en otra base con las mismas migraciones, ejecutar `cargar.sql` en SQL Editor como administrador del proyecto. No elimina datos, no modifica usuarios de Auth y no cambia las políticas RLS. La identidad interna se simula únicamente dentro de esa transacción administrativa para ejecutar las funciones existentes; no genera una sesión ni un token utilizable en la aplicación.
+El script crea un artículo con dos variantes, un cliente ficticio y un carrito mediante los repositorios. A continuación construye este objeto, utilizando los IDs reales obtenidos:
 
-Esta demo presenta la persistencia de datos. El estado `CONFIRMADO` no registra un pago ni descuenta existencias. `npm test` conserva sus pruebas locales independientes y `verificar:conexion` consulta el proyecto real.
+```typescript
+const pedido: PedidoNuevo = {
+  clienteId: cliente.id,
+  carritoId: carrito.id,
+  correoCliente: 'demo.typescript@example.com',
+  estado: EstadoPedido.PENDIENTE,
+  items: [
+    { varianteId: mediana.id, cantidad: 2, precioUnitario: 149.90 },
+    { varianteId: grande.id, cantidad: 1, precioUnitario: 159.90 },
+  ],
+};
+
+const guardado = await datos.pedidos.guardar(pedido);
+const recuperado = await otraConexion.pedidos.obtenerPorId(guardado.id);
+```
+
+La terminal imprime el objeto enviado y el pedido recuperado con otra conexión. Comprueba automáticamente las dos variantes, sus cantidades y precios, los subtotales de 299,80 y 159,90, el carrito cerrado y un reintento sin duplicados. Total: **459,70**. Solo muestra éxito si todas las comprobaciones pasan; un error termina con código distinto de cero.
+
+Para presentarlo en Supabase, abrir **Table Editor > pedidos** y filtrar por el ID impreso. Después, abrir **items_pedido** y filtrar `pedido_id` por ese mismo número: aparecen las dos líneas. Los datos se conservan, identificados por `DEMO TS` y la fecha de ejecución en el nombre del cliente y del artículo. Cada ejecución crea un nuevo caso de demostración. No descuenta existencias ni registra pagos.
+
+Verificación real del 17 de octubre de 2026: el script guardó y recuperó el pedido **3**, carrito **5**, variantes **6** y **7**, con dos líneas y total **459,70**. Una consulta independiente por MCP confirmó esos registros y el cierre del carrito. Son IDs de esa ejecución, no valores fijos de la demo.
+
+`supabase/demo/cargar.sql` y `consultas.sql` quedan como datos y consultas auxiliares de la demostración anterior. Esa carga SQL permite revisar el esquema, pero no demuestra por sí misma la capa TypeScript; para eso se utiliza `npm run demo:datos`.
 
 ## Verificación
 
-`npm test` aplica la migración en PostgreSQL mediante PGlite, con roles y `auth.jwt()` de prueba. Verifica permisos públicos e internos, subtotales, restricciones, rollback, cierre del carrito, conservación del pedido, repetición sin duplicados y apertura de un carrito nuevo. Otras pruebas utilizan el cliente real de Supabase con HTTP simulado para comprobar las llamadas de los repositorios.
+`npm test` aplica las migraciones en PostgreSQL mediante PGlite, con roles y `auth.jwt()` de prueba. Verifica permisos públicos e internos, subtotales, restricciones, rollback del objeto completo, cierre del carrito, conservación del pedido, repetición sin duplicados y apertura de un carrito nuevo. Otras pruebas utilizan el cliente real de Supabase con HTTP simulado para comprobar las llamadas de los repositorios.
 
 `npm test` no se conecta al proyecto remoto. PGlite se usa solo como dependencia de desarrollo; no reemplaza Supabase en la implementación. Las operaciones compuestas usan [funciones de PostgreSQL invocadas mediante Supabase](https://supabase.com/docs/guides/database/functions).
 
 `npm run verificar:conexion` consulta el catálogo real y comprueba que la clave pública no pueda leer clientes ni generar pedidos. No inserta datos ni necesita credenciales de empleados.
 
-La verificación inicial de GaboStore se hizo con una transacción de prueba y `ROLLBACK`, sin guardar registros. La demo actual es distinta: sus datos marcados `DEMO GaboStore` sí se conservan en el proyecto para la presentación.
-
-La revisión de seguridad de Supabase no reportó alertas. La revisión de rendimiento solo señaló [índices aún sin uso](https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index), una observación informativa esperable en una base recién creada y vacía. El índice señalado como faltante se añadió en la segunda migración.
+La revisión de seguridad de Supabase después de añadir `guardar_pedido` no reportó alertas. La revisión de rendimiento inicial solo señaló [índices aún sin uso](https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index), una observación informativa esperable en una base recién creada. El índice señalado como faltante se añadió en la segunda migración.

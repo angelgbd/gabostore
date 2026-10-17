@@ -57,6 +57,12 @@ export interface Pedido {
   items: ItemCarrito[];
 }
 
+/** Datos de un pedido por guardar. PostgreSQL asigna ID, fecha y subtotales. */
+export type PedidoNuevo = Pick<Pedido, 'clienteId' | 'carritoId' | 'correoCliente'> & {
+  estado?: EstadoPedido;
+  items: Omit<ItemCarrito, 'subtotal'>[];
+};
+
 export interface VarianteNueva {
   tallaMedida: string;
   existencia: number;

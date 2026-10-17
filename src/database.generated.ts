@@ -279,6 +279,16 @@ export type Database = {
         }
         Returns: undefined
       }
+      guardar_pedido: {
+        Args: {
+          p_carrito_id: number
+          p_cliente_id: number
+          p_correo_cliente: string
+          p_estado?: Database["public"]["Enums"]["estado_pedido"]
+          p_items: Json
+        }
+        Returns: number
+      }
       obtener_catalogo: {
         Args: { p_articulo_id?: number; p_desde?: number; p_limite?: number }
         Returns: {

@@ -1,8 +1,8 @@
 import type { ClienteSupabase } from '../supabase.js';
-import { EstadoPedido, type Pedido } from '../models.js';
+import { EstadoPedido, type Pedido, type PedidoNuevo } from '../models.js';
 import { comprobarError, ErrorDatos, requerido } from '../errors.js';
 import { convertirPedido } from '../mappers.js';
-import { identificador, paginacion } from '../validation.js';
+import { correo, entero, identificador, importe, paginacion } from '../validation.js';
 
 export interface FiltroPedidos {
   clienteId?: number;
@@ -17,6 +17,36 @@ function comprobarEstado(estado: EstadoPedido): void {
 
 export class PedidoRepository {
   constructor(private readonly db: ClienteSupabase) {}
+
+  /** Guarda la cabecera y todo el detalle en una transacción, cerrando su carrito. */
+  async guardar(pedido: PedidoNuevo): Promise<Pedido> {
+    identificador(pedido.clienteId, 'clienteId');
+    identificador(pedido.carritoId, 'carritoId');
+    const estado = pedido.estado ?? EstadoPedido.PENDIENTE;
+    comprobarEstado(estado);
+    const correoCliente = correo(pedido.correoCliente);
+    if (!Array.isArray(pedido.items) || pedido.items.length === 0) {
+      throw new ErrorDatos('El pedido debe contener al menos un artículo.', 'VALIDACION');
+    }
+    const variantes = new Set<number>();
+    const items = pedido.items.map(item => {
+      identificador(item.varianteId, 'varianteId');
+      entero(item.cantidad, 1, 'cantidad');
+      importe(item.precioUnitario);
+      if (variantes.has(item.varianteId)) {
+        throw new ErrorDatos('Una variante no puede aparecer dos veces en el pedido.', 'VALIDACION');
+      }
+      variantes.add(item.varianteId);
+      return { variante_id: item.varianteId, cantidad: item.cantidad, precio_unitario: item.precioUnitario };
+    });
+    const { data, error } = await this.db.rpc('guardar_pedido', {
+      p_cliente_id: pedido.clienteId, p_carrito_id: pedido.carritoId,
+      p_correo_cliente: correoCliente, p_estado: estado, p_items: items,
+    });
+    comprobarError(error);
+    return requerido(await this.obtenerPorId(requerido(data, 'No se obtuvo el pedido guardado.')),
+      'El pedido se guardó, pero no fue posible recuperarlo. Reintentar con el mismo carrito.');
+  }
 
   async crearDesdeCarrito(carritoId: number): Promise<Pedido> {
     identificador(carritoId, 'carritoId');

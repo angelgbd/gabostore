@@ -58,6 +58,42 @@ test('generar un pedido usa la operación atómica y recupera la copia persistid
   assert.equal(peticiones[1]?.url.searchParams.get('id'), 'eq.6');
 });
 
+test('guardar recibe el objeto de pedido y envía cabecera y todo el detalle en una llamada', async () => {
+  const { datos, peticiones } = simulacion(({ url }) => url.pathname.endsWith('guardar_pedido')
+    ? respuesta(6)
+    : respuesta({ id: 6, cliente_id: 5, carrito_id: 4, correo_cliente: 'cliente@example.com',
+      estado: 'PENDIENTE', fecha_creacion: '2026-10-17T12:00:00Z', items_pedido: [linea,
+        { variante_id: 3, cantidad: 1, precio_unitario: 20, subtotal: 20 }] }));
+  const pedido = await datos.pedidos.guardar({
+    clienteId: 5, carritoId: 4, correoCliente: ' CLIENTE@example.com ',
+    items: [{ varianteId: 2, cantidad: 3, precioUnitario: 0.1 }, { varianteId: 3, cantidad: 1, precioUnitario: 20 }],
+  });
+  assert.equal(peticiones.length, 2, 'Una escritura atómica seguida de una lectura.');
+  assert.equal(peticiones[0]?.url.pathname, '/rest/v1/rpc/guardar_pedido');
+  assert.deepEqual(JSON.parse(String(peticiones[0]?.opciones?.body)), {
+    p_cliente_id: 5, p_carrito_id: 4, p_correo_cliente: 'cliente@example.com', p_estado: 'PENDIENTE',
+    p_items: [{ variante_id: 2, cantidad: 3, precio_unitario: 0.1 }, { variante_id: 3, cantidad: 1, precio_unitario: 20 }],
+  });
+  assert.equal(pedido.id, 6);
+  assert.equal(pedido.items.length, 2);
+  assert.equal(pedido.items[0]?.subtotal, 0.3);
+  assert.equal(pedido.items[1]?.precioUnitario, 20);
+});
+
+test('guardar valida el objeto completo antes de escribir y no oculta un fallo de lectura posterior', async () => {
+  const { datos, peticiones } = simulacion(() => { throw new Error('No debe consultar la red'); });
+  const cabecera = { clienteId: 5, carritoId: 4, correoCliente: 'cliente@example.com' };
+  const linea = { varianteId: 2, cantidad: 1, precioUnitario: 10 };
+  for (const items of [[], [linea, linea], [{ ...linea, cantidad: 0 }], [{ ...linea, precioUnitario: 0.125 }]]) {
+    await assert.rejects(datos.pedidos.guardar({ ...cabecera, items }),
+      (error: unknown) => error instanceof ErrorDatos && error.codigo === 'VALIDACION');
+  }
+  assert.equal(peticiones.length, 0);
+  const fallo = simulacion(({ url }) => url.pathname.endsWith('guardar_pedido') ? respuesta(6) : respuesta([]));
+  await assert.rejects(fallo.datos.pedidos.guardar({ ...cabecera, items: [linea] }),
+    (error: unknown) => error instanceof ErrorDatos && error.codigo === 'NO_ENCONTRADO');
+});
+
 test('errores de base de datos se propagan sin devolver éxitos vacíos', async () => {
   const { datos } = simulacion(() => respuesta({ code: '55000', message: 'Carrito cerrado', details: '', hint: null }, 400));
   await assert.rejects(datos.carritos.guardarItem(4, 2, 1),

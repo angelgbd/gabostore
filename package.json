@@ -13,6 +13,7 @@
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.test.json",
     "test": "node --import tsx --test tests/*.test.ts",
+    "demo:datos": "node --env-file=.env --import tsx scripts/demo-pedido.ts",
     "verificar:conexion": "node --env-file=.env scripts/verificar-conexion.mjs"
   },
   "dependencies": { "@supabase/supabase-js": "2.117.3" },

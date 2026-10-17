@@ -13,6 +13,7 @@ before(async () => {
   await db.exec(`
     create role anon nologin;
     create role authenticated nologin;
+    create role service_role nologin bypassrls;
     create schema auth;
     create function auth.jwt() returns jsonb language sql stable as $$
       select coalesce(nullif(current_setting('request.jwt.claims', true), ''), '{}')::jsonb
@@ -20,9 +21,9 @@ before(async () => {
     create function auth.uid() returns uuid language sql stable as $$
       select nullif(auth.jwt() ->> 'sub', '')::uuid
     $$;
-    grant usage on schema auth, public to anon, authenticated;
-    grant execute on function auth.jwt() to anon, authenticated;
-    grant execute on function auth.uid() to anon, authenticated;
+    grant usage on schema auth, public to anon, authenticated, service_role;
+    grant execute on function auth.jwt() to anon, authenticated, service_role;
+    grant execute on function auth.uid() to anon, authenticated, service_role;
   `);
   const carpeta = new URL('../supabase/migrations/', import.meta.url);
   const archivos = (await readdir(carpeta)).filter(nombre => nombre.endsWith('.sql')).sort();
@@ -35,7 +36,7 @@ async function claims(valor: object) {
   await db.query("select set_config('request.jwt.claims', $1, false)", [JSON.stringify(valor)]);
 }
 
-async function conRol<T>(rol: 'anon' | 'authenticated', jwt: object, ejecutar: () => Promise<T>): Promise<T> {
+async function conRol<T>(rol: 'anon' | 'authenticated' | 'service_role', jwt: object, ejecutar: () => Promise<T>): Promise<T> {
   await claims(jwt);
   await db.exec(`set role ${rol}`);
   try { return await ejecutar(); }
@@ -216,4 +217,90 @@ test('la demo persistente deja sus datos y repetir la carga no los duplica', asy
     where c.nombre='DEMO GaboStore - Cliente' order by ca.id
   `);
   assert.deepEqual(carritos.rows.map(c => c.cerrado), [true, false]);
+});
+
+test('guardar el objeto persiste toda la cabecera y el detalle, calcula subtotales y admite reintentos', async () => {
+  const f = await fixture();
+  const otra = await id("insert into public.variantes(articulo_id,talla_medida,existencia) values ($1,'XL',2) returning id", [f.articulo]);
+  const items = JSON.stringify([
+    { variante_id: f.variante, cantidad: 2, precio_unitario: 149.9 },
+    { variante_id: otra, cantidad: 1, precio_unitario: 159.9 },
+  ]);
+  await conRol('authenticated', personal, async () => {
+    // El carrito inicialmente no tiene líneas; el pedido aporta el detalle completo.
+    const parametros = [f.cliente, f.carrito, items];
+    const sql = "select public.guardar_pedido($1,$2,'  CLIENTE@example.com  ',$3::jsonb,'PENDIENTE') as id";
+    const pedido = await id(sql, parametros);
+    assert.equal(await id(sql, parametros), pedido);
+    const cabecera = await db.query<{ cliente_id: string; carrito_id: string; correo_cliente: string; estado: string; fecha_creacion: Date }>(
+      'select * from public.pedidos where id=$1', [pedido]);
+    assert.equal(Number(cabecera.rows[0]?.cliente_id), f.cliente);
+    assert.equal(Number(cabecera.rows[0]?.carrito_id), f.carrito);
+    assert.equal(cabecera.rows[0]?.correo_cliente, 'cliente@example.com');
+    assert.equal(cabecera.rows[0]?.estado, 'PENDIENTE');
+    assert.ok(cabecera.rows[0]?.fecha_creacion instanceof Date);
+    const detalle = await db.query<{ variante_id: string; cantidad: number; precio_unitario: string; subtotal: string }>(
+      'select variante_id,cantidad,precio_unitario,subtotal from public.items_pedido where pedido_id=$1 order by variante_id', [pedido]);
+    assert.deepEqual(detalle.rows.map(i => ({ variante: Number(i.variante_id), cantidad: i.cantidad,
+      precio: Number(i.precio_unitario), subtotal: Number(i.subtotal) })), [
+      { variante: f.variante, cantidad: 2, precio: 149.9, subtotal: 299.8 },
+      { variante: otra, cantidad: 1, precio: 159.9, subtotal: 159.9 },
+    ]);
+    assert.equal((await db.query<{ cerrado: boolean }>('select cerrado from public.carritos where id=$1', [f.carrito])).rows[0]?.cerrado, true);
+    const cambiado = JSON.stringify([{ variante_id: f.variante, cantidad: 9, precio_unitario: 1 }]);
+    await assert.rejects(id(sql, [f.cliente, f.carrito, cambiado]), codigoEsperado('55000'));
+    await db.query("update public.pedidos set estado='CONFIRMADO' where id=$1", [pedido]);
+    assert.equal(await id(sql, parametros), pedido, 'El reintento no revierte un cambio de estado posterior.');
+    assert.equal((await db.query<{ estado: string }>('select estado from public.pedidos where id=$1', [pedido])).rows[0]?.estado, 'CONFIRMADO');
+    assert.equal((await db.query('select id from public.pedidos where carrito_id=$1', [f.carrito])).rows.length, 1);
+  });
+});
+
+test('si un detalle no existe se revierte el pedido completo y se conserva el carrito anterior', async () => {
+  const f = await fixture();
+  await conRol('authenticated', personal, async () => {
+    await db.query('select public.guardar_item_carrito($1,$2,3,10)', [f.carrito, f.variante]);
+    const items = [{ variante_id: f.variante, cantidad: 2, precio_unitario: 149.9 },
+      { variante_id: 9007199254740991, cantidad: 1, precio_unitario: 1 }];
+    await assert.rejects(db.query("select public.guardar_pedido($1,$2,'otro@example.com',$3::jsonb)",
+      [f.cliente, f.carrito, JSON.stringify(items)]), codigoEsperado('23503'));
+    assert.equal((await db.query('select id from public.pedidos where carrito_id=$1', [f.carrito])).rows.length, 0);
+    const carrito = await db.query<{ cerrado: boolean; correo_cliente: string }>('select cerrado,correo_cliente from public.carritos where id=$1', [f.carrito]);
+    assert.deepEqual(carrito.rows[0], { cerrado: false, correo_cliente: 'cliente@example.com' });
+    const detalle = await db.query<{ cantidad: number; precio_unitario: string }>('select cantidad,precio_unitario from public.items_carrito where carrito_id=$1', [f.carrito]);
+    assert.equal(detalle.rows.length, 1);
+    assert.equal(detalle.rows[0]?.cantidad, 3);
+    assert.equal(Number(detalle.rows[0]?.precio_unitario), 10);
+  });
+});
+
+test('guardar rechaza datos inválidos, variantes repetidas y un cliente ajeno al carrito', async () => {
+  const f = await fixture();
+  const linea = { variante_id: f.variante, cantidad: 1, precio_unitario: 149.9 };
+  await conRol('authenticated', personal, async () => {
+    for (const items of [[], null, {}, [null], [linea, linea], [{ ...linea, cantidad: 0 }],
+      [{ ...linea, cantidad: 1.5 }], [{ ...linea, precio_unitario: 1.234 }],
+      [{ ...linea, precio_unitario: '10' }], [{ ...linea, precio_unitario: -1 }]]) {
+      await assert.rejects(db.query("select public.guardar_pedido($1,$2,'cliente@example.com',$3::jsonb)",
+        [f.cliente, f.carrito, JSON.stringify(items)]), codigoEsperado('22023'));
+    }
+    await assert.rejects(db.query("select public.guardar_pedido($1,$2,'cliente@example.com',$3::jsonb)",
+      [f.cliente + 1, f.carrito, JSON.stringify([linea])]), codigoEsperado('22023'));
+    assert.equal((await db.query('select id from public.pedidos where carrito_id=$1', [f.carrito])).rows.length, 0);
+  });
+});
+
+test('guardar solo admite personal autenticado o el rol SQL real del backend', async () => {
+  const f = await fixture();
+  const parametros = [f.cliente, f.carrito, JSON.stringify([{ variante_id: f.variante, cantidad: 1, precio_unitario: 10 }])];
+  const sql = "select public.guardar_pedido($1,$2,'cliente@example.com',$3::jsonb) as id";
+  await conRol('anon', {}, () => assert.rejects(db.query(sql, parametros), codigoEsperado('42501')));
+  for (const jwt of [{}, { sub: personal.sub, user_metadata: { rol: 'ADMIN' } },
+    { app_metadata: { rol: 'ADMIN' } }, { role: 'service_role' }]) {
+    await conRol('authenticated', jwt, () => assert.rejects(db.query(sql, parametros), codigoEsperado('42501')));
+  }
+  await conRol('service_role', { role: 'service_role' }, async () => {
+    const pedido = await id(sql, parametros);
+    assert.equal((await db.query('select * from public.items_pedido where pedido_id=$1', [pedido])).rows.length, 1);
+  });
 });

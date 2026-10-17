@@ -15,6 +15,12 @@ assert.equal(privado.error?.code, '42501', 'El acceso público a clientes debe e
 const escritura = await cliente.rpc('crear_pedido_desde_carrito', { p_carrito_id: 1 });
 assert.equal(escritura.error?.code, '42501', 'El acceso público no debe generar pedidos.');
 
+const objeto = await cliente.rpc('guardar_pedido', {
+  p_cliente_id: 1, p_carrito_id: 1, p_correo_cliente: 'prueba@example.com',
+  p_items: [{ variante_id: 1, cantidad: 1, precio_unitario: 1 }],
+});
+assert.equal(objeto.error?.code, '42501', 'El acceso público tampoco debe guardar objetos de pedido.');
+
 console.log(JSON.stringify({
   conexion: 'OK',
   articulosEnLaPagina: catalogo.length,
