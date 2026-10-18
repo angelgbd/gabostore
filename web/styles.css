@@ -77,7 +77,12 @@ input::placeholder{color:var(--secundario);font-weight:400}
 .disponible{color:var(--verde);font-size:14px}
 .agotado{color:var(--secundario);font-size:14px}
 .pie{border-top:1px solid var(--linea);color:var(--secundario);text-align:center;padding:22px;font-size:13px;background:var(--superficie)}
+.acceso{max-width:440px;margin:16px auto 48px}
+.acceso>p{color:var(--secundario);margin-top:14px}
+.formulario{display:grid;gap:22px;margin-top:28px}
+.sesion-personal{color:var(--secundario);font-size:13px;overflow-wrap:anywhere;margin-bottom:24px}
 @media(min-width:1100px){.productos{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:800px){.cabecera-interior{padding:0 20px}.contenedor{padding:28px 20px 40px}.detalle-articulo{gap:24px}.fotografia{min-height:150px}.producto-info{padding:18px}}
 @media(max-width:560px){.cabecera-interior{padding:0 16px;min-height:68px;gap:16px}nav{gap:12px}.marca{font-size:23px}.contenedor{padding:28px 16px 40px}h1{font-size:28px}.titulo-pagina{align-items:start;gap:12px}.contador{margin-top:6px}.productos{grid-template-columns:minmax(0,1fr);gap:18px}.fotografia{min-height:180px;aspect-ratio:1.9}.detalle-articulo{grid-template-columns:minmax(0,1fr)}.detalle-articulo>.fotografia{aspect-ratio:1.4}.producto-info{padding:20px}.categoria{padding-inline:13px}.titulo-pagina p{font-size:14px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(max-width:560px){.nav-catalogo{display:none}.sesion-personal{margin-bottom:20px}.acceso{margin-top:0}}
