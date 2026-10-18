@@ -171,6 +171,7 @@ export type Database = {
           carrito_id: number
           cliente_id: number
           correo_cliente: string
+          creado_por: string | null
           estado: Database["public"]["Enums"]["estado_pedido"]
           fecha_creacion: string
           id: number
@@ -179,6 +180,7 @@ export type Database = {
           carrito_id: number
           cliente_id: number
           correo_cliente: string
+          creado_por?: string | null
           estado?: Database["public"]["Enums"]["estado_pedido"]
           fecha_creacion?: string
           id?: never
@@ -187,6 +189,7 @@ export type Database = {
           carrito_id?: number
           cliente_id?: number
           correo_cliente?: string
+          creado_por?: string | null
           estado?: Database["public"]["Enums"]["estado_pedido"]
           fecha_creacion?: string
           id?: never

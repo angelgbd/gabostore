@@ -238,6 +238,8 @@ test('guardar el objeto persiste toda la cabecera y el detalle, calcula subtotal
     assert.equal(Number(cabecera.rows[0]?.carrito_id), f.carrito);
     assert.equal(cabecera.rows[0]?.correo_cliente, 'cliente@example.com');
     assert.equal(cabecera.rows[0]?.estado, 'PENDIENTE');
+    const autor = await db.query<{ creado_por: string }>('select creado_por from public.pedidos where id=$1', [pedido]);
+    assert.equal(autor.rows[0]?.creado_por, personal.sub);
     assert.ok(cabecera.rows[0]?.fecha_creacion instanceof Date);
     const detalle = await db.query<{ variante_id: string; cantidad: number; precio_unitario: string; subtotal: string }>(
       'select variante_id,cantidad,precio_unitario,subtotal from public.items_pedido where pedido_id=$1 order by variante_id', [pedido]);
