@@ -27,7 +27,7 @@ export function useSesion() {
       if (!vigente) return;
       if (fallo) throw fallo;
       setToken(data.session?.access_token);
-      setIniciando(false);
+      if (!data.session) setIniciando(false);
     }).catch(e => { if (vigente) { setError(mensajeError(e)); setIniciando(false); } });
     return () => { vigente = false; cancelar(); };
   }, []);
@@ -36,7 +36,8 @@ export function useSesion() {
     if (!token) { setPersonal(null); return; }
     void solicitar<Personal>('personal/sesion', token).then(usuario => {
       if (vigente) { setPersonal(usuario); setError(''); }
-    }).catch(e => { if (vigente) { setPersonal(null); setError(mensajeError(e)); } });
+    }).catch(e => { if (vigente) { setPersonal(null); setError(mensajeError(e)); } })
+      .finally(() => { if (vigente) setIniciando(false); });
     return () => { vigente = false; };
   }, [token]);
 
