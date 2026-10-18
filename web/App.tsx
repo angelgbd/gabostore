@@ -16,6 +16,10 @@ export function App() {
   const sesion = useSesion();
   const carrito = useCarrito(sesion.token, sesion.personal?.id);
   const [ruta, setRuta] = useState(location.hash.slice(1) || '/');
+  const rutaActual = useRef(ruta);
+  const posicionCatalogo = useRef(0);
+  const [busqueda, setBusqueda] = useState('');
+  const [categoria, setCategoria] = useState('Todas');
   const [articulos, setArticulos] = useState<ArticuloCatalogo[]>([]);
   const [detalle, setDetalle] = useState<ArticuloCatalogo | null>(null);
   const [pedido, setPedido] = useState<PedidoDetalle | null>(null);
@@ -24,14 +28,22 @@ export function App() {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState('');
   useEffect(() => {
-    const cambio = () => setRuta(location.hash.slice(1) || '/');
+    const cambio = () => {
+      const siguiente = location.hash.slice(1) || '/';
+      if (rutaActual.current === '/') posicionCatalogo.current = window.scrollY;
+      rutaActual.current = siguiente;
+      setRuta(siguiente);
+    };
     addEventListener('hashchange', cambio);
     return () => removeEventListener('hashchange', cambio);
   }, []);
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (ruta !== '/') window.scrollTo(0, 0);
     document.title = `GaboStore · ${ruta === '/personal' ? 'Acceso del personal' : ruta === '/carrito' ? 'Carrito' : ruta === '/confirmar' ? 'Revisar pedido' : ruta.startsWith('/pedido/') ? 'Pedido registrado' : ruta.startsWith('/articulo/') ? 'Detalle del artículo' : 'Catálogo'}`;
   }, [ruta]);
+  useEffect(() => {
+    if (ruta === '/' && !cargando && !sesion.iniciando) window.scrollTo(0, posicionCatalogo.current);
+  }, [ruta, cargando, sesion.iniciando]);
   useEffect(() => {
     if (sesion.iniciando || ruta === '/personal' || ruta === '/carrito' || ruta === '/confirmar') return;
     let actual = true;
@@ -75,7 +87,7 @@ export function App() {
       {ruta === '/carrito' ? sesion.personal ? carrito.cargando ? <Cargando /> : <PantallaCarrito carrito={carrito.carrito} ocupado={carrito.ocupado} crear={carrito.crear} cambiar={carrito.cambiar} quitar={carrito.quitar} /> : <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> :
         ruta === '/confirmar' ? sesion.personal ? carrito.cargando ? <Cargando /> : <PantallaConfirmacionPedido carrito={carrito.carrito} registrando={registrando} registrar={registrar} /> : <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> :
         ruta.startsWith('/pedido/') ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> : cargando ? <Cargando /> : error ? <ErrorCarga mensaje={error} /> : <PantallaConfirmacionPedido carrito={null} pedido={pedido} registrando={false} registrar={registrar} /> :
-        <div className={`catalogo-layout${sesion.personal && esCatalogo ? ' con-pedido' : ''}`}><section className="contenido-catalogo">{cargando ? <Cargando /> : error ? <ErrorCarga mensaje={error} /> : ruta.startsWith('/articulo/') && detalle ? <PantallaDetalleArticulo key={detalle.id} articulo={detalle} personal={Boolean(sesion.personal)} tieneCarrito={Boolean(carrito.carrito)} ocupado={carrito.ocupado} agregar={carrito.agregar} /> : <PantallaCatalogo articulos={articulos} />}</section>{sesion.personal && esCatalogo && <ResumenPedido carrito={carrito.carrito} cargando={carrito.cargando} />}</div>}
+        <div className={`catalogo-layout${sesion.personal && esCatalogo ? ' con-pedido' : ''}`}><section className="contenido-catalogo">{cargando ? <Cargando /> : error ? <ErrorCarga mensaje={error} /> : ruta.startsWith('/articulo/') && detalle ? <PantallaDetalleArticulo key={detalle.id} articulo={detalle} personal={Boolean(sesion.personal)} tieneCarrito={Boolean(carrito.carrito)} ocupado={carrito.ocupado} agregar={carrito.agregar} /> : <PantallaCatalogo articulos={articulos} busqueda={busqueda} categoria={categoria} setBusqueda={setBusqueda} setCategoria={setCategoria} />}</section>{sesion.personal && esCatalogo && <ResumenPedido carrito={carrito.carrito} cargando={carrito.cargando} />}</div>}
     </>}</main>
     <footer className="pie">GaboStore · Catálogo de artículos</footer>
   </>;

@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import type { ArticuloCatalogo } from '../src/negocio/ControlCatalogo.js';
 import { dinero, Fotografia, nombreArticulo } from './componentes.js';
 
-export function PantallaCatalogo({ articulos }: { articulos: ArticuloCatalogo[] }) {
-  const [busqueda, setBusqueda] = useState('');
-  const [categoria, setCategoria] = useState('Todas');
+export function PantallaCatalogo({ articulos, busqueda, categoria, setBusqueda, setCategoria }: {
+  articulos: ArticuloCatalogo[]; busqueda: string; categoria: string;
+  setBusqueda: (valor: string) => void; setCategoria: (valor: string) => void;
+}) {
   const categorias = ['Todas', ...new Set(articulos.map(a => a.categoria))];
   const consulta = busqueda.trim().toLocaleLowerCase('es');
   const visibles = articulos.filter(a => (categoria === 'Todas' || a.categoria === categoria)
