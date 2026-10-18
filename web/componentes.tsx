@@ -11,9 +11,9 @@ export function nombreArticulo(nombre: string): string {
 export function Fotografia({ ruta, nombre }: { ruta: string; nombre: string }) {
   const [fallo, setFallo] = useState(false);
   const valida = /^https:\/\//.test(ruta) || /^\/(?!\/)/.test(ruta);
-  return <div className="fotografia">{valida && !fallo
+  return <div className={`fotografia${valida && !fallo ? '' : ' sin-imagen'}`}>{valida && !fallo
     ? <img src={ruta} alt={nombre} loading="lazy" onError={() => setFallo(true)} />
-    : <span className="sin-foto"><svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m4 17 5-5 4 4 3-3 4 4"/></svg><span>Sin fotografía</span></span>}</div>;
+    : <span className="sin-foto">Sin fotografía</span>}</div>;
 }
 
 export function Aviso({ children, error = false }: { children: ReactNode; error?: boolean }) {

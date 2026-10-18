@@ -1,16 +1,17 @@
 import type { ArticuloCatalogo } from '../src/negocio/ControlCatalogo.js';
 import { dinero, Fotografia, nombreArticulo } from './componentes.js';
 
-export function PantallaCatalogo({ articulos, busqueda, categoria, setBusqueda, setCategoria }: {
+export function PantallaCatalogo({ articulos, busqueda, categoria, setBusqueda, setCategoria, nuevoPedido = false }: {
   articulos: ArticuloCatalogo[]; busqueda: string; categoria: string;
   setBusqueda: (valor: string) => void; setCategoria: (valor: string) => void;
+  nuevoPedido?: boolean;
 }) {
   const categorias = ['Todas', ...new Set(articulos.map(a => a.categoria))];
   const consulta = busqueda.trim().toLocaleLowerCase('es');
   const visibles = articulos.filter(a => (categoria === 'Todas' || a.categoria === categoria)
     && `${a.nombre} ${a.categoria}`.toLocaleLowerCase('es').includes(consulta));
   return <>
-    <div className="titulo-pagina"><div><h1>Catálogo</h1><p>Artículos, variantes y disponibilidad actual.</p></div><span className="contador">{articulos.length} artículos</span></div>
+    <div className="titulo-pagina"><div className="titulo-catalogo"><h1>Catálogo</h1><span className="contador">{visibles.length} {visibles.length === 1 ? 'artículo' : 'artículos'}</span></div>{nuevoPedido && <a className="boton" href="#/carrito">Nuevo pedido</a>}</div>
     <label className="busqueda">Buscar artículos<input type="search" placeholder="Nombre o categoría" value={busqueda} onChange={e => setBusqueda(e.target.value)} /></label>
     <div className="categorias" aria-label="Filtrar por categoría">{categorias.map(c => <button key={c} className={categoria === c ? 'categoria activa' : 'categoria'} aria-pressed={categoria === c} onClick={() => setCategoria(c)}>{c}</button>)}</div>
     {visibles.length ? <div className="productos">{visibles.map(articulo => <a className="producto" href={`#/articulo/${articulo.id}`} key={articulo.id}>
