@@ -120,6 +120,20 @@ input::placeholder{color:var(--secundario);font-weight:400}
 .agregar-articulo{gap:16px}
 .empezar-pedido .boton{margin-top:18px}
 .aviso{overflow-wrap:anywhere;margin-bottom:18px}
+.datos-pedido>.boton{margin-top:22px}
+.pasos{display:flex;gap:26px;flex-wrap:wrap;list-style:decimal;padding:0 0 18px 20px;margin:0 0 30px;border-bottom:1px solid var(--linea);font-size:13px;color:var(--secundario)}
+.pasos li{padding-left:3px}
+.pasos a{text-decoration:none}
+.paso-actual{color:var(--verde);font-weight:700}
+.confirmacion-exito{display:flex;align-items:center;gap:14px;padding:20px 22px;margin-bottom:28px;background:var(--suave);color:var(--verde);border-radius:var(--radio)}
+.confirmacion-exito svg{flex-shrink:0}
+.revision>li>strong{font-variant-numeric:tabular-nums;white-space:nowrap}
+.acciones-confirmacion{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.registro-pedido{margin-top:30px}
+fieldset{border:1px solid var(--linea);border-radius:var(--radio);padding:22px;max-width:740px;margin:0}
+legend{font-weight:650;padding:0 7px}
+.confirmacion-check{display:flex;align-items:start;gap:12px;font-weight:400;margin-top:18px}
+.confirmacion-check input{width:20px;height:20px;flex-shrink:0;margin:1px 0 0;accent-color:var(--verde)}
 @media(max-width:1000px){.con-pedido{grid-template-columns:minmax(0,1fr) 270px;gap:24px}.con-pedido .productos{grid-template-columns:minmax(0,1fr)}.resumen-pedido{padding:20px}.con-pedido .detalle-articulo{grid-template-columns:minmax(0,1fr)}.con-pedido .detalle-articulo>.fotografia{aspect-ratio:1.7}}
 @media(max-width:800px){.cabecera-interior{padding:0 20px}.contenedor{padding:28px 20px 40px}.detalle-articulo{gap:24px}.fotografia{min-height:150px}.producto-info{padding:18px}}
 @media(max-width:560px){.cabecera-interior{padding:0 16px;min-height:68px;gap:16px}nav{gap:12px}.marca{font-size:23px}.contenedor{padding:28px 16px 40px}h1{font-size:28px}.titulo-pagina{align-items:start;gap:12px}.contador{margin-top:6px}.productos{grid-template-columns:minmax(0,1fr);gap:18px}.fotografia{min-height:180px;aspect-ratio:1.9}.detalle-articulo{grid-template-columns:minmax(0,1fr)}.detalle-articulo>.fotografia{aspect-ratio:1.4}.producto-info{padding:20px}.categoria{padding-inline:13px}.titulo-pagina p{font-size:14px}}
