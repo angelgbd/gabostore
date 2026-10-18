@@ -37,6 +37,13 @@ export class ArticuloRepository {
     return data ? convertirArticulo(data) : null;
   }
 
+  async obtenerPorVariante(varianteId: number): Promise<Articulo | null> {
+    identificador(varianteId, 'varianteId');
+    const { data, error } = await this.db.from('variantes').select('articulo_id').eq('id', varianteId).maybeSingle();
+    comprobarError(error);
+    return data ? this.obtenerPorId(data.articulo_id) : null;
+  }
+
   async crear(datos: ArticuloNuevo): Promise<Articulo> {
     importe(datos.precioBase);
     const variantes = (datos.variantes ?? []).map(v => {
