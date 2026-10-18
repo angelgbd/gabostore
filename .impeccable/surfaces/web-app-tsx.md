@@ -17,7 +17,7 @@ OWN-WORLD: Blanco, verde profundo y gris verdoso. Tipografía de sistema firme, 
 
 STORY: Consultar disponibilidad, elegir variante y cantidad, revisar el carrito y registrar un pedido pendiente. El público puede leer; el personal autenticado puede operar.
 
-FIRST VIEWPORT: Cabecera breve con GaboStore, catálogo y acceso del personal. Título, búsqueda y categorías encima de dos columnas de artículos en escritorio. Resumen de pedido a la derecha para el personal; en móvil una columna y acceso persistente al carrito. Cada ficha alinea categoría, nombre, precio y disponibilidad.
+FIRST VIEWPORT: Cabecera breve con GaboStore, catálogo y acceso del personal. Título, búsqueda y categorías encima de dos columnas de filas compactas en escritorio. Miniaturas discretas, datos alineados y filtros subrayados. El resumen aparece a la derecha cuando el personal tiene un carrito; en móvil se apila y el carrito permanece accesible en cabecera. El detalle sin fotografía usa una sola columna de información y una nota breve.
 
 FORM: Mostrador de tienda, candidato 1 de la lista fundamentada, elección model-pick confirmada por el usuario; semilla 61217a2d. Interacción distintiva: añadir una variante actualiza el resumen sin perder la posición del catálogo; la confirmación conserva la misma jerarquía de líneas y totales. Movimiento breve de opacidad, respetando reduced-motion.
 

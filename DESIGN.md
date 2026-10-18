@@ -2,14 +2,14 @@
 name: "GaboStore"
 description: "Mostrador de tienda: artículos, variantes y pedidos con claridad."
 colors:
-  fondo: "#f5f8f6"
+  fondo: "#fff"
   superficie: "#fff"
-  tinta: "#19372d"
-  secundario: "#536b61"
+  tinta: "#202925"
+  secundario: "#5b655f"
   verde: "#17624c"
   verde-hover: "#104b39"
-  suave: "#edf4ef"
-  linea: "#d8e3dc"
+  suave: "#f3f5f3"
+  linea: "#dfe4e0"
   error: "#a22630"
   error-fondo: "#fff2f2"
   foco: "#287b61"
@@ -29,12 +29,12 @@ typography:
   title:
     fontFamily: "\"Public Sans\", system-ui, sans-serif"
     fontSize: "19px"
-    fontWeight: 700
+    fontWeight: 650
     lineHeight: 1.35
   title-compact:
     fontFamily: "\"Public Sans\", system-ui, sans-serif"
     fontSize: "18px"
-    fontWeight: 700
+    fontWeight: 650
     lineHeight: 1.35
   body:
     fontFamily: "\"Public Sans\", system-ui, sans-serif"
@@ -68,8 +68,8 @@ typography:
     lineHeight: 1.55
   price:
     fontFamily: "\"Public Sans\", system-ui, sans-serif"
-    fontSize: "21px"
-    fontWeight: 700
+    fontSize: "20px"
+    fontWeight: 650
     lineHeight: 1.55
   total:
     fontFamily: "\"Public Sans\", system-ui, sans-serif"
@@ -78,14 +78,15 @@ typography:
     lineHeight: 1.55
   brand:
     fontFamily: "\"Public Sans\", system-ui, sans-serif"
-    fontSize: "25px"
+    fontSize: "24px"
     fontWeight: 800
     lineHeight: 1.55
     letterSpacing: "-0.035em"
 rounded:
-  tag: "5px"
-  category: "7px"
-  control: "8px"
+  none: "0px"
+  tag: "0px"
+  category: "0px"
+  control: "4px"
   surface: "14px"
 spacing:
   xs: "4px"
@@ -94,7 +95,6 @@ spacing:
   lg: "16px"
   control: "18px"
   section: "20px"
-  card: "22px"
   panel: "24px"
   block: "28px"
   shell: "32px"
@@ -132,27 +132,27 @@ components:
   navigation:
     textColor: "{colors.secundario}"
   category:
-    backgroundColor: "{colors.superficie}"
+    backgroundColor: "transparent"
     textColor: "{colors.secundario}"
     rounded: "{rounded.category}"
-    padding: "7px 16px"
+    padding: "10px 0"
     typography: "{typography.note}"
   category-active:
-    backgroundColor: "{colors.verde}"
-    textColor: "{colors.superficie}"
+    backgroundColor: "transparent"
+    textColor: "{colors.tinta}"
   tag:
-    backgroundColor: "{colors.suave}"
+    backgroundColor: "transparent"
     textColor: "{colors.verde}"
     rounded: "{rounded.tag}"
-    padding: "3px 8px"
+    padding: "0"
     typography: "{typography.tag}"
   tag-neutral:
-    backgroundColor: "{colors.fondo}"
+    backgroundColor: "transparent"
     textColor: "{colors.secundario}"
-  product-card:
+  product-row:
     backgroundColor: "{colors.superficie}"
     textColor: "{colors.tinta}"
-    rounded: "{rounded.surface}"
+    rounded: "{rounded.none}"
   quantity-control:
     backgroundColor: "{colors.superficie}"
     textColor: "{colors.verde}"
@@ -160,8 +160,8 @@ components:
   order-summary:
     backgroundColor: "{colors.superficie}"
     textColor: "{colors.tinta}"
-    rounded: "{rounded.surface}"
-    padding: "24px"
+    rounded: "{rounded.none}"
+    padding: "0 0 0 24px"
 ---
 
 # Design System: GaboStore
@@ -170,144 +170,114 @@ components:
 
 **Creative North Star: "Mostrador de tienda"**
 
-“Mostrador de tienda” organiza una interfaz de trabajo sobria, cercana y en español. El blanco, el verde profundo y los grises verdosos dejan que los artículos, las variantes y los importes se lean antes que cualquier adorno. La densidad permite comparar fichas y revisar líneas de pedido con el mismo lenguaje visual.
+“Mostrador de tienda” organiza una interfaz de trabajo sobria, cercana y en español. Los artículos, las variantes y los importes mandan; el verde profundo identifica acciones y disponibilidad sobre un fondo blanco.
 
-La implementación usa Public Sans local como voz común de títulos y controles; concreta la intención de una sans firme del contrato, cuyo texto inicial mencionaba tipografía de sistema. La profundidad se apoya en superficies opacas y divisores. Las fotografías reales ocupan su espacio cuando existen; en esta entrega la ausencia se declara con un pictograma SVG y “Sin fotografía”, sin fabricar mercancía.
+Public Sans local mantiene una voz común. Las filas abiertas, los divisores finos y los controles compactos permiten comparar sin convertir cada dato en una tarjeta. Las fotografías reales se muestran cuando existen; su ausencia se indica con texto, sin reservar un bloque grande en el detalle.
 
 **Key Characteristics:**
 
-- Una sans local, jerarquía por tamaño y peso, e importes con cifras tabulares.
-- Superficies claras opacas, contornos finos y esquinas discretas.
-- Verde profundo para acciones, selección y estado; rojo reservado para errores.
-- Listas de pedido y totales con continuidad visual entre preparación y confirmación.
-- Movimiento breve de estado, desactivado con la preferencia de movimiento reducido.
+- Public Sans e importes con cifras tabulares.
+- Filas abiertas, controles compactos y separación por espacio y líneas.
+- Verde para acciones y disponibilidad; rojo para errores.
+- La misma jerarquía de líneas y totales durante todo el pedido.
+- Una transición breve del resumen, desactivada con movimiento reducido.
 
 ## Colors
 
-La paleta combina un verde profundo de trabajo con blancos y neutrales de matiz verde; los valores normativos están en el frontmatter.
-
-Las rampas tonales del sidecar se sintetizan para visualizar cada color en el panel; no amplían la paleta aplicada.
+Los valores normativos están en el frontmatter. El blanco es el lienzo y las superficies comparten su tono; la agrupación no depende de fondos de tarjeta. Las rampas del sidecar son muestras sintéticas, no colores adicionales de la interfaz.
 
 ### Primary
 
-- **Verde de mostrador** (`verde`): acciones principales, categorías seleccionadas, enlaces y disponibilidad.
-- **Verde de respuesta** (`verde-hover`): respuesta del botón principal al pasar el puntero.
-- **Verde de foco** (`foco`): contorno de navegación por teclado.
+Verde de mostrador para acciones y disponibilidad, verde de respuesta para hover y verde de foco para teclado.
 
 ### Secondary
 
-- **Rojo de error** (`error`) y **papel de error** (`error-fondo`): texto y fondo de avisos de error. Son semánticos, no un segundo acento decorativo.
+Rojo de error y papel de error se reservan para mensajes de error.
 
 ### Neutral
 
-- **Fondo de trabajo** (`fondo`): lienzo general y etiqueta neutral.
-- **Blanco de superficie** (`superficie`): cabecera, fichas, campos y paneles.
-- **Tinta verde** (`tinta`): lectura principal.
-- **Gris de apoyo** (`secundario`): contexto, categorías, notas, datos y disponibilidad agotada.
-- **Verde lavado** (`suave`): ausencia de fotografía, etiquetas de estado y avisos informativos.
-- **Línea clara** (`linea`): límites de campos, fichas, paneles y filas.
+Tinta oscura para lectura, gris de apoyo para contexto, gris suave para miniaturas y avisos, y línea clara para campos y filas.
 
-### Named Rules
-
-**The Verde con función Rule.** El verde identifica acción, selección o estado; los textos secundarios conservan el gris verdoso y los errores usan su pareja roja.
+**The Verde con función Rule.** El verde identifica acción, selección o estado. La lectura principal usa tinta oscura y el contexto usa gris de apoyo.
 
 ## Typography
 
-**Display Font:** Public Sans; respaldo system-ui y sans-serif. No hay una familia de exhibición independiente.
-**Body Font:** Public Sans; archivo local `/fonts/public-sans-latin.woff2`, peso variable de 400 a 800 y `font-display: swap`.
+Public Sans local, con respaldo system-ui y sans-serif. El archivo variable cubre pesos de (400–800) con font-display swap. El cuerpo conserva interlineado (1.55) y medida máxima de (70ch).
 
-**Character:** Una sola sans firme y abierta distingue títulos, controles e información por peso y tamaño. El cuerpo usa interlineado holgado y los párrafos se limitan a una medida de lectura de (70ch).
+Los títulos de página usan headline y su variante móvil; nombres y secciones usan title. El detalle destaca el precio a (24px), reducido a (22px) en teléfono. Los importes se alinean con cifras tabulares. Las etiquetas de campo, notas, metadatos y acciones conservan sus roles del frontmatter.
 
-### Hierarchy
-
-- **Headline:** título de página, peso (750), interlineado (1.2) y espaciado entre letras (-0.025em); se reduce en teléfono según `headline-mobile`.
-- **Title:** títulos de artículo y panel, peso (700) e interlineado (1.35). La variante `title-compact` sirve al resumen y a las líneas del carrito; estas últimas se reducen a (16px) en teléfono.
-- **Body:** texto principal regular, interlineado (1.55).
-- **Note / Meta:** información auxiliar, contexto y filas del resumen. Las notas conservan legibilidad con el gris de apoyo.
-- **Label / Tag:** etiquetas de campo y etiquetas compactas; los botones tienen peso específico (650), tamaño (14px) e interlineado heredado (1.55).
-- **Price / Total:** el precio de ficha usa `price`; el total usa `total`. El precio del detalle sube a (28px), peso (700). Todos usan `font-variant-numeric: tabular-nums`.
-- **Brand:** nombre textual GaboStore con `brand`; baja a (23px) en teléfono. “Store” usa el verde de mostrador.
-
-### Named Rules
-
-**The Una voz, cifras alineadas Rule.** Public Sans sostiene toda la interfaz. Los importes del catálogo, las líneas y el total usan cifras tabulares para mantener la comparación.
+**The Una voz, cifras alineadas Rule.** Public Sans sostiene toda la interfaz. Los precios y totales usan cifras tabulares.
 
 ## Layout
 
-El marco y la cabecera comparten un ancho máximo de (1280px), centrado. El contenido tiene relleno de escritorio (40px 32px 56px); la cabecera usa laterales de (32px) y altura mínima de (76px). El ritmo combina los pasos observados del frontmatter: no se fuerza una retícula de múltiplos únicos.
+Marco y cabecera centrados de hasta (1280px). El contenido de escritorio usa relleno (40px 32px 64px); la cabecera, laterales de (32px) y altura mínima de (68px).
 
-El catálogo usa dos columnas iguales con separación de (24px). Cuando aparece el pedido del personal, el contenedor reserva una columna de (300px) y un espacio de (32px). El resumen se mantiene visible con `position: sticky` y límite superior de (100px). Carrito y confirmación comparten una columna de datos de (320px), separación de (36px), líneas horizontales y el mismo total. La búsqueda ocupa como máximo (600px); los formularios de acceso y nuevo pedido usan máximos de (440px) y (520px).
+El catálogo presenta dos columnas de filas compactas con separación horizontal de (40px). Cada fila combina miniatura cuadrada de (112px) e información, con espacio de (20px). La búsqueda tiene un máximo de (600px); las categorías aparecen debajo como filtros subrayados. El contador refleja los resultados visibles.
 
-- **Hasta (1000px):** la columna del resumen baja a (270px), el espacio a (24px) y las fichas del catálogo del personal pasan a una columna. El panel usa relleno de (20px); el detalle junto al resumen también se apila.
-- **Hasta (800px):** el marco usa relleno (28px 20px 40px); resumen, carrito y confirmación se apilan y el resumen deja de ser sticky. El catálogo del personal vuelve a dos columnas; el espacio del carrito baja a (28px).
-- **Hasta (560px):** el catálogo pasa a una columna con espacio de (18px), los laterales del marco son de (16px), la cabecera mide como mínimo (68px) y el detalle se apila. La navegación oculta el enlace redundante “Catálogo”; marca y carrito siguen en la cabecera fija. Los botones de cabecera usan altura mínima de (38px), relleno (8px 12px); el resto conserva sus dimensiones propias.
+El resumen aparece cuando el personal tiene un carrito, no como panel vacío al entrar. Su columna mide (280px), con separación de (40px), y permanece sticky a (100px). El detalle con imagen conserva dos columnas. Sin imagen, usa una sola columna de hasta (680px) y una nota breve bajo la información. Carrito y confirmación reservan una columna de (300px) para cliente y total.
 
-Los nombres y contactos largos pueden partirse; los importes permanecen juntos. Las categorías y los grupos de acciones admiten varias líneas. Las fotografías de ficha usan una proporción horizontal de (2.15), con altura mínima de (190px); en teléfono usan proporción (1.9) y mínimo de (180px). El detalle público parte de una imagen cuadrada y pasa a (1.4) en teléfono; el detalle del personal usa (1.7) hasta el corte de (1000px), incluida su vista móvil.
+- Hasta (1000px), el resumen baja a (250px), el espacio a (32px) y el catálogo con resumen pasa a una columna de artículos.
+- Hasta (800px), resumen y datos del pedido se apilan. Las filas usan miniaturas de (88px), espacio de (16px) y dos columnas cuando caben. Los laterales del marco bajan a (20px).
+- Hasta (560px), el catálogo queda en una columna. El marco usa laterales de (16px), la cabecera mide al menos (64px) y los títulos usan headline-mobile. La marca y el carrito mantienen la navegación. El enlace redundante al catálogo y la etiqueta de sesión se ocultan.
+
+Los nombres y contactos largos pueden partirse; los importes de las líneas permanecen juntos. Las acciones y categorías admiten varias líneas. Formularios de acceso y nuevo pedido conservan sus máximos de (440px) y (520px).
 
 ## Elevation & Depth
 
-El sistema no usa sombras ni desenfoque. La cabecera y el resumen son opacos; la primera se fija arriba y el segundo acompaña el trabajo solo en escritorio. El blanco sobre el fondo de trabajo, los bordes de (1px) y los divisores de filas comunican agrupación y profundidad.
+No hay sombras ni desenfoque. La cabecera es opaca; las filas se delimitan por abajo y los datos laterales se separan con una línea de (1px). En móvil esa separación pasa arriba. No se duplican los divisores entre la última línea y el bloque de datos.
 
-### Named Rules
-
-**The Superficie opaca Rule.** La cabecera, las fichas y los paneles conservan fondo opaco y un borde fino. La separación se construye con tono, espacio y líneas.
+**The Agrupar sin encerrar Rule.** El espacio y los divisores agrupan artículos y datos del pedido. No se añade un contenedor por cada dato.
 
 ## Shapes
 
-Las superficies tienen esquinas discretas: `surface` para fichas y paneles, `control` para campos y botones, `category` para filtros y `tag` para etiquetas y contadores. Las fichas recortan la imagen dentro del contorno. Las listas de variantes y líneas de pedido permanecen abiertas, separadas por reglas horizontales en lugar de tarjetas anidadas. Los controles de cantidad se agrupan bajo un único contorno.
+Controles con esquinas discretas según control. Las filas, filtros y etiquetas no usan cápsulas. El radio surface se conserva en las fotografías reales del detalle; no convierte la ausencia de imagen en una tarjeta.
 
 ## Components
 
 ### Buttons
 
-Acciones compactas, legibles y de trabajo. El principal usa verde y texto blanco; el secundario usa blanco, texto verde y borde claro; el de texto reduce relleno y altura sin añadir superficie. Los tres tienen esquinas `control`, peso (650) y separación interna de (8px) entre contenidos. Principal y secundario parten de una altura mínima de (44px); el de texto de (36px).
+Principal verde con texto blanco, secundario blanco con contorno y acción de texto para quitar. Altura mínima de (44px), salvo el de texto de (36px). El hover oscurece el principal o subraya acciones de texto. El foco usa contorno verde de (3px), separado (4px). Disabled usa opacidad (0.55) y cursor not-allowed.
 
-El principal cambia al verde de respuesta al pasar el puntero. El secundario cambia al verde lavado y marca su borde en verde. El foco global usa un contorno verde de (3px), separado (4px). Los botones deshabilitados muestran opacidad (0.6) y cursor de espera. No hay una animación añadida a los botones.
+### Categories and Tags
 
-### Chips / Tags
+Categorías como botones de texto con línea inferior; la activa tiene peso (650), texto oscuro y línea verde. Se conserva aria-pressed. Sobre pedido y Demo son texto compacto de estado, sin fondos de insignia.
 
-Los filtros son rectángulos pequeños con esquinas `category`, altura mínima de (40px) y un borde fino. La selección invierte a verde con blanco, además de su estado accesible `aria-pressed`. El hover cambia el borde. Las etiquetas informativas son más compactas y usan verde lavado; “Demo” usa la variante neutral. El contador del carrito comparte ese lenguaje compacto.
+### Product Rows
 
-### Cards / Containers
+El enlace incluye miniatura, nombre, categoría, precio y disponibilidad. No tiene contorno completo, sombra ni relleno de tarjeta. El hover subraya el nombre y cambia su color. Una foto ausente ocupa solo la miniatura; en el detalle queda como nota de texto.
 
-La ficha es un enlace completo: imagen o ausencia identificada, nombre y categoría, precio, disponibilidad y acceso a variantes. Usa superficie blanca, borde claro, radio `surface` y relleno de información (22px). El relleno observado pasa a (18px) hasta el corte intermedio y a (20px) en teléfono. Su hover cambia solo el borde a verde, con transición de (120ms ease-out).
+### Inputs and Variants
 
-Los paneles de resumen y datos conservan el mismo material. Sus rellenos son de (24px), con las reducciones adaptables descritas en Layout. No se añade sombra al hover ni al panel fijo.
+Campos de altura (46px), etiquetas visibles y borde fino. El personal con carrito selecciona la variante directamente en una lista de radios que muestra disponibilidad; no hay un selector que repita la misma lista. Las variantes agotadas se ven y se deshabilitan cuando corresponde. Cantidad y botón para añadir comparten una fila que puede envolver.
 
-### Inputs / Fields
-
-Campos blancos de altura (46px), borde claro de (1px), radio `control` y relleno horizontal de (12px). Una etiqueta visible precede al campo; el placeholder usa gris de apoyo y peso normal. Búsqueda, selectores, contacto y acceso comparten esta forma. El foco usa el contorno global. Los errores se muestran mediante el aviso semántico, no mediante un estilo de campo rojo inventado.
-
-El control de cantidad agrupa dos botones y el valor: altura (40px), botones de ancho (38px) e input de (54px), que se reducen a (30px) y (40px) en teléfono. El foco rodea el grupo con contorno de (3px), separado (3px); no duplica el contorno en el input interior.
+El control de cantidad del carrito conserva botones de (38px) e input de (54px), reducidos a (30px) y (40px) en teléfono. El foco rodea el grupo.
 
 ### Navigation
 
-Cabecera blanca fija, marca textual a la izquierda y enlaces a la derecha. Los enlaces usan peso (600); el hover y la clase activa usan verde. El estado de sesión y las etapas del pedido aparecen bajo la cabecera para el personal. Las etapas usan numeración, divisores y peso (700) en la actual, sin iconografía ornamental. La adaptación de teléfono conserva el acceso al carrito.
+Marca textual y enlaces, con la página actual subrayada. El acceso público se llama Acceso del personal. La sesión del empleado se indica en la cabecera; el correo está disponible como nombre accesible y título. Las etapas numeradas se reservan para carrito y revisión. No hay un pie que repita la marca.
 
-### Order Summary
+### Order Summary and Confirmation
 
-El resumen mantiene el cliente, las líneas, los subtotales y el total junto al catálogo del personal. Las líneas usan texto auxiliar para variante y cantidad; los importes se alinean a la derecha y permanecen juntos. El total se separa con una línea y espacio, sin un color de fondo propio.
+Cliente, líneas y total se leen en un panel abierto, separado por una regla. Los importes se alinean a la derecha. El resumen solo anima líneas y total: opacidad de (0.72) a (1) durante (180ms), curva cubic-bezier(.16,1,.3,1). Con prefers-reduced-motion se desactivan animaciones y transiciones.
 
-Solo el bloque de líneas y total responde a cambios de contenido: opacidad de (0.72) a (1), durante (180ms), con curva `cubic-bezier(.16,1,.3,1)`. No hay desplazamiento ni ocultación completa. Con `prefers-reduced-motion: reduce` se desactivan animaciones, transiciones y desplazamiento suave. La confirmación reutiliza la jerarquía de líneas y total y comunica el resultado con texto y un SVG de trazo.
+La confirmación conserva líneas, datos de contacto y total. El resultado correcto muestra un SVG de confirmación y texto, sin un bloque decorativo. La indicación de que el pedido no representa pago ni reserva permanece visible.
 
-### Messages / Empty States
+### Messages and Empty States
 
-Los avisos informativos usan verde sobre verde lavado; el error usa la pareja roja. El resultado correcto usa un SVG de confirmación y texto, con fondo lavado. Los estados vacíos centran un mensaje breve y una acción cuando procede; la carga muestra texto de estado. La ausencia de fotografía usa un SVG de imagen y una etiqueta explícita.
+Avisos informativos sobrios y errores con su pareja roja. Estados vacíos alineados al contenido, con mensaje y acción de recuperación. La búsqueda sin resultados permite limpiar filtros. Los mensajes mantienen roles status y alert.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- **Do** conservar la jerarquía nombre, información de variante e importe, con cifras tabulares en los precios.
-- **Do** mantener etiquetas visibles, foco perceptible y mensajes de estado con texto.
-- **Do** usar superficies opacas y el borde de separación definido para fichas y paneles.
-- **Do** conservar la adaptación de columnas y la cabecera con acceso al carrito en teléfono.
-- **Do** declarar “Sin fotografía” cuando no haya una imagen válida y sustituirlo por la fotografía real cuando exista.
-- **Do** respetar la preferencia de movimiento reducido en las animaciones y transiciones.
+- **Do** mantener nombre, variante, cantidad e importe fáciles de comparar.
+- **Do** conservar etiquetas visibles, foco de teclado y mensajes de estado con texto.
+- **Do** usar imágenes reales y una indicación breve cuando falten.
+- **Do** reservar el botón principal para avanzar en la tarea.
 
 ### Don't:
 
-- **Don't** usar el color como único indicador de disponibilidad, selección o error.
-- **Don't** sustituir las fotografías ausentes por imágenes de productos inventados.
-- **Don't** convertir una actualización del resumen en una animación de toda la pantalla.
-- **Don't** presentar la confirmación visual de un pedido pendiente como un pago.
+- **Don't** volver a envolver cada artículo o panel en una tarjeta.
+- **Don't** usar un gran bloque de relleno cuando falte una fotografía.
+- **Don't** añadir ayudas, insignias o pasos que repitan la información inmediata.
+- **Don't** fabricar mercancía, fotografías ni afirmaciones comerciales.

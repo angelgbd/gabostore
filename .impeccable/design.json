@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-18T19:56:29.744Z",
+  "generatedAt": "2026-10-18T21:07:24.499Z",
   "title": "Design System: GaboStore",
   "extensions": {
     "colorMeta": {
@@ -8,154 +8,154 @@
         "role": "neutral",
         "displayName": "Fondo de trabajo",
         "tonalRamp": [
-          "oklch(15% 0.0041 157.18)",
-          "oklch(26.43% 0.0041 157.18)",
-          "oklch(37.86% 0.0041 157.18)",
-          "oklch(49.29% 0.0041 157.18)",
-          "oklch(60.71% 0.0041 157.18)",
-          "oklch(72.14% 0.0041 157.18)",
-          "oklch(83.57% 0.0041 157.18)",
-          "oklch(95% 0.0041 157.18)"
-        ]
-      },
-      "superficie": {
-        "role": "neutral",
-        "displayName": "Blanco de superficie",
-        "tonalRamp": [
-          "oklch(15% 0.0000 0.00)",
+          "oklch(15.00% 0.0000 0.00)",
           "oklch(26.43% 0.0000 0.00)",
           "oklch(37.86% 0.0000 0.00)",
           "oklch(49.29% 0.0000 0.00)",
           "oklch(60.71% 0.0000 0.00)",
           "oklch(72.14% 0.0000 0.00)",
           "oklch(83.57% 0.0000 0.00)",
-          "oklch(95% 0.0000 0.00)"
+          "oklch(95.00% 0.0000 0.00)"
+        ]
+      },
+      "superficie": {
+        "role": "neutral",
+        "displayName": "Blanco de superficie",
+        "tonalRamp": [
+          "oklch(15.00% 0.0000 0.00)",
+          "oklch(26.43% 0.0000 0.00)",
+          "oklch(37.86% 0.0000 0.00)",
+          "oklch(49.29% 0.0000 0.00)",
+          "oklch(60.71% 0.0000 0.00)",
+          "oklch(72.14% 0.0000 0.00)",
+          "oklch(83.57% 0.0000 0.00)",
+          "oklch(95.00% 0.0000 0.00)"
         ]
       },
       "tinta": {
         "role": "neutral",
-        "displayName": "Tinta verde",
+        "displayName": "Tinta oscura",
         "tonalRamp": [
-          "oklch(15% 0.0407 169.75)",
-          "oklch(26.43% 0.0407 169.75)",
-          "oklch(37.86% 0.0407 169.75)",
-          "oklch(49.29% 0.0407 169.75)",
-          "oklch(60.71% 0.0407 169.75)",
-          "oklch(72.14% 0.0407 169.75)",
-          "oklch(83.57% 0.0407 169.75)",
-          "oklch(95% 0.0407 169.75)"
+          "oklch(15.00% 0.0146 166.52)",
+          "oklch(26.43% 0.0146 166.52)",
+          "oklch(37.86% 0.0146 166.52)",
+          "oklch(49.29% 0.0146 166.52)",
+          "oklch(60.71% 0.0146 166.52)",
+          "oklch(72.14% 0.0146 166.52)",
+          "oklch(83.57% 0.0146 166.52)",
+          "oklch(95.00% 0.0146 166.52)"
         ]
       },
       "secundario": {
         "role": "neutral",
         "displayName": "Gris de apoyo",
         "tonalRamp": [
-          "oklch(15% 0.0326 167.69)",
-          "oklch(26.43% 0.0326 167.69)",
-          "oklch(37.86% 0.0326 167.69)",
-          "oklch(49.29% 0.0326 167.69)",
-          "oklch(60.71% 0.0326 167.69)",
-          "oklch(72.14% 0.0326 167.69)",
-          "oklch(83.57% 0.0326 167.69)",
-          "oklch(95% 0.0326 167.69)"
+          "oklch(15.00% 0.0155 159.50)",
+          "oklch(26.43% 0.0155 159.50)",
+          "oklch(37.86% 0.0155 159.50)",
+          "oklch(49.29% 0.0155 159.50)",
+          "oklch(60.71% 0.0155 159.50)",
+          "oklch(72.14% 0.0155 159.50)",
+          "oklch(83.57% 0.0155 159.50)",
+          "oklch(95.00% 0.0155 159.50)"
         ]
       },
       "verde": {
         "role": "primary",
         "displayName": "Verde de mostrador",
         "tonalRamp": [
-          "oklch(15% 0.0803 168.76)",
+          "oklch(15.00% 0.0803 168.76)",
           "oklch(26.43% 0.0803 168.76)",
           "oklch(37.86% 0.0803 168.76)",
           "oklch(49.29% 0.0803 168.76)",
           "oklch(60.71% 0.0803 168.76)",
           "oklch(72.14% 0.0803 168.76)",
           "oklch(83.57% 0.0803 168.76)",
-          "oklch(95% 0.0803 168.76)"
+          "oklch(95.00% 0.0803 168.76)"
         ]
       },
       "verde-hover": {
         "role": "primary",
         "displayName": "Verde de respuesta",
         "tonalRamp": [
-          "oklch(15% 0.0670 168.04)",
+          "oklch(15.00% 0.0670 168.04)",
           "oklch(26.43% 0.0670 168.04)",
           "oklch(37.86% 0.0670 168.04)",
           "oklch(49.29% 0.0670 168.04)",
           "oklch(60.71% 0.0670 168.04)",
           "oklch(72.14% 0.0670 168.04)",
           "oklch(83.57% 0.0670 168.04)",
-          "oklch(95% 0.0670 168.04)"
+          "oklch(95.00% 0.0670 168.04)"
         ]
       },
       "suave": {
         "role": "neutral",
-        "displayName": "Verde lavado",
+        "displayName": "Gris suave",
         "tonalRamp": [
-          "oklch(15% 0.0099 155.10)",
-          "oklch(26.43% 0.0099 155.10)",
-          "oklch(37.86% 0.0099 155.10)",
-          "oklch(49.29% 0.0099 155.10)",
-          "oklch(60.71% 0.0099 155.10)",
-          "oklch(72.14% 0.0099 155.10)",
-          "oklch(83.57% 0.0099 155.10)",
-          "oklch(95% 0.0099 155.10)"
+          "oklch(15.00% 0.0034 145.55)",
+          "oklch(26.43% 0.0034 145.55)",
+          "oklch(37.86% 0.0034 145.55)",
+          "oklch(49.29% 0.0034 145.55)",
+          "oklch(60.71% 0.0034 145.55)",
+          "oklch(72.14% 0.0034 145.55)",
+          "oklch(83.57% 0.0034 145.55)",
+          "oklch(95.00% 0.0034 145.55)"
         ]
       },
       "linea": {
         "role": "neutral",
         "displayName": "Línea clara",
         "tonalRamp": [
-          "oklch(15% 0.0151 158.22)",
-          "oklch(26.43% 0.0151 158.22)",
-          "oklch(37.86% 0.0151 158.22)",
-          "oklch(49.29% 0.0151 158.22)",
-          "oklch(60.71% 0.0151 158.22)",
-          "oklch(72.14% 0.0151 158.22)",
-          "oklch(83.57% 0.0151 158.22)",
-          "oklch(95% 0.0151 158.22)"
+          "oklch(15.00% 0.0076 151.88)",
+          "oklch(26.43% 0.0076 151.88)",
+          "oklch(37.86% 0.0076 151.88)",
+          "oklch(49.29% 0.0076 151.88)",
+          "oklch(60.71% 0.0076 151.88)",
+          "oklch(72.14% 0.0076 151.88)",
+          "oklch(83.57% 0.0076 151.88)",
+          "oklch(95.00% 0.0076 151.88)"
         ]
       },
       "error": {
         "role": "secondary",
         "displayName": "Rojo de error",
         "tonalRamp": [
-          "oklch(15% 0.1595 21.82)",
+          "oklch(15.00% 0.1595 21.82)",
           "oklch(26.43% 0.1595 21.82)",
           "oklch(37.86% 0.1595 21.82)",
           "oklch(49.29% 0.1595 21.82)",
           "oklch(60.71% 0.1595 21.82)",
           "oklch(72.14% 0.1595 21.82)",
           "oklch(83.57% 0.1595 21.82)",
-          "oklch(95% 0.1595 21.82)"
+          "oklch(95.00% 0.1595 21.82)"
         ]
       },
       "error-fondo": {
         "role": "secondary",
         "displayName": "Papel de error",
         "tonalRamp": [
-          "oklch(15% 0.0140 17.40)",
+          "oklch(15.00% 0.0140 17.40)",
           "oklch(26.43% 0.0140 17.40)",
           "oklch(37.86% 0.0140 17.40)",
           "oklch(49.29% 0.0140 17.40)",
           "oklch(60.71% 0.0140 17.40)",
           "oklch(72.14% 0.0140 17.40)",
           "oklch(83.57% 0.0140 17.40)",
-          "oklch(95% 0.0140 17.40)"
+          "oklch(95.00% 0.0140 17.40)"
         ]
       },
       "foco": {
         "role": "primary",
         "displayName": "Verde de foco",
         "tonalRamp": [
-          "oklch(15% 0.0897 168.46)",
+          "oklch(15.00% 0.0897 168.46)",
           "oklch(26.43% 0.0897 168.46)",
           "oklch(37.86% 0.0897 168.46)",
           "oklch(49.29% 0.0897 168.46)",
           "oklch(60.71% 0.0897 168.46)",
           "oklch(72.14% 0.0897 168.46)",
           "oklch(83.57% 0.0897 168.46)",
-          "oklch(95% 0.0897 168.46)"
+          "oklch(95.00% 0.0897 168.46)"
         ]
       }
     },
@@ -216,11 +216,6 @@
     "shadows": [],
     "motion": [
       {
-        "name": "product-border",
-        "value": "border-color 120ms ease-out",
-        "purpose": "Respuesta del contorno de la ficha al puntero."
-      },
-      {
         "name": "summary-update",
         "value": "180ms cubic-bezier(.16,1,.3,1)",
         "purpose": "Solo las líneas y el total: opacidad de 0.72 a 1 cuando cambia su contenido."
@@ -253,7 +248,7 @@
       "refersTo": "button-primary",
       "description": "Acción principal del flujo; mismo estilo para enlaces de avance.",
       "html": "<button class=\"ds-button\" type=\"button\">Añadir al carrito</button>",
-      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:8px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;font-weight:650;line-height:1.55;text-decoration:none;white-space:nowrap;cursor:pointer;background:var(--verde,#17624c);color:var(--superficie,#fff)}.ds-button:hover{background:var(--verde-hover,#104b39)}.ds-button:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-button:disabled{cursor:wait;opacity:.6}"
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:4px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;font-weight:650;line-height:1.55;text-decoration:none;white-space:nowrap;cursor:pointer;background:var(--verde,#17624c);color:var(--superficie,#fff)}.ds-button:hover{background:var(--verde-hover,#104b39)}.ds-button:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-button:disabled{cursor:not-allowed;opacity:.55}"
     },
     {
       "name": "Botón secundario",
@@ -261,7 +256,7 @@
       "refersTo": "button-secondary",
       "description": "Acción alternativa y acceso del personal.",
       "html": "<a class=\"ds-secondary\" href=\"#/\">Volver al catálogo</a>",
-      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:8px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;font-weight:650;line-height:1.55;text-decoration:none;white-space:nowrap;cursor:pointer;background:var(--superficie,#fff);color:var(--verde,#17624c);border-color:var(--linea,#d8e3dc)}.ds-secondary:hover{background:var(--suave,#edf4ef);border-color:var(--verde,#17624c)}.ds-secondary:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-secondary:disabled{cursor:wait;opacity:.6}"
+      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:4px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;font-weight:650;line-height:1.55;text-decoration:none;white-space:nowrap;cursor:pointer;background:var(--superficie,#fff);color:var(--verde,#17624c);border-color:var(--linea,#dfe4e0)}.ds-secondary:hover{background:var(--suave,#f3f5f3);border-color:var(--verde,#17624c)}.ds-secondary:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-secondary:disabled{cursor:not-allowed;opacity:.55}"
     },
     {
       "name": "Botón de texto",
@@ -269,7 +264,7 @@
       "refersTo": "button-text",
       "description": "Acción de quitar una línea del carrito.",
       "html": "<button class=\"ds-text\" type=\"button\">Quitar</button>",
-      "css": ".ds-text{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:8px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;font-weight:650;line-height:1.55;text-decoration:none;white-space:nowrap;cursor:pointer;background:none;color:var(--verde,#17624c);padding:6px 0;min-height:36px}.ds-text:hover{background:none}.ds-text:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-text:disabled{cursor:wait;opacity:.6}"
+      "css": ".ds-text{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:4px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;font-weight:650;line-height:1.55;text-decoration:none;white-space:nowrap;cursor:pointer;background:none;color:var(--verde,#17624c);padding:6px 0;min-height:36px}.ds-text:hover{background:none;text-decoration:underline;text-underline-offset:4px}.ds-text:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-text:disabled{cursor:not-allowed;opacity:.55}"
     },
     {
       "name": "Búsqueda con etiqueta",
@@ -277,15 +272,15 @@
       "refersTo": "field",
       "description": "Campo compartido con los formularios, mostrado como búsqueda de artículos.",
       "html": "<label class=\"ds-label\">Buscar artículos<input class=\"ds-input\" type=\"search\" placeholder=\"Nombre o categoría\"></label>",
-      "css": ".ds-label{display:grid;gap:7px;max-width:600px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;font-weight:600;line-height:1.55;color:var(--tinta,#19372d)}.ds-input{min-width:0;max-width:100%;width:100%;height:46px;border:1px solid var(--linea,#d8e3dc);border-radius:8px;background:var(--superficie,#fff);color:var(--tinta,#19372d);padding:0 12px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:15px;font-weight:400;line-height:1.55;caret-color:var(--verde,#17624c)}.ds-input::placeholder{color:var(--secundario,#536b61);font-weight:400}.ds-input:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}"
+      "css": ".ds-label{display:grid;gap:7px;max-width:600px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;font-weight:600;line-height:1.55;color:var(--tinta,#202925)}.ds-input{min-width:0;max-width:100%;width:100%;height:46px;border:1px solid var(--linea,#dfe4e0);border-radius:4px;background:var(--superficie,#fff);color:var(--tinta,#202925);padding:0 12px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:15px;font-weight:400;line-height:1.55;caret-color:var(--verde,#17624c)}.ds-input::placeholder{color:var(--secundario,#5b655f);font-weight:400}.ds-input:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}"
     },
     {
       "name": "Navegación principal",
       "kind": "nav",
       "refersTo": "navigation",
       "description": "Marca textual y acceso al catálogo y al carrito.",
-      "html": "<header class=\"ds-header\"><a class=\"ds-brand\" href=\"#/\" aria-label=\"GaboStore, catálogo\">Gabo<span class=\"ds-brand-green\">Store</span></a><nav class=\"ds-nav\" aria-label=\"Navegación principal\"><a class=\"ds-catalog\" href=\"#/\">Catálogo</a><a href=\"#/carrito\">Carrito <span class=\"ds-count\">2</span></a></nav></header>",
-      "css": ".ds-header{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:76px;max-width:1280px;margin:auto;padding:0 32px;background:var(--superficie,#fff);border-bottom:1px solid var(--linea,#d8e3dc);font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:15px;line-height:1.55;color:var(--tinta,#19372d)}.ds-brand{font-size:25px;font-weight:800;letter-spacing:-.035em;text-decoration:none;white-space:nowrap;color:var(--tinta,#19372d)}.ds-brand-green{color:var(--verde,#17624c)}.ds-nav{display:flex;align-items:center;gap:24px;flex-wrap:wrap}.ds-nav a{text-decoration:none;font-weight:600;color:var(--secundario,#536b61)}.ds-nav a:hover,.ds-nav .ds-catalog{color:var(--verde,#17624c)}.ds-header a:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-count{display:inline-grid;place-items:center;min-width:24px;height:24px;font-size:12px;border-radius:5px;background:var(--suave,#edf4ef);color:var(--verde,#17624c);margin-left:4px}@media(max-width:800px){.ds-header{padding:0 20px}}@media(max-width:560px){.ds-header{padding:0 16px;min-height:68px;gap:16px}.ds-brand{font-size:23px}.ds-nav{gap:10px}.ds-nav a{font-size:13px}.ds-catalog{display:none}.ds-count{margin-left:1px;min-width:21px;height:22px}}"
+      "html": "<header class=\"ds-header\"><a class=\"ds-brand ds-focus\" href=\"#/\">Gabo<span>Store</span></a><nav aria-label=\"Navegación principal\"><a class=\"ds-current ds-focus\" href=\"#/\" aria-current=\"page\">Catálogo</a><a class=\"ds-focus\" href=\"#/personal\">Acceso del personal</a></nav></header>",
+      "css": ".ds-header{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:68px;padding:0 32px;border-bottom:1px solid var(--linea,#dfe4e0);background:var(--superficie,#fff);color:var(--tinta,#202925);font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);line-height:1.55;}.ds-brand{font-size:24px;font-weight:800;letter-spacing:-.035em;text-decoration:none;color:inherit;white-space:nowrap}.ds-brand span{color:var(--verde,#17624c)}.ds-header nav{display:flex;gap:24px;align-items:center;flex-wrap:wrap}.ds-header nav a{min-height:44px;display:inline-flex;align-items:center;color:var(--secundario,#5b655f);font-size:14px;font-weight:600;text-decoration:none}.ds-header nav a:hover{color:var(--verde,#17624c);text-decoration:underline;text-underline-offset:4px}.ds-header nav .ds-current{text-decoration:underline;color:var(--tinta,#202925)}.ds-focus:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px}@media(max-width:560px){.ds-header{padding:0 16px;min-height:64px}.ds-brand{font-size:23px}.ds-current{display:none}.ds-header nav{gap:14px}}"
     },
     {
       "name": "Filtros de categoría",
@@ -293,7 +288,7 @@
       "refersTo": "category",
       "description": "Filtros de selección única con estado pulsado accesible.",
       "html": "<div class=\"ds-categories\" aria-label=\"Filtrar por categoría\"><button class=\"ds-category ds-selected\" type=\"button\" aria-pressed=\"true\">Todas</button><button class=\"ds-category\" type=\"button\" aria-pressed=\"false\">Ropa</button><button class=\"ds-category\" type=\"button\" aria-pressed=\"false\">Accesorios</button></div>",
-      "css": ".ds-categories{display:flex;gap:8px;flex-wrap:wrap}.ds-category{background:var(--superficie,#fff);color:var(--secundario,#536b61);border:1px solid var(--linea,#d8e3dc);border-radius:7px;min-height:40px;padding:7px 16px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;line-height:1.55;cursor:pointer}.ds-category:hover{border-color:var(--verde,#17624c)}.ds-category.ds-selected{background:var(--verde,#17624c);color:var(--superficie,#fff);border-color:var(--verde,#17624c)}.ds-category:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}@media(max-width:560px){.ds-category{padding-inline:13px}}"
+      "css": ".ds-categories{display:flex;gap:24px;flex-wrap:wrap;border-bottom:1px solid var(--linea,#dfe4e0)}.ds-category{border:0;border-bottom:2px solid transparent;background:none;color:var(--secundario,#5b655f);min-height:44px;padding:10px 0;font-size:14px;cursor:pointer;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);line-height:1.55;}.ds-category:hover{color:var(--verde,#17624c)}.ds-category.ds-selected{color:var(--tinta,#202925);border-bottom-color:var(--verde,#17624c);font-weight:650}.ds-category:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px}"
     },
     {
       "name": "Etiquetas de estado",
@@ -301,15 +296,15 @@
       "refersTo": "tag",
       "description": "Etiquetas informativas compactas, incluida la variante neutral de Demo.",
       "html": "<span class=\"ds-tag\">Sobre pedido</span> <span class=\"ds-tag ds-neutral\">Demo</span>",
-      "css": ".ds-tag{display:inline-block;color:var(--verde,#17624c);background:var(--suave,#edf4ef);padding:3px 8px;border-radius:5px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:12px;font-weight:600;line-height:1.55;white-space:nowrap}.ds-tag.ds-neutral{background:var(--fondo,#f5f8f6);color:var(--secundario,#536b61)}"
+      "css": ".ds-tag{display:inline-block;color:var(--verde,#17624c);font-size:12px;font-weight:600;white-space:nowrap;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);line-height:1.55;}.ds-tag.ds-neutral{color:var(--secundario,#5b655f);font-weight:400}"
     },
     {
-      "name": "Ficha de artículo",
-      "kind": "card",
-      "refersTo": "product-card",
-      "description": "Ficha real del catálogo; ejemplo DEMO sin fotografía comercial.",
-      "html": "<a class=\"ds-product\" href=\"#/\"><div class=\"ds-photo\"><span class=\"ds-no-photo\"><svg viewBox=\"0 0 24 24\" width=\"36\" height=\"36\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.3\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"3\"></rect><circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"></circle><path d=\"m4 17 5-5 4 4 3-3 4 4\"></path></svg><span>Sin fotografía</span></span></div><div class=\"ds-info\"><div class=\"ds-name\"><h2>Camisa básica</h2><span class=\"ds-demo\">Demo</span></div><p class=\"ds-category-text\">Ropa</p><div class=\"ds-price\"><strong>$169.90</strong></div><div class=\"ds-product-footer\"><span>5 disponibles</span><span class=\"ds-link\">Ver variantes</span></div></div></a>",
-      "css": ".ds-product{display:block;min-width:0;border:1px solid var(--linea,#d8e3dc);border-radius:var(--radio,14px);overflow:hidden;text-decoration:none;background:var(--superficie,#fff);color:var(--tinta,#19372d);transition:border-color 120ms ease-out;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:15px;line-height:1.55}.ds-product:hover{border-color:var(--verde,#17624c)}.ds-product:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-photo{background:var(--suave,#edf4ef);display:grid;place-items:center;min-height:190px;aspect-ratio:2.15;overflow:hidden}.ds-no-photo{display:grid;justify-items:center;gap:10px;font-size:13px;color:var(--secundario,#536b61)}.ds-info{padding:22px}.ds-name{display:flex;align-items:start;justify-content:space-between;gap:12px}.ds-name h2{margin:0;font-size:19px;line-height:1.35;font-weight:700;overflow-wrap:anywhere}.ds-demo{display:inline-block;color:var(--secundario,#536b61);background:var(--fondo,#f5f8f6);padding:3px 8px;border-radius:5px;font-size:12px;font-weight:600;white-space:nowrap}.ds-category-text{margin:5px 0 0;color:var(--secundario,#536b61);font-size:14px}.ds-price{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:20px}.ds-price strong{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums}.ds-product-footer{margin-top:20px;padding-top:15px;border-top:1px solid var(--linea,#d8e3dc);display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--secundario,#536b61)}.ds-link{color:var(--verde,#17624c);font-weight:650;white-space:nowrap}@media(max-width:800px){.ds-photo{min-height:150px}.ds-info{padding:18px}}@media(max-width:560px){.ds-photo{min-height:180px;aspect-ratio:1.9}.ds-info{padding:20px}}@media(prefers-reduced-motion:reduce){.ds-product{transition:none}}"
+      "name": "Fila de artículo",
+      "kind": "custom",
+      "refersTo": "product-row",
+      "description": "Artículo compacto con miniatura y datos, separado por una línea.",
+      "html": "<a class=\"ds-product ds-focus\" href=\"#/\"><div class=\"ds-photo\">Sin fotografía</div><div class=\"ds-info\"><div class=\"ds-name\"><h2>Camisa básica</h2><span>Demo</span></div><p>Ropa</p><strong class=\"ds-price\">$169.90</strong><div class=\"ds-product-footer\"><span>5 disponibles</span><span class=\"ds-link\">Ver variantes</span></div></div></a>",
+      "css": ".ds-product{display:grid;grid-template-columns:112px minmax(0,1fr);gap:20px;padding:24px 0;border-bottom:1px solid var(--linea,#dfe4e0);color:var(--tinta,#202925);text-decoration:none;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);line-height:1.55;}.ds-product:hover h2{color:var(--verde,#17624c);text-decoration:underline;text-underline-offset:4px}.ds-photo{aspect-ratio:1;display:grid;place-items:center;background:var(--suave,#f3f5f3);color:var(--secundario,#5b655f);font-size:11px;text-align:center}.ds-info{min-width:0}.ds-name{display:flex;justify-content:space-between;align-items:baseline;gap:12px}.ds-name h2{margin:0;font-size:19px;font-weight:650;line-height:1.35;overflow-wrap:anywhere}.ds-name span{font-size:12px;color:var(--secundario,#5b655f)}.ds-info p{margin:4px 0 0;font-size:14px;color:var(--secundario,#5b655f)}.ds-price{display:block;margin-top:12px;font-size:20px;font-weight:650;font-variant-numeric:tabular-nums}.ds-product-footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--secundario,#5b655f)}.ds-link{color:var(--verde,#17624c);font-weight:600}.ds-focus:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px}@media(max-width:800px){.ds-product{grid-template-columns:88px minmax(0,1fr);gap:16px}}"
     },
     {
       "name": "Control de cantidad",
@@ -317,57 +312,55 @@
       "refersTo": "quantity-control",
       "description": "Grupo editable de cantidad con foco alrededor del conjunto.",
       "html": "<div class=\"ds-quantity\"><button type=\"button\" aria-label=\"Disminuir cantidad de Camisa básica M\">−</button><input type=\"number\" min=\"1\" step=\"1\" inputmode=\"numeric\" value=\"2\" aria-label=\"Cantidad de Camisa básica M\"><button type=\"button\" aria-label=\"Aumentar cantidad de Camisa básica M\">+</button></div>",
-      "css": ".ds-quantity{display:flex;align-items:center;border:1px solid var(--linea,#d8e3dc);border-radius:8px;background:var(--superficie,#fff);overflow:hidden;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:15px;line-height:1.55}.ds-quantity input{border:0;border-radius:0;width:54px;height:40px;text-align:center;padding:0;appearance:textfield;background:var(--superficie,#fff);color:var(--tinta,#19372d);font:inherit;font-variant-numeric:tabular-nums}.ds-quantity input::-webkit-inner-spin-button{appearance:none}.ds-quantity button{width:38px;height:40px;border:0;background:var(--superficie,#fff);color:var(--verde,#17624c);font:inherit;font-size:20px;cursor:pointer}.ds-quantity button:hover{background:var(--suave,#edf4ef)}.ds-quantity:focus-within{outline:3px solid var(--foco,#287b61);outline-offset:3px}.ds-quantity input:focus-visible{outline:none}.ds-quantity button:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-quantity button:disabled{cursor:wait;opacity:.6}@media(max-width:560px){.ds-quantity button{width:30px}.ds-quantity input{width:40px}}"
+      "css": ".ds-quantity{display:flex;align-items:center;border:1px solid var(--linea,#dfe4e0);border-radius:4px;background:var(--superficie,#fff);overflow:hidden;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:15px;line-height:1.55}.ds-quantity input{border:0;border-radius:0;width:54px;height:40px;text-align:center;padding:0;appearance:textfield;background:var(--superficie,#fff);color:var(--tinta,#202925);font:inherit;font-variant-numeric:tabular-nums}.ds-quantity input::-webkit-inner-spin-button{appearance:none}.ds-quantity button{width:38px;height:40px;border:0;background:var(--superficie,#fff);color:var(--verde,#17624c);font:inherit;font-size:20px;cursor:pointer}.ds-quantity button:hover{background:var(--suave,#f3f5f3)}.ds-quantity:focus-within{outline:3px solid var(--foco,#287b61);outline-offset:3px}.ds-quantity input:focus-visible{outline:none}.ds-quantity button:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-quantity button:disabled{cursor:not-allowed;opacity:.55}@media(max-width:560px){.ds-quantity button{width:30px}.ds-quantity input{width:40px}}"
     },
     {
       "name": "Resumen de pedido",
       "kind": "custom",
       "refersTo": "order-summary",
-      "description": "Panel recurrente junto al catálogo; ejemplo con las mismas líneas DEMO de confirmación.",
+      "description": "Resumen abierto con cliente, líneas y total; aparece al existir un carrito.",
       "html": "<aside class=\"ds-summary\" aria-label=\"Resumen del pedido\"><h2>Pedido en preparación</h2><p class=\"ds-client\">DEMO WEB · Cliente</p><div class=\"ds-summary-content\"><ul class=\"ds-summary-lines\"><li><div><strong>Camisa básica</strong><span>M · 2 unidades</span></div><strong>$339.80</strong></li><li><div><strong>Gorra</strong><span>Única · 1 unidad</span></div><strong>$199.00</strong></li></ul><div class=\"ds-total\"><span>Total</span><strong>$538.80</strong></div></div><a class=\"ds-button ds-wide\" href=\"#/carrito\">Ver carrito</a><p class=\"ds-note\">El pedido se registra como pendiente. No representa un pago.</p></aside>",
-      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:8px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;font-weight:650;line-height:1.55;text-decoration:none;white-space:nowrap;cursor:pointer;background:var(--verde,#17624c);color:var(--superficie,#fff)}.ds-button:hover{background:var(--verde-hover,#104b39)}.ds-button:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-button:disabled{cursor:wait;opacity:.6}.ds-summary{background:var(--superficie,#fff);border:1px solid var(--linea,#d8e3dc);border-radius:var(--radio,14px);padding:24px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:15px;line-height:1.55;color:var(--tinta,#19372d)}.ds-summary h2{margin:0;font-size:18px;font-weight:700;line-height:1.35}.ds-client{margin:12px 0 0;color:var(--secundario,#536b61);overflow-wrap:anywhere}.ds-summary-lines{list-style:none;padding:0;margin:24px 0 0}.ds-summary-lines li{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--linea,#d8e3dc);font-size:13px}.ds-summary-lines li>strong{white-space:nowrap;font-variant-numeric:tabular-nums}.ds-summary-lines li div{display:grid;gap:4px;min-width:0;overflow-wrap:anywhere}.ds-summary-lines span{color:var(--secundario,#536b61);font-size:12px}.ds-total{display:flex;justify-content:space-between;gap:16px;align-items:center;padding-top:22px;margin-top:22px;border-top:1px solid var(--linea,#d8e3dc)}.ds-total strong{font-size:24px;font-variant-numeric:tabular-nums}.ds-wide{width:100%;margin-top:20px}.ds-note{font-size:14px;color:var(--secundario,#536b61);margin:16px 0 0}.ds-summary-content{animation:ds-summary-updated 180ms cubic-bezier(.16,1,.3,1)}@keyframes ds-summary-updated{from{opacity:.72}to{opacity:1}}@media(max-width:1000px){.ds-summary{padding:20px}}@media(max-width:800px){.ds-note:last-child{margin-top:14px}}@media(prefers-reduced-motion:reduce){.ds-summary-content{animation:none}}"
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:4px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;font-weight:650;line-height:1.55;text-decoration:none;white-space:nowrap;cursor:pointer;background:var(--verde,#17624c);color:var(--superficie,#fff)}.ds-button:hover{background:var(--verde-hover,#104b39)}.ds-button:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-button:disabled{cursor:not-allowed;opacity:.55}.ds-summary{border-left:1px solid var(--linea,#dfe4e0);padding:0 0 0 24px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:15px;line-height:1.55;color:var(--tinta,#202925)}.ds-summary h2{margin:0;font-size:18px;font-weight:650;line-height:1.35}.ds-client{margin:12px 0 0;color:var(--secundario,#5b655f);overflow-wrap:anywhere}.ds-summary-lines{list-style:none;padding:0;margin:24px 0 0}.ds-summary-lines li{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--linea,#dfe4e0);font-size:13px}.ds-summary-lines li>strong{white-space:nowrap;font-variant-numeric:tabular-nums}.ds-summary-lines li div{display:grid;gap:4px;min-width:0;overflow-wrap:anywhere}.ds-summary-lines span{color:var(--secundario,#5b655f);font-size:12px}.ds-total{display:flex;justify-content:space-between;gap:16px;align-items:center;padding-top:20px;margin-top:20px;border-top:1px solid var(--linea,#dfe4e0)}.ds-total strong{font-size:24px;font-variant-numeric:tabular-nums}.ds-wide{width:100%;margin-top:20px}.ds-note{font-size:14px;color:var(--secundario,#5b655f);margin:16px 0 0}.ds-summary-content{animation:ds-summary-updated 180ms cubic-bezier(.16,1,.3,1)}@keyframes ds-summary-updated{from{opacity:.72}to{opacity:1}}@media(max-width:800px){.ds-summary{border-left:0;border-top:1px solid var(--linea,#dfe4e0);padding:24px 0 0}}@media(prefers-reduced-motion:reduce){.ds-summary-content{animation:none}}"
     }
   ],
   "narrative": {
     "northStar": "Mostrador de tienda",
-    "overview": "“Mostrador de tienda” organiza una interfaz de trabajo sobria, cercana y en español. El blanco, el verde profundo y los grises verdosos dejan que los artículos, las variantes y los importes se lean antes que cualquier adorno. La densidad permite comparar fichas y revisar líneas de pedido con el mismo lenguaje visual.\n\nLa implementación usa Public Sans local como voz común de títulos y controles; concreta la intención de una sans firme del contrato, cuyo texto inicial mencionaba tipografía de sistema. La profundidad se apoya en superficies opacas y divisores. Las fotografías reales ocupan su espacio cuando existen; en esta entrega la ausencia se declara con un pictograma SVG y “Sin fotografía”, sin fabricar mercancía.",
+    "overview": "“Mostrador de tienda” organiza una interfaz de trabajo sobria, cercana y en español. Los artículos, las variantes y los importes mandan; el verde profundo identifica acciones y disponibilidad sobre un fondo blanco.\n\nPublic Sans local mantiene una voz común. Las filas abiertas, los divisores finos y los controles compactos permiten comparar sin convertir cada dato en una tarjeta. Las fotografías reales se muestran cuando existen; su ausencia se indica con texto, sin reservar un bloque grande en el detalle.",
     "keyCharacteristics": [
-      "Una sans local, jerarquía por tamaño y peso, e importes con cifras tabulares.",
-      "Superficies claras opacas, contornos finos y esquinas discretas.",
-      "Verde profundo para acciones, selección y estado; rojo reservado para errores.",
-      "Listas de pedido y totales con continuidad visual entre preparación y confirmación.",
-      "Movimiento breve de estado, desactivado con la preferencia de movimiento reducido."
+      "Public Sans e importes con cifras tabulares.",
+      "Filas abiertas, controles compactos y separación por espacio y líneas.",
+      "Verde para acciones y disponibilidad; rojo para errores.",
+      "La misma jerarquía de líneas y totales durante todo el pedido.",
+      "Una transición breve del resumen, desactivada con movimiento reducido."
     ],
     "rules": [
       {
         "name": "Verde con función",
-        "body": "El verde identifica acción, selección o estado; los textos secundarios conservan el gris verdoso y los errores usan su pareja roja.",
+        "body": "El verde identifica acción, selección o estado. La lectura principal usa tinta oscura y el contexto usa gris de apoyo.",
         "section": "colors"
       },
       {
         "name": "Una voz, cifras alineadas",
-        "body": "Public Sans sostiene toda la interfaz. Los importes del catálogo, las líneas y el total usan cifras tabulares para mantener la comparación.",
+        "body": "Public Sans sostiene toda la interfaz. Los precios y totales usan cifras tabulares.",
         "section": "typography"
       },
       {
-        "name": "Superficie opaca",
-        "body": "La cabecera, las fichas y los paneles conservan fondo opaco y un borde fino. La separación se construye con tono, espacio y líneas.",
+        "name": "Agrupar sin encerrar",
+        "body": "El espacio y los divisores agrupan artículos y datos del pedido. No se añade un contenedor por cada dato.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "**Do** conservar la jerarquía nombre, información de variante e importe, con cifras tabulares en los precios.",
-      "**Do** mantener etiquetas visibles, foco perceptible y mensajes de estado con texto.",
-      "**Do** usar superficies opacas y el borde de separación definido para fichas y paneles.",
-      "**Do** conservar la adaptación de columnas y la cabecera con acceso al carrito en teléfono.",
-      "**Do** declarar “Sin fotografía” cuando no haya una imagen válida y sustituirlo por la fotografía real cuando exista.",
-      "**Do** respetar la preferencia de movimiento reducido en las animaciones y transiciones."
+      "**Do** mantener nombre, variante, cantidad e importe fáciles de comparar.",
+      "**Do** conservar etiquetas visibles, foco de teclado y mensajes de estado con texto.",
+      "**Do** usar imágenes reales y una indicación breve cuando falten.",
+      "**Do** reservar el botón principal para avanzar en la tarea."
     ],
     "donts": [
-      "**Don't** usar el color como único indicador de disponibilidad, selección o error.",
-      "**Don't** sustituir las fotografías ausentes por imágenes de productos inventados.",
-      "**Don't** convertir una actualización del resumen en una animación de toda la pantalla.",
-      "**Don't** presentar la confirmación visual de un pedido pendiente como un pago."
+      "**Don't** volver a envolver cada artículo o panel en una tarjeta.",
+      "**Don't** usar un gran bloque de relleno cuando falte una fotografía.",
+      "**Don't** añadir ayudas, insignias o pasos que repitan la información inmediata.",
+      "**Don't** fabricar mercancía, fotografías ni afirmaciones comerciales."
     ]
   }
 }
