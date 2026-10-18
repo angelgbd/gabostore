@@ -62,6 +62,13 @@ export class PedidoRepository {
     return data ? convertirPedido(data) : null;
   }
 
+  async obtenerPorCarrito(carritoId: number): Promise<Pedido | null> {
+    identificador(carritoId, 'carritoId');
+    const { data, error } = await this.db.from('pedidos').select('*, items_pedido(*)').eq('carrito_id', carritoId).maybeSingle();
+    comprobarError(error);
+    return data ? convertirPedido(data) : null;
+  }
+
   async listar(filtro: FiltroPedidos = {}): Promise<Pedido[]> {
     const limite = filtro.limite ?? 100;
     const desde = filtro.desde ?? 0;
