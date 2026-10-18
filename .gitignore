@@ -6,3 +6,7 @@ dist/
 .supabase/
 supabase/.temp/
 supabase/.branches/
+web-dist/
+.impeccable/questions/
+.impeccable/review/
+.impeccable/mocks/

@@ -1,0 +1,83 @@
+@font-face{font-family:"Public Sans";font-style:normal;font-weight:400 800;font-display:swap;src:url('/fonts/public-sans-latin.woff2') format('woff2')}
+:root{--fondo:#f5f8f6;--superficie:#fff;--tinta:#19372d;--secundario:#536b61;--verde:#17624c;--verde-hover:#104b39;--suave:#edf4ef;--linea:#d8e3dc;--error:#a22630;--error-fondo:#fff2f2;--foco:#287b61;--radio:14px;--fuente:"Public Sans",system-ui,sans-serif;color-scheme:light;font-family:var(--fuente);color:var(--tinta);background:var(--fondo);font-synthesis:none}
+*{box-sizing:border-box}
+body{margin:0;font-size:15px;line-height:1.55}
+button,input,select{font:inherit}
+button,a,input{ -webkit-tap-highlight-color:transparent}
+button,a{touch-action:manipulation}
+button{cursor:pointer}
+a{color:inherit;text-underline-offset:4px}
+button:disabled{cursor:wait;opacity:.6}
+:focus-visible{outline:3px solid var(--foco);outline-offset:4px}
+::selection{background:var(--verde);color:var(--superficie)}
+input{caret-color:var(--verde)}
+html{scrollbar-color:var(--linea) var(--fondo)}
+h1,h2,h3,p{margin:0}
+h1{font-size:32px;font-weight:750;line-height:1.2;letter-spacing:-.025em;overflow-wrap:anywhere}
+h2{font-size:19px;line-height:1.35;font-weight:700}
+h3{font-size:16px}
+p{max-width:70ch}
+.saltar{position:fixed;top:-100px;left:16px;background:var(--superficie);padding:12px;z-index:20}
+.saltar:focus{top:12px}
+.cabecera{background:var(--superficie);border-bottom:1px solid var(--linea)}
+.cabecera-interior{max-width:1280px;padding:0 32px;margin:auto;min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.marca{font-size:25px;font-weight:800;text-decoration:none;letter-spacing:-.035em;white-space:nowrap}
+.marca span{color:var(--verde)}
+nav{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+nav a{text-decoration:none;font-weight:600;color:var(--secundario)}
+nav a:hover,.nav-activa{color:var(--verde)}
+.contenedor{max-width:1280px;padding:40px 32px 56px;margin:auto;min-height:calc(100vh - 154px)}
+.catalogo-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;align-items:start}
+.contenido-catalogo{min-width:0}
+.titulo-pagina{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:28px}
+.titulo-pagina p{color:var(--secundario);margin-top:8px}
+.contador{font-size:13px;color:var(--secundario);white-space:nowrap}
+label{display:grid;gap:7px;font-size:14px;font-weight:600}
+input,select{min-width:0;max-width:100%;width:100%;height:46px;border:1px solid var(--linea);border-radius:8px;background:var(--superficie);color:var(--tinta);padding:0 12px}
+input::placeholder{color:var(--secundario);font-weight:400}
+.busqueda{max-width:600px;margin-bottom:20px}
+.categorias{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.categoria{background:var(--superficie);color:var(--secundario);border:1px solid var(--linea);border-radius:7px;min-height:40px;padding:7px 16px;font-size:14px}
+.categoria:hover{border-color:var(--verde)}
+.categoria.activa{background:var(--verde);color:var(--superficie);border-color:var(--verde)}
+.productos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.producto{display:block;min-width:0;border:1px solid var(--linea);border-radius:var(--radio);overflow:hidden;text-decoration:none;background:var(--superficie);transition:border-color 120ms ease-out}
+.producto:hover{border-color:var(--verde)}
+.fotografia{background:var(--suave);display:grid;place-items:center;min-height:190px;aspect-ratio:2.15;overflow:hidden}
+.fotografia img{width:100%;height:100%;object-fit:cover;display:block}
+.sin-foto{display:grid;justify-items:center;gap:10px;font-size:13px;color:var(--secundario)}
+.producto-info{padding:22px}
+.producto-nombre{display:flex;align-items:start;justify-content:space-between;gap:12px}
+.producto-nombre h2{overflow-wrap:anywhere}
+.categoria-texto{color:var(--secundario);font-size:14px;margin-top:5px}
+.producto-precio{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:20px}
+.producto-precio strong{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums}
+.etiqueta{display:inline-block;color:var(--verde);background:var(--suave);padding:3px 8px;border-radius:5px;font-size:12px;font-weight:600;white-space:nowrap}
+.etiqueta.neutra{background:var(--fondo);color:var(--secundario)}
+.producto-pie{margin-top:20px;padding-top:15px;border-top:1px solid var(--linea);display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--secundario)}
+.enlace{color:var(--verde);font-weight:650;white-space:nowrap}
+.estado-vacio{padding:48px 24px;text-align:center;display:grid;justify-items:center;gap:16px}
+.estado-vacio p{color:var(--secundario)}
+.boton{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:8px;background:var(--verde);color:var(--superficie);font-size:14px;font-weight:650;text-decoration:none;white-space:nowrap}
+.boton:hover{background:var(--verde-hover)}
+.boton.secundario{background:var(--superficie);color:var(--verde);border-color:var(--linea)}
+.boton.secundario:hover{background:var(--suave);border-color:var(--verde)}
+.boton.texto{background:none;color:var(--verde);padding:6px 0;min-height:36px}
+.boton.ancho{width:100%}
+.aviso{padding:15px 18px;background:var(--suave);border-radius:8px;color:var(--verde);font-size:14px}
+.aviso.error{background:var(--error-fondo);color:var(--error)}
+.volver{display:inline-block;color:var(--verde);margin-bottom:28px;font-size:14px;font-weight:600}
+.detalle-articulo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start}
+.detalle-articulo>.fotografia{aspect-ratio:1;min-height:0;border-radius:var(--radio)}
+.detalle-articulo h2{margin-top:28px;margin-bottom:14px}
+.precio-detalle{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:22px}
+.nota{font-size:14px;color:var(--secundario);margin-top:16px}
+.variantes{list-style:none;padding:0;margin:0;border-top:1px solid var(--linea)}
+.variantes li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--linea)}
+.disponible{color:var(--verde);font-size:14px}
+.agotado{color:var(--secundario);font-size:14px}
+.pie{border-top:1px solid var(--linea);color:var(--secundario);text-align:center;padding:22px;font-size:13px;background:var(--superficie)}
+@media(min-width:1100px){.productos{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:800px){.cabecera-interior{padding:0 20px}.contenedor{padding:28px 20px 40px}.detalle-articulo{gap:24px}.fotografia{min-height:150px}.producto-info{padding:18px}}
+@media(max-width:560px){.cabecera-interior{padding:0 16px;min-height:68px;gap:16px}nav{gap:12px}.marca{font-size:23px}.contenedor{padding:28px 16px 40px}h1{font-size:28px}.titulo-pagina{align-items:start;gap:12px}.contador{margin-top:6px}.productos{grid-template-columns:minmax(0,1fr);gap:18px}.fotografia{min-height:180px;aspect-ratio:1.9}.detalle-articulo{grid-template-columns:minmax(0,1fr)}.detalle-articulo>.fotografia{aspect-ratio:1.4}.producto-info{padding:20px}.categoria{padding-inline:13px}.titulo-pagina p{font-size:14px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
