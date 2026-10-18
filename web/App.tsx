@@ -29,6 +29,10 @@ export function App() {
     return () => removeEventListener('hashchange', cambio);
   }, []);
   useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = `GaboStore · ${ruta === '/personal' ? 'Acceso del personal' : ruta === '/carrito' ? 'Carrito' : ruta === '/confirmar' ? 'Revisar pedido' : ruta.startsWith('/pedido/') ? 'Pedido registrado' : ruta.startsWith('/articulo/') ? 'Detalle del artículo' : 'Catálogo'}`;
+  }, [ruta]);
+  useEffect(() => {
     if (sesion.iniciando || ruta === '/personal' || ruta === '/carrito' || ruta === '/confirmar') return;
     let actual = true;
     setCargando(true); setError('');
@@ -60,9 +64,9 @@ export function App() {
   const unidades = carrito.carrito?.items.reduce((total, item) => total + item.cantidad, 0) ?? 0;
   const esCatalogo = ruta === '/' || ruta.startsWith('/articulo/');
   return <>
-    <a className="saltar" href="#contenido">Saltar al contenido</a>
+    <a className="saltar" href="#contenido" onClick={e => { e.preventDefault(); document.getElementById('contenido')?.focus(); }}>Saltar al contenido</a>
     <header className="cabecera"><div className="cabecera-interior"><a className="marca" href="#/" aria-label="GaboStore, catálogo">Gabo<span>Store</span></a><nav aria-label="Navegación principal"><a className="nav-activa nav-catalogo" href="#/">Catálogo</a>{sesion.personal ? <><a className="nav-carrito" href="#/carrito">Carrito <span className="unidades">{unidades}</span></a><button className="boton secundario" disabled={carrito.ocupado || registrando} onClick={() => { void salir(); }}>Salir</button></> : <a className="boton secundario" href="#/personal">Personal</a>}</nav></div></header>
-    <main id="contenido" className="contenedor">{sesion.iniciando ? <Cargando /> : ruta === '/personal' ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> : <>
+    <main id="contenido" className="contenedor" tabIndex={-1}>{sesion.iniciando ? <Cargando /> : ruta === '/personal' ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> : <>
       {sesion.error && <Aviso error>{sesion.error}</Aviso>}
       {carrito.error && <Aviso error>{carrito.error}</Aviso>}
       {sesion.personal && <p className="sesion-personal">Sesión de personal · {sesion.personal.email}</p>}

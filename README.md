@@ -1,6 +1,6 @@
-# GaboStore: capa de datos
+# GaboStore: datos, negocio y presentación
 
-Implementación independiente de la capa de persistencia con **Supabase/PostgreSQL y TypeScript**. Contiene los tres repositorios del último diagrama lógico aprobado: `ArticuloRepository`, `CarritoRepository` y `PedidoRepository`.
+Implementación con **Supabase/PostgreSQL, TypeScript y React**. Conserva los tres repositorios del diagrama lógico y añade sus controles de negocio y las cuatro pantallas del flujo básico.
 
 ## Qué está implementado
 
@@ -14,7 +14,18 @@ Implementación independiente de la capa de persistencia con **Supabase/PostgreS
 - Permisos de acceso para el personal y protección de datos de clientes, carritos y pedidos.
 - Ajustes atómicos de existencias, validaciones y errores identificables.
 
-Esta entrega contiene persistencia y acceso a datos. La interfaz, los controladores, el inicio de sesión y el despliegue de las API pertenecen a las otras capas y no se implementan aquí.
+También están implementados `ControlCatalogo`, `ControlCarrito`, `ControlGeneracionPedido` y las pantallas de catálogo, detalle, carrito y confirmación. El público consulta; el personal autenticado registra pedidos. El alcance termina en un pedido pendiente: no incluye pagos, ventas, reservas, envíos, devoluciones ni interfaces de administración.
+
+## Ejecutar la aplicación web
+
+```powershell
+cd C:\Users\angel\OneDrive\Documents\GaboStoreDatos
+npm run dev
+```
+
+Abrir **http://127.0.0.1:3000**. La conexión y una cuenta EMPLEADO de demostración ya están preparadas en esta carpeta. El correo y contraseña están en `.env.personal.local`, un archivo privado ignorado por Git.
+
+La [guía del flujo básico](docs/FLUJO_BASICO.md) explica la prueba paso a paso, la separación de capas, las credenciales y la configuración en otro equipo. No se ha publicado la aplicación ni se han desplegado nuevas funciones Edge; el servidor HTTP es el adaptador de prueba local.
 
 ## Archivos principales
 
@@ -23,15 +34,19 @@ Esta entrega contiene persistencia y acceso a datos. La interfaz, los controlado
 - `src/database.types.ts`: alias de los tipos utilizados por los repositorios.
 - `src/supabase.ts`: configuración del cliente de Supabase.
 - `src/repositories/`: los tres repositorios.
+- `src/negocio/`: los tres controles y las reglas del flujo básico.
+- `src/servidor/`: API HTTP que valida la sesión y el rol del personal.
+- `web/`: presentación React/TypeScript; `web-dist/` es una salida generada.
 - `src/index.ts`: exportaciones y función `crearCapaDatos`.
 - `supabase/migrations/`: migraciones aplicadas, con versiones sincronizadas con Supabase.
 - `tests/`: pruebas de la migración y del acceso desde TypeScript.
 - `scripts/verificar-conexion.mjs`: prueba de conexión y permisos públicos sobre Supabase real.
 - `scripts/demo-pedido.ts`: ejecuta los repositorios TypeScript y deja un pedido completo en Supabase real.
+- `scripts/verificar-flujo.ts`: prueba real de HTTP → negocio → datos → Supabase.
 
 ## Preparación local
 
-Requiere Node.js 22 o posterior.
+Requiere Node.js 22.12 o posterior.
 
 ```powershell
 cd C:\Users\angel\OneDrive\Documents\GaboStoreDatos
@@ -42,7 +57,7 @@ npm run build
 npm run verificar:conexion
 ```
 
-`build` genera JavaScript y declaraciones de tipos en `dist/`. El paquete se puede importar desde otra aplicación TypeScript o desde las funciones del backend. No necesita React ni un servidor web propio.
+`build` genera JavaScript y declaraciones de tipos en `dist/`. `build:web` compila la presentación en `web-dist/`. `dev` compila la web y arranca el servidor local; se reinicia para reflejar cambios de código. Los repositorios y controles también pueden importarse sin utilizar la presentación React.
 
 ## Preparación de Supabase
 
@@ -53,12 +68,13 @@ Migraciones aplicadas:
 - `20261014031557_datos_gabostore.sql`: modelo, permisos y funciones.
 - `20261014032020_ajustar_integridad_pedidos.sql`: índice de la relación compuesta y subtotales obligatorios.
 - `20261017191819_guardar_objeto_pedido.sql`: guardado atómico de un objeto de pedido y permisos explícitos para un backend con `service_role`.
+- `20261018193202_registrar_personal_pedido.sql`: UID del personal responsable en `pedidos.creado_por`. Los registros anteriores conservan un autor nulo; no se inventa trazabilidad histórica.
 
 **No volver a ejecutar estas migraciones en GaboStore:** ya están registradas en su historial. Para preparar otro proyecto vacío, ejecutar los archivos de `supabase/migrations/` en orden y configurar su URL y clave pública.
 
 Este paquete recibe la configuración por parámetro; no carga `.env` automáticamente. En Node.js se puede cargar con `node --env-file=.env archivo.js`, o usar la gestión de variables de la aplicación.
 
-Para operaciones internas todavía se necesita el JWT de un usuario del personal con `app_metadata.rol` igual a `ADMIN` o `EMPLEADO`. No se han creado cuentas de empleados ni modificado usuarios de Auth.
+Las operaciones internas requieren un JWT de personal con `app_metadata.rol` ADMIN o EMPLEADO. La presentación ya implementa el inicio de sesión. `preparar:personal` creó una cuenta EMPLEADO ficticia sin enviar correos ni modificar cuentas existentes; los clientes siguen sin cuentas de Auth.
 
 ### Autorización del personal
 
@@ -94,7 +110,7 @@ const primeraPagina = await datos.articulos.listarCatalogo(20, 0);
 const detalle = await datos.articulos.obtenerPublicoPorId(1);
 ```
 
-Operaciones internas: el JWT proviene del inicio de sesión del personal, que implementará la aplicación. La capa de datos recibe ese token, sin implementar el flujo de autenticación.
+Operaciones internas: el JWT proviene del inicio de sesión del personal. La API lo valida con Supabase Auth antes de crear los controles; la capa de datos recibe ese token.
 
 ```typescript
 import { crearClienteSupabase, crearCapaDatos } from './dist/index.js';
@@ -129,6 +145,7 @@ También se puede pasar un `SupabaseClient<Database>` ya configurado a `crearCap
 - `obtenerPublicoPorId(id)`: devuelve un artículo público disponible o `null`.
 - `listar(limite?, desde?)`: consulta interna, incluyendo agotados.
 - `obtenerPorId(id)`: consulta interna o `null`.
+- `obtenerPorVariante(varianteId)`: recupera el artículo de una variante para validar el carrito.
 - `crear(datos)`: guarda el artículo y sus variantes en una sola transacción.
 - `actualizar(id, cambios)`: cambia los campos básicos del artículo.
 - `crearVariante(articuloId, datos)`: añade una talla/medida. Para un producto sin talla, usar una variante `Única`.
@@ -150,6 +167,7 @@ Al añadir una variante sin indicar precio, se toma el precio base del artículo
 - `guardar(pedido: PedidoNuevo)`: recibe cliente, carrito, correo, estado opcional (por defecto `PENDIENTE`) y todas las líneas `{ varianteId, cantidad, precioUnitario }`. Guarda cabecera y detalle en una transacción, sincroniza y cierra el carrito, y recupera el `Pedido` persistido. PostgreSQL asigna el ID, la fecha y los subtotales. No hay que insertar los detalles por separado.
 - `crearDesdeCarrito(carritoId)`: genera un pedido `PENDIENTE`, copia las líneas y cierra el carrito. Repetir la llamada devuelve el mismo pedido.
 - `obtenerPorId(id)`.
+- `obtenerPorCarrito(carritoId)`: recupera el pedido de un carrito cerrado para un reintento del flujo.
 - `listar({ clienteId?, estado?, limite?, desde? })`: consultas paginadas, con los pedidos más recientes primero.
 - `actualizarEstado(id, estado)`: persiste uno de los cinco estados válidos. La capa de control debe decidir cuándo corresponde una transición.
 
@@ -223,4 +241,6 @@ Verificación real del 17 de octubre de 2026: el script guardó y recuperó el p
 
 `npm run verificar:conexion` consulta el catálogo real y comprueba que la clave pública no pueda leer clientes ni generar pedidos. No inserta datos ni necesita credenciales de empleados.
 
-La revisión de seguridad de Supabase después de añadir `guardar_pedido` no reportó alertas. La revisión de rendimiento inicial solo señaló [índices aún sin uso](https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index), una observación informativa esperable en una base recién creada. El índice señalado como faltante se añadió en la segunda migración.
+`npm run verificar:flujo` autentica el personal de prueba y recorre la API HTTP real. Crea un carrito, añade, modifica y quita líneas, genera el pedido, verifica su autor y recupera la copia persistida. Comprueba que un precio enviado por el navegador se ignore, que el reintento no duplique el pedido y que no se descuente stock. Sus registros quedan identificados por `DEMO FLUJO` en Supabase.
+
+La revisión posterior a incorporar Auth señaló **Leaked Password Protection Disabled**, una configuración del proyecto: revisar la [protección de contraseñas filtradas](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection) en Supabase antes de una publicación. La revisión de rendimiento inicial solo señaló [índices aún sin uso](https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index). El índice señalado como faltante se añadió en la segunda migración.
