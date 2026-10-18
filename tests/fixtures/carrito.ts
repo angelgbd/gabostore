@@ -25,4 +25,3 @@ export function escenarioCarrito() {
   });
   return { articulo, carrito, escrituras, control };
 }
-
