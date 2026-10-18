@@ -2,10 +2,10 @@
   "name": "gabostore-datos",
   "version": "1.0.0",
   "private": true,
-  "description": "Capa de datos de GaboStore: Supabase y repositorios TypeScript.",
+  "description": "Capas de datos, negocio y presentación React del flujo básico de GaboStore.",
   "type": "module",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.12.0"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
