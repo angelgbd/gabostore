@@ -19,7 +19,7 @@ h3{font-size:16px}
 p{max-width:70ch}
 .saltar{position:fixed;top:-100px;left:16px;background:var(--superficie);padding:12px;z-index:20}
 .saltar:focus{top:12px}
-.cabecera{background:var(--superficie);border-bottom:1px solid var(--linea)}
+.cabecera{background:var(--superficie);border-bottom:1px solid var(--linea);position:sticky;top:0;z-index:10}
 .cabecera-interior{max-width:1280px;padding:0 32px;margin:auto;min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
 .marca{font-size:25px;font-weight:800;text-decoration:none;letter-spacing:-.035em;white-space:nowrap}
 .marca span{color:var(--verde)}
@@ -81,8 +81,48 @@ input::placeholder{color:var(--secundario);font-weight:400}
 .acceso>p{color:var(--secundario);margin-top:14px}
 .formulario{display:grid;gap:22px;margin-top:28px}
 .sesion-personal{color:var(--secundario);font-size:13px;overflow-wrap:anywhere;margin-bottom:24px}
-@media(min-width:1100px){.productos{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.con-pedido{grid-template-columns:minmax(0,1fr) 300px}
+.resumen-pedido{background:var(--superficie);border:1px solid var(--linea);border-radius:var(--radio);padding:24px;position:sticky;top:100px}
+.resumen-pedido h2{font-size:18px}
+.resumen-pedido .boton{margin-top:20px}
+.resumen-lineas{list-style:none;padding:0;margin:24px 0 0}
+.resumen-lineas li{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--linea);font-size:13px}
+.resumen-lineas li>strong{white-space:nowrap;font-variant-numeric:tabular-nums}
+.resumen-lineas li div{display:grid;gap:4px;min-width:0;overflow-wrap:anywhere}
+.resumen-lineas span{color:var(--secundario);font-size:12px}
+.cliente-resumen{margin-top:12px;color:var(--secundario);overflow-wrap:anywhere}
+.total{display:flex;justify-content:space-between;gap:16px;align-items:center;padding-top:22px;margin-top:22px;border-top:1px solid var(--linea)}
+.total strong{font-size:24px;font-variant-numeric:tabular-nums}
+.unidades{display:inline-grid;place-items:center;min-width:24px;height:24px;font-size:12px;border-radius:5px;background:var(--suave);color:var(--verde);margin-left:4px}
+.nuevo-pedido{max-width:520px;margin:0 auto 24px}
+.carrito-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:36px;align-items:start}
+.datos-pedido{padding:24px;border:1px solid var(--linea);border-radius:var(--radio);background:var(--superficie)}
+.datos-cliente{display:grid;gap:16px;margin:24px 0 0}
+.datos-cliente dt{font-size:12px;color:var(--secundario)}
+.datos-cliente dd{margin:4px 0 0;font-size:14px;overflow-wrap:anywhere}
+.lineas-carrito{list-style:none;margin:0;padding:0;border-top:1px solid var(--linea)}
+.lineas-carrito>li{padding:24px 0;border-bottom:1px solid var(--linea);display:flex;align-items:center;justify-content:space-between;gap:24px}
+.linea-descripcion{min-width:0}
+.linea-descripcion h2{font-size:18px;overflow-wrap:anywhere}
+.linea-descripcion>a{text-decoration:none}
+.linea-descripcion>a:hover{text-decoration:underline}
+.linea-descripcion p{font-size:13px;color:var(--secundario);margin-top:7px}
+.linea-descripcion .etiqueta{margin-top:10px}
+.linea-controles{display:grid;gap:10px;justify-items:end;flex-shrink:0}
+.linea-controles>strong{font-variant-numeric:tabular-nums}
+.cantidad-control{display:flex;align-items:center;border:1px solid var(--linea);border-radius:8px;background:var(--superficie);overflow:hidden}
+.cantidad-control input{border:0;border-radius:0;width:54px;height:40px;text-align:center;padding:0;appearance:textfield;font-variant-numeric:tabular-nums}
+.cantidad-control input::-webkit-inner-spin-button{appearance:none}
+.cantidad-control button{width:38px;height:40px;border:0;background:var(--superficie);color:var(--verde);font-size:20px}
+.cantidad-control button:hover{background:var(--suave)}
+.cantidad-control:focus-within{outline:3px solid var(--foco);outline-offset:3px}
+.cantidad-control input:focus-visible{outline:none}
+.agregar-articulo{gap:16px}
+.empezar-pedido .boton{margin-top:18px}
+.aviso{overflow-wrap:anywhere;margin-bottom:18px}
+@media(max-width:1000px){.con-pedido{grid-template-columns:minmax(0,1fr) 270px;gap:24px}.con-pedido .productos{grid-template-columns:minmax(0,1fr)}.resumen-pedido{padding:20px}.con-pedido .detalle-articulo{grid-template-columns:minmax(0,1fr)}.con-pedido .detalle-articulo>.fotografia{aspect-ratio:1.7}}
 @media(max-width:800px){.cabecera-interior{padding:0 20px}.contenedor{padding:28px 20px 40px}.detalle-articulo{gap:24px}.fotografia{min-height:150px}.producto-info{padding:18px}}
 @media(max-width:560px){.cabecera-interior{padding:0 16px;min-height:68px;gap:16px}nav{gap:12px}.marca{font-size:23px}.contenedor{padding:28px 16px 40px}h1{font-size:28px}.titulo-pagina{align-items:start;gap:12px}.contador{margin-top:6px}.productos{grid-template-columns:minmax(0,1fr);gap:18px}.fotografia{min-height:180px;aspect-ratio:1.9}.detalle-articulo{grid-template-columns:minmax(0,1fr)}.detalle-articulo>.fotografia{aspect-ratio:1.4}.producto-info{padding:20px}.categoria{padding-inline:13px}.titulo-pagina p{font-size:14px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
-@media(max-width:560px){.nav-catalogo{display:none}.sesion-personal{margin-bottom:20px}.acceso{margin-top:0}}
+@media(max-width:800px){.con-pedido,.carrito-layout{grid-template-columns:minmax(0,1fr)}.resumen-pedido{position:static}.con-pedido .productos{grid-template-columns:repeat(2,minmax(0,1fr))}.resumen-pedido .nota:last-child{margin-top:14px}.carrito-layout{gap:28px}}
+@media(max-width:560px){.nav-catalogo{display:none}.sesion-personal{margin-bottom:20px}.acceso{margin-top:0}.con-pedido .productos{grid-template-columns:minmax(0,1fr)}.cabecera-interior nav{gap:10px}.cabecera-interior .boton{padding:8px 12px;min-height:38px}.nav-carrito{font-size:13px}.unidades{margin-left:1px;min-width:21px;height:22px}.lineas-carrito>li{gap:16px;align-items:start}.linea-descripcion h2{font-size:16px}.linea-controles{gap:9px}.cantidad-control button{width:30px}.cantidad-control input{width:40px}.datos-pedido{padding:20px}}
