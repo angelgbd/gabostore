@@ -31,6 +31,18 @@ test('la configuración pública entrega solo URL, clave pública y destino What
   assert.match(respuesta.headers.get('Content-Security-Policy') ?? '', /frame-ancestors 'none'/);
 });
 
+test('el destino WhatsApp configurado es público y los números inválidos se deshabilitan', async () => {
+  for (const [entrada, esperado] of [['+526621234567', '526621234567'], ['telefono-pendiente', null]] as const) {
+    const temporal = crearServidor({ url: 'https://prueba.supabase.co', clavePublica: clave, carpetaWeb: 'web-dist', whatsappNumero: entrada });
+    await new Promise<void>(resolver => temporal.listen(0, '127.0.0.1', resolver));
+    try {
+      const direccion = temporal.address(); assert.ok(direccion && typeof direccion === 'object');
+      const respuesta = await fetch(`http://127.0.0.1:${direccion.port}/api/config`);
+      assert.deepEqual(await respuesta.json(), { url: 'https://prueba.supabase.co', clavePublica: clave, whatsappNumero: esperado });
+    } finally { await new Promise<void>((resolver, rechazar) => temporal.close(error => error ? rechazar(error) : resolver())); }
+  }
+});
+
 test('el catálogo es público y todas las operaciones de carritos y pedidos requieren sesión', async () => {
   assert.deepEqual(await (await fetch(`${base}/api/catalogo`)).json(), []);
   for (const ruta of ['/api/personal/carritos/1', '/api/personal/pedidos/1', '/api/personal/catalogo']) {
