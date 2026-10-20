@@ -5,6 +5,7 @@ import { ControlGeneracionPedido } from './ControlGeneracionPedido.js';
 
 export { ControlCatalogo, ControlCarrito, ControlGeneracionPedido };
 export { ErrorNegocio } from './ErrorNegocio.js';
+export * from './SolicitudConsulta.js';
 export type { ArticuloCatalogo } from './ControlCatalogo.js';
 export type { ContactoCliente, CarritoDetalle, LineaCarrito } from './ControlCarrito.js';
 export type { PedidoDetalle } from './ControlGeneracionPedido.js';
