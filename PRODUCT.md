@@ -12,20 +12,20 @@ React y TypeScript elegidos por el usuario. Supabase/PostgreSQL y los repositori
 
 ## Users
 
-El cliente consulta un catálogo público de solo lectura. El administrador o empleado registra pedidos recibidos por WhatsApp desde la tienda o bodega.
+El cliente consulta el catálogo y arma una solicitud temporal para enviarla manualmente por WhatsApp. El administrador o empleado registra el pedido real desde la tienda o bodega.
 
 ## Product Purpose
 
-Consultar artículos y preparar un pedido con sus variantes, cantidades, precios y datos de contacto. El éxito de este alcance es completar catálogo, detalle, carrito y confirmación, dejando el pedido íntegro en Supabase.
+Consultar artículos y preparar una solicitud con variantes, cantidades, precios estimados y correo de contacto. El público completa catálogo, detalle, carrito y mensaje de WhatsApp. El personal conserva su flujo de registro del pedido íntegro en Supabase.
 
 ## Operating Context
 
-WhatsApp continúa fuera del sistema. No hay cuentas de clientes ni checkout público. La interfaz debe funcionar en computadoras y teléfonos. Esta entrega se prueba localmente; la publicación en Cloudflare/Supabase se mantiene como decisión de despliegue y no se realiza automáticamente.
+WhatsApp se abre mediante un enlace con texto precargado, enviado manualmente por el cliente. No hay cuentas de clientes, pagos ni checkout público. La solicitud vive solo en la pestaña del navegador y no crea registros en Supabase. El número comercial es configurable; mientras falte, la vista previa funciona y la apertura queda deshabilitada. La interfaz funciona en computadoras y teléfonos. Esta entrega es local; no publica en Cloudflare/Supabase.
 
 ## Capabilities and Constraints
 
 - El público consulta disponibilidad y variantes agotadas de artículos con alguna existencia.
-- Solo personal autenticado puede crear o modificar carritos y generar pedidos.
+- Solo personal autenticado puede crear o modificar carritos persistentes y generar pedidos. El carrito público es una solicitud independiente en sessionStorage.
 - Se conservan los tres controles del diagrama lógico: ControlCatalogo, ControlCarrito y ControlGeneracionPedido.
 - Se usa un carrito nuevo por pedido. Cabecera y detalle se guardan en una sola transacción.
 - Las cantidades son enteras positivas. Los precios se obtienen desde los datos del servidor; no se aceptan precios del navegador.
@@ -35,7 +35,7 @@ WhatsApp continúa fuera del sistema. No hay cuentas de clientes ni checkout pú
 
 ## Brand Commitments
 
-Nombre GaboStore. Interfaz sencilla, en español y orientada a completar la tarea.
+Nombre GaboStore. Interfaz en español basada en las seis referencias móviles aprobadas por el usuario el 20 de octubre de 2026: negro, paneles oscuros, rosa, tipografía Roboto Mono y marca rosada de dos líneas con camiseta. Verde para la preparación del mensaje de WhatsApp. Adaptar el mismo estilo a escritorio.
 
 ## Evidence on Hand
 

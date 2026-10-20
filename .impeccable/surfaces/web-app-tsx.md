@@ -7,18 +7,18 @@ related_targets: ["web/styles.css"]
 
 # Flujo básico
 
-Modo Operate. El público consulta el catálogo; el personal registra pedidos. Cuatro pantallas: catálogo, detalle, carrito y confirmación. React/TypeScript, construcción directa con código elegida por el usuario.
+Modo Operate. Cuatro pantallas públicas: catálogo, detalle, solicitud local y mensaje de WhatsApp. El personal conserva su registro de pedidos. React/TypeScript; implementación directa con código y referencias fijadas por el usuario.
 
 ## Direction contract
 
-THESIS: Mostrador de tienda. El artículo y el pedido comparten el primer plano; no hay portada comercial ni promesas de venta.
+THESIS: Catálogo oscuro de Gabo Store. El producto encabeza la consulta y el mensaje es el puente al negocio; no se confunde una solicitud con un pedido registrado.
 
-OWN-WORLD: Blanco, verde profundo y gris verdoso. Tipografía de sistema firme, bordes finos, esquinas discretas, controles de trabajo y fotografías reales cuando existan. La ausencia de fotografía se identifica sin inventar productos.
+OWN-WORLD: Referencias visuales del usuario de 20/10/2026: negro, paneles carbón, bordes finos, rosa intenso, Roboto Mono y logotipo rosado de dos líneas con camiseta. Acciones de WhatsApp verdes. Sin fotografías inventadas; las ausencias usan iniciales. Controles rectos y tamaños adaptados a lectura y tacto.
 
-STORY: Consultar disponibilidad, elegir variante y cantidad, revisar el carrito y registrar un pedido pendiente. El público puede leer; el personal autenticado puede operar.
+STORY: Buscar o filtrar, elegir variante/cantidad, revisar solicitud y correo, generar vista previa y abrir WhatsApp cuando se configure el destino. Envío manual; no hay escrituras públicas a Supabase. El personal mantiene su flujo protegido de pedido pendiente.
 
-FIRST VIEWPORT: Cabecera breve con GaboStore, catálogo y acceso del personal. Título, búsqueda y categorías encima de dos columnas de filas compactas en escritorio. Miniaturas discretas, datos alineados y filtros subrayados. El resumen aparece a la derecha cuando el personal tiene un carrito; en móvil se apila y el carrito permanece accesible en cabecera. El detalle sin fotografía usa una sola columna de información y una nota breve.
+FIRST VIEWPORT: Marca de dos líneas, carrito con contador rosa, búsqueda oscura y categorías de borde fino con selección rosa. Dos columnas de tarjetas de producto en móvil, tres desde 900px y cuatro desde 1200px, marco máximo1280px. Imagen o iniciales arriba, nombre/variante/precio debajo. Detalle móvil apilado y acción inferior fija con espacio reservado; en escritorio imagen y selección en columnas. Carrito de consulta con miniaturas y resumen/contacto lateral en escritorio. Mensaje centrado con vista previa verde.
 
-FORM: Mostrador de tienda, candidato 1 de la lista fundamentada, elección model-pick confirmada por el usuario; semilla 61217a2d. Interacción distintiva: añadir una variante actualiza el resumen sin perder la posición del catálogo; la confirmación conserva la misma jerarquía de líneas y totales. Movimiento breve de opacidad, respetando reduced-motion.
+FORM: Sustitución aprobada por el usuario a partir de seis imágenes, sin nueva propuesta creativa. Interacción: selección de talla resaltada en rosa, contador del carrito actualizado, conservación de búsqueda/categoría/posición y actualización de precios/disponibilidad antes de componer el mensaje. Movimiento breve del resumen del personal, respetando reduced-motion. Validación requerida a360/390/768/1024/1440px.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

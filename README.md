@@ -10,11 +10,12 @@ Implementación con **Supabase/PostgreSQL, TypeScript y React**. Conserva los tr
 - Un pedido por carrito, con copia independiente de cantidades y precios.
 - `PedidoRepository.guardar(pedido)`: recibe un objeto con toda la cabecera y las líneas; persiste el conjunto de manera atómica.
 - Estados de la última imagen: `PENDIENTE`, `ENVIADO`, `ENTREGADO`, `CANCELADO` y `CONFIRMADO`.
-- Catálogo público de solo lectura: oculta artículos completamente agotados y conserva las tallas agotadas de los artículos que aún tienen otra talla disponible.
+- Catálogo público con búsqueda y categorías: oculta artículos completamente agotados y conserva las tallas agotadas de los artículos que aún tienen otra talla disponible.
+- Solicitud pública local con carrito, correo y vista previa de WhatsApp; no crea registros en Supabase.
 - Permisos de acceso para el personal y protección de datos de clientes, carritos y pedidos.
 - Ajustes atómicos de existencias, validaciones y errores identificables.
 
-También están implementados `ControlCatalogo`, `ControlCarrito`, `ControlGeneracionPedido` y las pantallas de catálogo, detalle, carrito y confirmación. El público consulta; el personal autenticado registra pedidos. El alcance termina en un pedido pendiente: no incluye pagos, ventas, reservas, envíos, devoluciones ni interfaces de administración.
+También están implementados `ControlCatalogo`, `ControlCarrito`, `ControlGeneracionPedido` y `SolicitudConsulta`. El público prepara una consulta para WhatsApp; el personal autenticado registra el pedido real. La identidad oscura con acentos rosa se adapta a móvil y escritorio. El alcance termina en un pedido pendiente: no incluye pagos, ventas, reservas, gestión de envíos, devoluciones ni interfaces de administración.
 
 ## Ejecutar la aplicación web
 
@@ -25,6 +26,10 @@ npm run dev
 
 Abrir **http://127.0.0.1:3000**. La conexión y una cuenta EMPLEADO de demostración ya están preparadas en esta carpeta. El correo y contraseña están en `.env.personal.local`, un archivo privado ignorado por Git.
 
+La demostración de esta entrega está abierta en **http://127.0.0.1:3001** porque el puerto 3000 estaba ocupado. Para iniciarla en ese puerto, ejecutar `$env:PORT='3001'` antes de `npm run dev`.
+
+La vista previa pública funciona sin configurar WhatsApp. Para habilitar **Abrir WhatsApp**, definir `GABOSTORE_WHATSAPP` en `.env` con el número comercial internacional, solo dígitos, y reiniciar el servidor. Un valor ausente o inválido mantiene el botón deshabilitado. El usuario envía el mensaje manualmente; preparar o abrir la consulta no registra un pedido.
+
 La [guía del flujo básico](docs/FLUJO_BASICO.md) explica la prueba paso a paso, la separación de capas, las credenciales y la configuración en otro equipo. No se ha publicado la aplicación ni se han desplegado nuevas funciones Edge; el servidor HTTP es el adaptador de prueba local.
 
 ## Archivos principales
@@ -34,9 +39,10 @@ La [guía del flujo básico](docs/FLUJO_BASICO.md) explica la prueba paso a paso
 - `src/database.types.ts`: alias de los tipos utilizados por los repositorios.
 - `src/supabase.ts`: configuración del cliente de Supabase.
 - `src/repositories/`: los tres repositorios.
-- `src/negocio/`: los tres controles y las reglas del flujo básico.
+- `src/negocio/`: los tres controles, las reglas del flujo básico y la solicitud pública independiente de `PedidoNuevo`.
 - `src/servidor/`: API HTTP que valida la sesión y el rol del personal.
 - `web/`: presentación React/TypeScript; `web-dist/` es una salida generada.
+- `web/public/fonts/`: Roboto Mono y Public Sans alojadas localmente, con sus licencias OFL; proceden del repositorio oficial de Google Fonts.
 - `src/index.ts`: exportaciones y función `crearCapaDatos`.
 - `supabase/migrations/`: migraciones aplicadas, con versiones sincronizadas con Supabase.
 - `tests/`: pruebas de la migración y del acceso desde TypeScript.
