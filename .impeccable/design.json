@@ -1,242 +1,472 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-18T21:07:24.499Z",
+  "generatedAt": "2026-10-20T23:24:59.070Z",
   "title": "Design System: GaboStore",
   "extensions": {
     "colorMeta": {
       "fondo": {
         "role": "neutral",
-        "displayName": "Fondo de trabajo",
+        "displayName": "Negro del catálogo",
         "tonalRamp": [
-          "oklch(15.00% 0.0000 0.00)",
-          "oklch(26.43% 0.0000 0.00)",
-          "oklch(37.86% 0.0000 0.00)",
-          "oklch(49.29% 0.0000 0.00)",
-          "oklch(60.71% 0.0000 0.00)",
-          "oklch(72.14% 0.0000 0.00)",
-          "oklch(83.57% 0.0000 0.00)",
-          "oklch(95.00% 0.0000 0.00)"
+          "oklch(15.00% 0.0088 224.05)",
+          "oklch(26.43% 0.0088 224.05)",
+          "oklch(37.86% 0.0088 224.05)",
+          "oklch(49.29% 0.0088 224.05)",
+          "oklch(60.71% 0.0088 224.05)",
+          "oklch(72.14% 0.0088 224.05)",
+          "oklch(83.57% 0.0088 224.05)",
+          "oklch(95.00% 0.0088 224.05)"
         ]
       },
       "superficie": {
         "role": "neutral",
-        "displayName": "Blanco de superficie",
+        "displayName": "Carbón de panel",
         "tonalRamp": [
-          "oklch(15.00% 0.0000 0.00)",
-          "oklch(26.43% 0.0000 0.00)",
-          "oklch(37.86% 0.0000 0.00)",
-          "oklch(49.29% 0.0000 0.00)",
-          "oklch(60.71% 0.0000 0.00)",
-          "oklch(72.14% 0.0000 0.00)",
-          "oklch(83.57% 0.0000 0.00)",
-          "oklch(95.00% 0.0000 0.00)"
+          "oklch(15.00% 0.0130 233.19)",
+          "oklch(26.43% 0.0130 233.19)",
+          "oklch(37.86% 0.0130 233.19)",
+          "oklch(49.29% 0.0130 233.19)",
+          "oklch(60.71% 0.0130 233.19)",
+          "oklch(72.14% 0.0130 233.19)",
+          "oklch(83.57% 0.0130 233.19)",
+          "oklch(95.00% 0.0130 233.19)"
         ]
       },
       "tinta": {
         "role": "neutral",
-        "displayName": "Tinta oscura",
+        "displayName": "Tinta clara",
         "tonalRamp": [
-          "oklch(15.00% 0.0146 166.52)",
-          "oklch(26.43% 0.0146 166.52)",
-          "oklch(37.86% 0.0146 166.52)",
-          "oklch(49.29% 0.0146 166.52)",
-          "oklch(60.71% 0.0146 166.52)",
-          "oklch(72.14% 0.0146 166.52)",
-          "oklch(83.57% 0.0146 166.52)",
-          "oklch(95.00% 0.0146 166.52)"
+          "oklch(15.00% 0.0080 216.63)",
+          "oklch(26.43% 0.0080 216.63)",
+          "oklch(37.86% 0.0080 216.63)",
+          "oklch(49.29% 0.0080 216.63)",
+          "oklch(60.71% 0.0080 216.63)",
+          "oklch(72.14% 0.0080 216.63)",
+          "oklch(83.57% 0.0080 216.63)",
+          "oklch(95.00% 0.0080 216.63)"
         ]
       },
       "secundario": {
         "role": "neutral",
         "displayName": "Gris de apoyo",
         "tonalRamp": [
-          "oklch(15.00% 0.0155 159.50)",
-          "oklch(26.43% 0.0155 159.50)",
-          "oklch(37.86% 0.0155 159.50)",
-          "oklch(49.29% 0.0155 159.50)",
-          "oklch(60.71% 0.0155 159.50)",
-          "oklch(72.14% 0.0155 159.50)",
-          "oklch(83.57% 0.0155 159.50)",
-          "oklch(95.00% 0.0155 159.50)"
+          "oklch(15.00% 0.0201 230.77)",
+          "oklch(26.43% 0.0201 230.77)",
+          "oklch(37.86% 0.0201 230.77)",
+          "oklch(49.29% 0.0201 230.77)",
+          "oklch(60.71% 0.0201 230.77)",
+          "oklch(72.14% 0.0201 230.77)",
+          "oklch(83.57% 0.0201 230.77)",
+          "oklch(95.00% 0.0201 230.77)"
+        ]
+      },
+      "rosa": {
+        "role": "primary",
+        "displayName": "Rosa de selección",
+        "tonalRamp": [
+          "oklch(15.00% 0.2323 358.25)",
+          "oklch(26.43% 0.2323 358.25)",
+          "oklch(37.86% 0.2323 358.25)",
+          "oklch(49.29% 0.2323 358.25)",
+          "oklch(60.71% 0.2323 358.25)",
+          "oklch(72.14% 0.2323 358.25)",
+          "oklch(83.57% 0.2323 358.25)",
+          "oklch(95.00% 0.2323 358.25)"
+        ]
+      },
+      "rosa-hover": {
+        "role": "primary",
+        "displayName": "Rosa de respuesta",
+        "tonalRamp": [
+          "oklch(15.00% 0.1828 354.55)",
+          "oklch(26.43% 0.1828 354.55)",
+          "oklch(37.86% 0.1828 354.55)",
+          "oklch(49.29% 0.1828 354.55)",
+          "oklch(60.71% 0.1828 354.55)",
+          "oklch(72.14% 0.1828 354.55)",
+          "oklch(83.57% 0.1828 354.55)",
+          "oklch(95.00% 0.1828 354.55)"
         ]
       },
       "verde": {
-        "role": "primary",
-        "displayName": "Verde de mostrador",
+        "role": "secondary",
+        "displayName": "Verde WhatsApp",
         "tonalRamp": [
-          "oklch(15.00% 0.0803 168.76)",
-          "oklch(26.43% 0.0803 168.76)",
-          "oklch(37.86% 0.0803 168.76)",
-          "oklch(49.29% 0.0803 168.76)",
-          "oklch(60.71% 0.0803 168.76)",
-          "oklch(72.14% 0.0803 168.76)",
-          "oklch(83.57% 0.0803 168.76)",
-          "oklch(95.00% 0.0803 168.76)"
-        ]
-      },
-      "verde-hover": {
-        "role": "primary",
-        "displayName": "Verde de respuesta",
-        "tonalRamp": [
-          "oklch(15.00% 0.0670 168.04)",
-          "oklch(26.43% 0.0670 168.04)",
-          "oklch(37.86% 0.0670 168.04)",
-          "oklch(49.29% 0.0670 168.04)",
-          "oklch(60.71% 0.0670 168.04)",
-          "oklch(72.14% 0.0670 168.04)",
-          "oklch(83.57% 0.0670 168.04)",
-          "oklch(95.00% 0.0670 168.04)"
+          "oklch(15.00% 0.1971 152.05)",
+          "oklch(26.43% 0.1971 152.05)",
+          "oklch(37.86% 0.1971 152.05)",
+          "oklch(49.29% 0.1971 152.05)",
+          "oklch(60.71% 0.1971 152.05)",
+          "oklch(72.14% 0.1971 152.05)",
+          "oklch(83.57% 0.1971 152.05)",
+          "oklch(95.00% 0.1971 152.05)"
         ]
       },
       "suave": {
         "role": "neutral",
-        "displayName": "Gris suave",
+        "displayName": "Carbón suave",
         "tonalRamp": [
-          "oklch(15.00% 0.0034 145.55)",
-          "oklch(26.43% 0.0034 145.55)",
-          "oklch(37.86% 0.0034 145.55)",
-          "oklch(49.29% 0.0034 145.55)",
-          "oklch(60.71% 0.0034 145.55)",
-          "oklch(72.14% 0.0034 145.55)",
-          "oklch(83.57% 0.0034 145.55)",
-          "oklch(95.00% 0.0034 145.55)"
+          "oklch(15.00% 0.0179 227.45)",
+          "oklch(26.43% 0.0179 227.45)",
+          "oklch(37.86% 0.0179 227.45)",
+          "oklch(49.29% 0.0179 227.45)",
+          "oklch(60.71% 0.0179 227.45)",
+          "oklch(72.14% 0.0179 227.45)",
+          "oklch(83.57% 0.0179 227.45)",
+          "oklch(95.00% 0.0179 227.45)"
         ]
       },
       "linea": {
         "role": "neutral",
-        "displayName": "Línea clara",
+        "displayName": "Línea carbón",
         "tonalRamp": [
-          "oklch(15.00% 0.0076 151.88)",
-          "oklch(26.43% 0.0076 151.88)",
-          "oklch(37.86% 0.0076 151.88)",
-          "oklch(49.29% 0.0076 151.88)",
-          "oklch(60.71% 0.0076 151.88)",
-          "oklch(72.14% 0.0076 151.88)",
-          "oklch(83.57% 0.0076 151.88)",
-          "oklch(95.00% 0.0076 151.88)"
+          "oklch(15.00% 0.0228 233.27)",
+          "oklch(26.43% 0.0228 233.27)",
+          "oklch(37.86% 0.0228 233.27)",
+          "oklch(49.29% 0.0228 233.27)",
+          "oklch(60.71% 0.0228 233.27)",
+          "oklch(72.14% 0.0228 233.27)",
+          "oklch(83.57% 0.0228 233.27)",
+          "oklch(95.00% 0.0228 233.27)"
         ]
       },
       "error": {
-        "role": "secondary",
-        "displayName": "Rojo de error",
+        "role": "tertiary",
+        "displayName": "Rosa de error",
         "tonalRamp": [
-          "oklch(15.00% 0.1595 21.82)",
-          "oklch(26.43% 0.1595 21.82)",
-          "oklch(37.86% 0.1595 21.82)",
-          "oklch(49.29% 0.1595 21.82)",
-          "oklch(60.71% 0.1595 21.82)",
-          "oklch(72.14% 0.1595 21.82)",
-          "oklch(83.57% 0.1595 21.82)",
-          "oklch(95.00% 0.1595 21.82)"
+          "oklch(15.00% 0.1379 15.83)",
+          "oklch(26.43% 0.1379 15.83)",
+          "oklch(37.86% 0.1379 15.83)",
+          "oklch(49.29% 0.1379 15.83)",
+          "oklch(60.71% 0.1379 15.83)",
+          "oklch(72.14% 0.1379 15.83)",
+          "oklch(83.57% 0.1379 15.83)",
+          "oklch(95.00% 0.1379 15.83)"
         ]
       },
       "error-fondo": {
-        "role": "secondary",
-        "displayName": "Papel de error",
+        "role": "tertiary",
+        "displayName": "Fondo de error",
         "tonalRamp": [
-          "oklch(15.00% 0.0140 17.40)",
-          "oklch(26.43% 0.0140 17.40)",
-          "oklch(37.86% 0.0140 17.40)",
-          "oklch(49.29% 0.0140 17.40)",
-          "oklch(60.71% 0.0140 17.40)",
-          "oklch(72.14% 0.0140 17.40)",
-          "oklch(83.57% 0.0140 17.40)",
-          "oklch(95.00% 0.0140 17.40)"
+          "oklch(15.00% 0.0408 4.99)",
+          "oklch(26.43% 0.0408 4.99)",
+          "oklch(37.86% 0.0408 4.99)",
+          "oklch(49.29% 0.0408 4.99)",
+          "oklch(60.71% 0.0408 4.99)",
+          "oklch(72.14% 0.0408 4.99)",
+          "oklch(83.57% 0.0408 4.99)",
+          "oklch(95.00% 0.0408 4.99)"
         ]
       },
       "foco": {
         "role": "primary",
-        "displayName": "Verde de foco",
+        "displayName": "Rosa de foco",
         "tonalRamp": [
-          "oklch(15.00% 0.0897 168.46)",
-          "oklch(26.43% 0.0897 168.46)",
-          "oklch(37.86% 0.0897 168.46)",
-          "oklch(49.29% 0.0897 168.46)",
-          "oklch(60.71% 0.0897 168.46)",
-          "oklch(72.14% 0.0897 168.46)",
-          "oklch(83.57% 0.0897 168.46)",
-          "oklch(95.00% 0.0897 168.46)"
+          "oklch(15.00% 0.1828 354.55)",
+          "oklch(26.43% 0.1828 354.55)",
+          "oklch(37.86% 0.1828 354.55)",
+          "oklch(49.29% 0.1828 354.55)",
+          "oklch(60.71% 0.1828 354.55)",
+          "oklch(72.14% 0.1828 354.55)",
+          "oklch(83.57% 0.1828 354.55)",
+          "oklch(95.00% 0.1828 354.55)"
+        ]
+      },
+      "cabecera": {
+        "role": "neutral",
+        "displayName": "Negro de cabecera",
+        "tonalRamp": [
+          "oklch(15.00% 0.0077 229.50)",
+          "oklch(26.43% 0.0077 229.50)",
+          "oklch(37.86% 0.0077 229.50)",
+          "oklch(49.29% 0.0077 229.50)",
+          "oklch(60.71% 0.0077 229.50)",
+          "oklch(72.14% 0.0077 229.50)",
+          "oklch(83.57% 0.0077 229.50)",
+          "oklch(95.00% 0.0077 229.50)"
+        ]
+      },
+      "marca": {
+        "role": "primary",
+        "displayName": "Rosa de marca",
+        "tonalRamp": [
+          "oklch(15.00% 0.0943 353.38)",
+          "oklch(26.43% 0.0943 353.38)",
+          "oklch(37.86% 0.0943 353.38)",
+          "oklch(49.29% 0.0943 353.38)",
+          "oklch(60.71% 0.0943 353.38)",
+          "oklch(72.14% 0.0943 353.38)",
+          "oklch(83.57% 0.0943 353.38)",
+          "oklch(95.00% 0.0943 353.38)"
+        ]
+      },
+      "seleccion": {
+        "role": "primary",
+        "displayName": "Vino de selección",
+        "tonalRamp": [
+          "oklch(15.00% 0.0548 349.52)",
+          "oklch(26.43% 0.0548 349.52)",
+          "oklch(37.86% 0.0548 349.52)",
+          "oklch(49.29% 0.0548 349.52)",
+          "oklch(60.71% 0.0548 349.52)",
+          "oklch(72.14% 0.0548 349.52)",
+          "oklch(83.57% 0.0548 349.52)",
+          "oklch(95.00% 0.0548 349.52)"
+        ]
+      },
+      "foto-fondo": {
+        "role": "neutral",
+        "displayName": "Carbón de fotografía",
+        "tonalRamp": [
+          "oklch(15.00% 0.0177 227.38)",
+          "oklch(26.43% 0.0177 227.38)",
+          "oklch(37.86% 0.0177 227.38)",
+          "oklch(49.29% 0.0177 227.38)",
+          "oklch(60.71% 0.0177 227.38)",
+          "oklch(72.14% 0.0177 227.38)",
+          "oklch(83.57% 0.0177 227.38)",
+          "oklch(95.00% 0.0177 227.38)"
+        ]
+      },
+      "foto-alterno": {
+        "role": "neutral",
+        "displayName": "Vino de fotografía",
+        "tonalRamp": [
+          "oklch(15.00% 0.0251 341.81)",
+          "oklch(26.43% 0.0251 341.81)",
+          "oklch(37.86% 0.0251 341.81)",
+          "oklch(49.29% 0.0251 341.81)",
+          "oklch(60.71% 0.0251 341.81)",
+          "oklch(72.14% 0.0251 341.81)",
+          "oklch(83.57% 0.0251 341.81)",
+          "oklch(95.00% 0.0251 341.81)"
+        ]
+      },
+      "foto-iniciales": {
+        "role": "neutral",
+        "displayName": "Gris de iniciales",
+        "tonalRamp": [
+          "oklch(15.00% 0.0246 229.30)",
+          "oklch(26.43% 0.0246 229.30)",
+          "oklch(37.86% 0.0246 229.30)",
+          "oklch(49.29% 0.0246 229.30)",
+          "oklch(60.71% 0.0246 229.30)",
+          "oklch(72.14% 0.0246 229.30)",
+          "oklch(83.57% 0.0246 229.30)",
+          "oklch(95.00% 0.0246 229.30)"
+        ]
+      },
+      "foto-linea": {
+        "role": "neutral",
+        "displayName": "Línea de iniciales",
+        "tonalRamp": [
+          "oklch(15.00% 0.0231 231.28)",
+          "oklch(26.43% 0.0231 231.28)",
+          "oklch(37.86% 0.0231 231.28)",
+          "oklch(49.29% 0.0231 231.28)",
+          "oklch(60.71% 0.0231 231.28)",
+          "oklch(72.14% 0.0231 231.28)",
+          "oklch(83.57% 0.0231 231.28)",
+          "oklch(95.00% 0.0231 231.28)"
+        ]
+      },
+      "etiqueta-linea": {
+        "role": "primary",
+        "displayName": "Vino de etiqueta",
+        "tonalRamp": [
+          "oklch(15.00% 0.1178 357.98)",
+          "oklch(26.43% 0.1178 357.98)",
+          "oklch(37.86% 0.1178 357.98)",
+          "oklch(49.29% 0.1178 357.98)",
+          "oklch(60.71% 0.1178 357.98)",
+          "oklch(72.14% 0.1178 357.98)",
+          "oklch(83.57% 0.1178 357.98)",
+          "oklch(95.00% 0.1178 357.98)"
+        ]
+      },
+      "whatsapp-tinta": {
+        "role": "secondary",
+        "displayName": "Tinta de WhatsApp",
+        "tonalRamp": [
+          "oklch(15.00% 0.0253 156.26)",
+          "oklch(26.43% 0.0253 156.26)",
+          "oklch(37.86% 0.0253 156.26)",
+          "oklch(49.29% 0.0253 156.26)",
+          "oklch(60.71% 0.0253 156.26)",
+          "oklch(72.14% 0.0253 156.26)",
+          "oklch(83.57% 0.0253 156.26)",
+          "oklch(95.00% 0.0253 156.26)"
+        ]
+      },
+      "whatsapp-hover": {
+        "role": "secondary",
+        "displayName": "Verde de respuesta",
+        "tonalRamp": [
+          "oklch(15.00% 0.1721 154.44)",
+          "oklch(26.43% 0.1721 154.44)",
+          "oklch(37.86% 0.1721 154.44)",
+          "oklch(49.29% 0.1721 154.44)",
+          "oklch(60.71% 0.1721 154.44)",
+          "oklch(72.14% 0.1721 154.44)",
+          "oklch(83.57% 0.1721 154.44)",
+          "oklch(95.00% 0.1721 154.44)"
+        ]
+      },
+      "mensaje-fondo": {
+        "role": "secondary",
+        "displayName": "Verde de vista previa",
+        "tonalRamp": [
+          "oklch(15.00% 0.0299 161.11)",
+          "oklch(26.43% 0.0299 161.11)",
+          "oklch(37.86% 0.0299 161.11)",
+          "oklch(49.29% 0.0299 161.11)",
+          "oklch(60.71% 0.0299 161.11)",
+          "oklch(72.14% 0.0299 161.11)",
+          "oklch(83.57% 0.0299 161.11)",
+          "oklch(95.00% 0.0299 161.11)"
+        ]
+      },
+      "mensaje-linea": {
+        "role": "secondary",
+        "displayName": "Borde de vista previa",
+        "tonalRamp": [
+          "oklch(15.00% 0.0991 154.50)",
+          "oklch(26.43% 0.0991 154.50)",
+          "oklch(37.86% 0.0991 154.50)",
+          "oklch(49.29% 0.0991 154.50)",
+          "oklch(60.71% 0.0991 154.50)",
+          "oklch(72.14% 0.0991 154.50)",
+          "oklch(83.57% 0.0991 154.50)",
+          "oklch(95.00% 0.0991 154.50)"
+        ]
+      },
+      "mensaje-tinta": {
+        "role": "secondary",
+        "displayName": "Texto de vista previa",
+        "tonalRamp": [
+          "oklch(15.00% 0.0457 160.30)",
+          "oklch(26.43% 0.0457 160.30)",
+          "oklch(37.86% 0.0457 160.30)",
+          "oklch(49.29% 0.0457 160.30)",
+          "oklch(60.71% 0.0457 160.30)",
+          "oklch(72.14% 0.0457 160.30)",
+          "oklch(83.57% 0.0457 160.30)",
+          "oklch(95.00% 0.0457 160.30)"
         ]
       }
     },
     "typographyMeta": {
       "headline": {
         "displayName": "Título de página",
-        "purpose": "Encabezado principal de cada pantalla."
+        "purpose": "Encabezados generales y detalle; mayúsculas."
       },
       "headline-mobile": {
-        "displayName": "Título de página en teléfono",
-        "purpose": "Encabezado principal hasta el corte de teléfono."
+        "displayName": "Título de página móvil",
+        "purpose": "Título general hasta 560px; el detalle y el mensaje tienen ajustes propios."
+      },
+      "catalog-title": {
+        "displayName": "Título del catálogo",
+        "purpose": "Encabezado compacto del catálogo, reducido a 16px en teléfono."
       },
       "title": {
-        "displayName": "Título",
-        "purpose": "Nombre del artículo y encabezado de panel."
+        "displayName": "Título de sección",
+        "purpose": "Encabezados de sección con peso 700."
       },
-      "title-compact": {
-        "displayName": "Título compacto",
-        "purpose": "Resumen y líneas del carrito."
+      "card-title": {
+        "displayName": "Nombre del artículo",
+        "purpose": "Nombre de tarjeta, reducido a 13px en teléfono."
       },
       "body": {
         "displayName": "Cuerpo",
-        "purpose": "Lectura general."
+        "purpose": "Texto general de la interfaz."
       },
-      "note": {
-        "displayName": "Nota",
-        "purpose": "Notas, categorías y contexto."
+      "body-mobile": {
+        "displayName": "Cuerpo móvil",
+        "purpose": "Texto general hasta 560px."
       },
       "label": {
-        "displayName": "Etiqueta de campo",
-        "purpose": "Etiquetas visibles de campos; los botones conservan su peso específico de 650."
-      },
-      "meta": {
-        "displayName": "Información auxiliar",
-        "purpose": "Contadores, disponibilidad y filas auxiliares."
-      },
-      "tag": {
-        "displayName": "Etiqueta compacta",
-        "purpose": "Etiquetas informativas compactas."
-      },
-      "price": {
-        "displayName": "Precio de ficha",
-        "purpose": "Precio destacado en la ficha del catálogo."
-      },
-      "total": {
-        "displayName": "Total",
-        "purpose": "Total del pedido."
-      },
-      "brand": {
-        "displayName": "Marca textual",
-        "purpose": "Nombre GaboStore en la cabecera."
+        "displayName": "Etiqueta visible",
+        "purpose": "Etiquetas de campo en mayúsculas y con espaciado de letras."
       },
       "action": {
         "displayName": "Acción",
-        "purpose": "Botones principales, secundarios y de texto, con peso 650."
+        "purpose": "Botones en mayúsculas con peso 700."
+      },
+      "field": {
+        "displayName": "Texto de campo",
+        "purpose": "Campos etiquetados; el placeholder conserva peso 400."
+      },
+      "category": {
+        "displayName": "Categoría",
+        "purpose": "Botones de filtro en mayúsculas y espaciado normal."
+      },
+      "navigation": {
+        "displayName": "Navegación",
+        "purpose": "Enlaces de cabecera; se compactan en teléfono."
+      },
+      "meta": {
+        "displayName": "Información auxiliar",
+        "purpose": "Categoría, tallas, disponibilidad y notas breves."
+      },
+      "tag": {
+        "displayName": "Etiqueta de estado",
+        "purpose": "Sobre pedido y categoría del detalle; Demo tiene su variante neutral."
+      },
+      "price": {
+        "displayName": "Precio de tarjeta",
+        "purpose": "Importe rosa con cifras tabulares, reducido a 14px en teléfono."
+      },
+      "detail-price": {
+        "displayName": "Precio de detalle",
+        "purpose": "Importe destacado del artículo, reducido a 20px en teléfono."
+      },
+      "total": {
+        "displayName": "Total",
+        "purpose": "Importe del resumen, reducido a 19px en teléfono."
+      },
+      "brand": {
+        "displayName": "Marca SVG",
+        "purpose": "Public Sans se reserva para el texto de dos líneas de la marca."
       }
     },
-    "shadows": [],
+    "shadows": [
+      {
+        "name": "brand-glow",
+        "value": "drop-shadow(0 1px 5px #f775a454)",
+        "purpose": "Filtro del logotipo SVG; no es una sombra de elevación para paneles."
+      }
+    ],
     "motion": [
       {
         "name": "summary-update",
         "value": "180ms cubic-bezier(.16,1,.3,1)",
-        "purpose": "Solo las líneas y el total: opacidad de 0.72 a 1 cuando cambia su contenido."
+        "purpose": "Contenido del resumen del personal: opacidad de 0.72 a 1 cuando cambia."
       },
       {
         "name": "reduced-motion",
         "value": "@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}",
-        "purpose": "Desactivar animaciones, transiciones y desplazamiento suave según la preferencia del dispositivo."
+        "purpose": "Respeta la preferencia de movimiento reducido."
       }
     ],
     "breakpoints": [
       {
-        "name": "order-sidebar-compact",
-        "value": "1000px"
+        "name": "catalog-three-columns-min",
+        "value": "900px"
       },
       {
-        "name": "stacked-panels",
-        "value": "800px"
+        "name": "catalog-four-columns-min",
+        "value": "1200px"
       },
       {
-        "name": "phone",
+        "name": "compact-sidebars-max",
+        "value": "1024px"
+      },
+      {
+        "name": "stacked-panels-max",
+        "value": "899px"
+      },
+      {
+        "name": "phone-max",
         "value": "560px"
       }
     ]
@@ -246,121 +476,125 @@
       "name": "Botón principal",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Acción principal del flujo; mismo estilo para enlaces de avance.",
-      "html": "<button class=\"ds-button\" type=\"button\">Añadir al carrito</button>",
-      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:4px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;font-weight:650;line-height:1.55;text-decoration:none;white-space:nowrap;cursor:pointer;background:var(--verde,#17624c);color:var(--superficie,#fff)}.ds-button:hover{background:var(--verde-hover,#104b39)}.ds-button:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-button:disabled{cursor:not-allowed;opacity:.55}"
+      "description": "Acción rosa para avanzar o añadir un artículo.",
+      "html": "<button class=\"ds-primary\" type=\"button\">Agregar al carrito</button>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 18px;border:1px solid transparent;border-radius:0;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:.025em;text-decoration:none;text-align:center;cursor:pointer;background:var(--rosa,#ff4297);color:var(--fondo,#0d1214)}.ds-primary:hover{background:var(--rosa-hover,#ff72b1)}.ds-primary:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}.ds-primary:disabled{cursor:not-allowed;opacity:.45}"
     },
     {
       "name": "Botón secundario",
       "kind": "button",
       "refersTo": "button-secondary",
-      "description": "Acción alternativa y acceso del personal.",
+      "description": "Acción alternativa de superficie carbón y borde fino.",
       "html": "<a class=\"ds-secondary\" href=\"#/\">Volver al catálogo</a>",
-      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:4px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;font-weight:650;line-height:1.55;text-decoration:none;white-space:nowrap;cursor:pointer;background:var(--superficie,#fff);color:var(--verde,#17624c);border-color:var(--linea,#dfe4e0)}.ds-secondary:hover{background:var(--suave,#f3f5f3);border-color:var(--verde,#17624c)}.ds-secondary:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-secondary:disabled{cursor:not-allowed;opacity:.55}"
+      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 18px;border:1px solid transparent;border-radius:0;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:.025em;text-decoration:none;text-align:center;cursor:pointer;background:var(--suave,#1d282d);color:var(--tinta,#e9f0f2);border-color:var(--linea,#334149)}.ds-secondary:hover{border-color:var(--secundario,#afbec6)}.ds-secondary:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}.ds-secondary:disabled{cursor:not-allowed;opacity:.45}"
     },
     {
       "name": "Botón de texto",
       "kind": "button",
       "refersTo": "button-text",
-      "description": "Acción de quitar una línea del carrito.",
-      "html": "<button class=\"ds-text\" type=\"button\">Quitar</button>",
-      "css": ".ds-text{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:4px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;font-weight:650;line-height:1.55;text-decoration:none;white-space:nowrap;cursor:pointer;background:none;color:var(--verde,#17624c);padding:6px 0;min-height:36px}.ds-text:hover{background:none;text-decoration:underline;text-underline-offset:4px}.ds-text:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-text:disabled{cursor:not-allowed;opacity:.55}"
+      "description": "Eliminación de una línea de la solicitud.",
+      "html": "<button class=\"ds-text\" type=\"button\">Eliminar</button>",
+      "css": ".ds-text{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 18px;border:1px solid transparent;border-radius:0;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:.025em;text-decoration:none;text-align:center;cursor:pointer;background:none;color:var(--secundario,#afbec6);padding:0;min-height:36px;font-size:11px}.ds-text:hover{color:var(--rosa,#ff4297);text-decoration:underline}.ds-text:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}.ds-text:disabled{cursor:not-allowed;opacity:.45}"
     },
     {
-      "name": "Búsqueda con etiqueta",
+      "name": "Botón de WhatsApp",
+      "kind": "button",
+      "refersTo": "button-whatsapp",
+      "description": "Acción verde para generar o abrir el mensaje.",
+      "html": "<button class=\"ds-whatsapp\" type=\"button\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 11.5a8 8 0 0 1-12 7L3 20l1.5-5A8 8 0 1 1 20 11.5Z\"/><path d=\"M8 7c0 4 2 6 6 7l2-2-2-1-1 1c-2-1-3-2-3-3l1-1-1-2Z\"/></svg>Generar mensaje de WhatsApp</button>",
+      "css": ".ds-whatsapp{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 18px;border:1px solid transparent;border-radius:0;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:.025em;text-decoration:none;text-align:center;cursor:pointer;background:var(--verde,#22d974);color:#07140c}.ds-whatsapp:hover{background:#58e995}.ds-whatsapp:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}.ds-whatsapp:disabled{cursor:not-allowed;opacity:.45}"
+    },
+    {
+      "name": "Búsqueda de artículos",
       "kind": "input",
       "refersTo": "field",
-      "description": "Campo compartido con los formularios, mostrado como búsqueda de artículos.",
-      "html": "<label class=\"ds-label\">Buscar artículos<input class=\"ds-input\" type=\"search\" placeholder=\"Nombre o categoría\"></label>",
-      "css": ".ds-label{display:grid;gap:7px;max-width:600px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;font-weight:600;line-height:1.55;color:var(--tinta,#202925)}.ds-input{min-width:0;max-width:100%;width:100%;height:46px;border:1px solid var(--linea,#dfe4e0);border-radius:4px;background:var(--superficie,#fff);color:var(--tinta,#202925);padding:0 12px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:15px;font-weight:400;line-height:1.55;caret-color:var(--verde,#17624c)}.ds-input::placeholder{color:var(--secundario,#5b655f);font-weight:400}.ds-input:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}"
+      "description": "Campo oscuro con icono SVG y etiqueta accesible.",
+      "html": "<label class=\"ds-search\"><span class=\"ds-sr-only\">Buscar artículos</span><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><path d=\"m16 16 5 5\"/></svg><input class=\"ds-search-input\" type=\"search\" placeholder=\"Buscar artículos…\"></label>",
+      "css": ".ds-search{position:relative;display:block;margin-bottom:16px;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:600;line-height:1.65;text-transform:uppercase;letter-spacing:.05em;color:var(--tinta,#e9f0f2)}.ds-search>svg{position:absolute;left:15px;top:16px;color:var(--secundario,#afbec6);pointer-events:none}.ds-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}.ds-search-input{min-width:0;max-width:100%;width:100%;height:48px;border:1px solid var(--linea,#334149);border-radius:0;background:var(--superficie,#151c20);color:var(--tinta,#e9f0f2);padding:0 14px 0 44px;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;font-weight:600;line-height:1.65;letter-spacing:normal;caret-color:var(--rosa,#ff4297)}.ds-search-input::placeholder{color:var(--secundario,#afbec6);font-size:13px;font-weight:400}.ds-search-input:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}"
     },
     {
       "name": "Navegación principal",
       "kind": "nav",
       "refersTo": "navigation",
-      "description": "Marca textual y acceso al catálogo y al carrito.",
-      "html": "<header class=\"ds-header\"><a class=\"ds-brand ds-focus\" href=\"#/\">Gabo<span>Store</span></a><nav aria-label=\"Navegación principal\"><a class=\"ds-current ds-focus\" href=\"#/\" aria-current=\"page\">Catálogo</a><a class=\"ds-focus\" href=\"#/personal\">Acceso del personal</a></nav></header>",
-      "css": ".ds-header{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:68px;padding:0 32px;border-bottom:1px solid var(--linea,#dfe4e0);background:var(--superficie,#fff);color:var(--tinta,#202925);font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);line-height:1.55;}.ds-brand{font-size:24px;font-weight:800;letter-spacing:-.035em;text-decoration:none;color:inherit;white-space:nowrap}.ds-brand span{color:var(--verde,#17624c)}.ds-header nav{display:flex;gap:24px;align-items:center;flex-wrap:wrap}.ds-header nav a{min-height:44px;display:inline-flex;align-items:center;color:var(--secundario,#5b655f);font-size:14px;font-weight:600;text-decoration:none}.ds-header nav a:hover{color:var(--verde,#17624c);text-decoration:underline;text-underline-offset:4px}.ds-header nav .ds-current{text-decoration:underline;color:var(--tinta,#202925)}.ds-focus:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px}@media(max-width:560px){.ds-header{padding:0 16px;min-height:64px}.ds-brand{font-size:23px}.ds-current{display:none}.ds-header nav{gap:14px}}"
+      "description": "Marca SVG, catálogo, carrito con contador y acceso del personal.",
+      "html": "<header class=\"ds-header\"><div class=\"ds-header-inner\"><a class=\"ds-brand\" href=\"#/\" aria-label=\"GaboStore, catálogo\"><svg class=\"ds-logo\" viewBox=\"0 0 176 64\" role=\"presentation\" aria-hidden=\"true\"><g fill=\"currentColor\" font-family=\"Public Sans, sans-serif\" font-weight=\"800\" font-size=\"30\" letter-spacing=\"-1\"><text x=\"0\" y=\"28\">GABO</text><text x=\"0\" y=\"56\">STORE</text></g><g transform=\"translate(111 5)\" stroke=\"currentColor\" stroke-linejoin=\"round\"><path d=\"M19 9c0-5 8-5 8 0 0 3-4 3-4 6l18 10H5l18-10\" fill=\"none\" stroke-width=\"2\"/><path d=\"m13 23 10 4 10-4 13 10-8 10-5-4v20H13V39l-5 4-8-10Z\" fill=\"currentColor\" stroke-width=\"1\"/></g></svg></a><nav class=\"ds-nav\" aria-label=\"Navegación principal\"><a class=\"ds-catalog ds-current\" href=\"#/\" aria-current=\"page\">Catálogo</a><a class=\"ds-cart\" href=\"#/solicitud\" aria-label=\"Mi pedido, 3 artículos\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 3h2l2.5 12h11l2-9H6\"/><path d=\"M8 19h.01M18 19h.01\" stroke-width=\"3\"/></svg><span class=\"ds-count\">3</span></a><a class=\"ds-staff\" href=\"#/personal\">Personal</a></nav></div></header>",
+      "css": ".ds-header{background:#0a0e10;border-bottom:1px solid var(--linea,#334149);font-family:var(--fuente,\"Roboto Mono\",monospace);line-height:1.65}.ds-header-inner{max-width:1280px;padding:12px 24px;margin:auto;min-height:92px;display:flex;align-items:center;justify-content:space-between;gap:20px}.ds-brand{display:inline-flex;flex-shrink:0;color:#f4aac8;text-decoration:none}.ds-logo{display:block;width:176px;height:64px;filter:drop-shadow(0 1px 5px #f775a454)}.ds-nav{display:flex;align-items:center;gap:24px;min-width:0}.ds-nav a{font-size:13px;text-transform:uppercase;font-weight:600;min-height:44px;display:inline-flex;align-items:center;color:var(--secundario,#afbec6);text-decoration:none}.ds-nav a:hover,.ds-nav .ds-current{color:var(--rosa,#ff4297)}.ds-nav .ds-cart{position:relative;justify-content:center;min-width:44px;border:1px solid var(--linea,#334149);background:var(--superficie,#151c20)}.ds-count{position:absolute;right:-7px;top:-7px;min-width:20px;height:20px;padding:0 4px;border-radius:50%;background:var(--rosa,#ff4297);color:var(--fondo,#0d1214);font-size:11px;font-weight:700;text-align:center;line-height:20px;font-variant-numeric:tabular-nums}.ds-header a:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}@media(max-width:560px){.ds-header-inner{padding:10px 16px;min-height:76px;gap:12px}.ds-logo{width:132px;height:48px}.ds-nav{gap:16px}.ds-nav .ds-catalog{display:none}.ds-nav a{font-size:11px}.ds-nav .ds-cart{min-width:40px;min-height:40px}.ds-nav .ds-staff{font-size:10px}}"
     },
     {
       "name": "Filtros de categoría",
       "kind": "chip",
       "refersTo": "category",
-      "description": "Filtros de selección única con estado pulsado accesible.",
+      "description": "Fila desplazable de filtros; selección rosa con fondo vino.",
       "html": "<div class=\"ds-categories\" aria-label=\"Filtrar por categoría\"><button class=\"ds-category ds-selected\" type=\"button\" aria-pressed=\"true\">Todas</button><button class=\"ds-category\" type=\"button\" aria-pressed=\"false\">Ropa</button><button class=\"ds-category\" type=\"button\" aria-pressed=\"false\">Accesorios</button></div>",
-      "css": ".ds-categories{display:flex;gap:24px;flex-wrap:wrap;border-bottom:1px solid var(--linea,#dfe4e0)}.ds-category{border:0;border-bottom:2px solid transparent;background:none;color:var(--secundario,#5b655f);min-height:44px;padding:10px 0;font-size:14px;cursor:pointer;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);line-height:1.55;}.ds-category:hover{color:var(--verde,#17624c)}.ds-category.ds-selected{color:var(--tinta,#202925);border-bottom-color:var(--verde,#17624c);font-weight:650}.ds-category:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px}"
+      "css": ".ds-categories{display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;padding:0 0 16px;margin-bottom:24px;border-bottom:1px solid var(--linea,#334149)}.ds-category{background:var(--superficie,#151c20);color:var(--secundario,#afbec6);border:1px solid var(--linea,#334149);min-height:44px;padding:9px 14px;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:600;line-height:1.65;text-transform:uppercase;white-space:nowrap;cursor:pointer}.ds-category:hover{border-color:var(--rosa,#ff4297);color:var(--rosa,#ff4297)}.ds-category.ds-selected{color:var(--rosa,#ff4297);background:#351626;border-color:var(--rosa,#ff4297)}.ds-category:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}@media(max-width:560px){.ds-categories{margin-bottom:18px}}"
     },
     {
       "name": "Etiquetas de estado",
       "kind": "chip",
       "refersTo": "tag",
-      "description": "Etiquetas informativas compactas, incluida la variante neutral de Demo.",
+      "description": "Estado de contorno rosa y variante neutral Demo.",
       "html": "<span class=\"ds-tag\">Sobre pedido</span> <span class=\"ds-tag ds-neutral\">Demo</span>",
-      "css": ".ds-tag{display:inline-block;color:var(--verde,#17624c);font-size:12px;font-weight:600;white-space:nowrap;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);line-height:1.55;}.ds-tag.ds-neutral{color:var(--secundario,#5b655f);font-weight:400}"
+      "css": ".ds-tag{display:inline-block;width:fit-content;color:var(--rosa,#ff4297);border:1px solid #843253;padding:2px 6px;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:11px;font-weight:600;line-height:1.65;text-transform:uppercase;white-space:nowrap}.ds-tag.ds-neutral{border:0;color:var(--secundario,#afbec6);padding:0;font-weight:400;font-size:10px}"
     },
     {
-      "name": "Fila de artículo",
-      "kind": "custom",
-      "refersTo": "product-row",
-      "description": "Artículo compacto con miniatura y datos, separado por una línea.",
-      "html": "<a class=\"ds-product ds-focus\" href=\"#/\"><div class=\"ds-photo\">Sin fotografía</div><div class=\"ds-info\"><div class=\"ds-name\"><h2>Camisa básica</h2><span>Demo</span></div><p>Ropa</p><strong class=\"ds-price\">$169.90</strong><div class=\"ds-product-footer\"><span>5 disponibles</span><span class=\"ds-link\">Ver variantes</span></div></div></a>",
-      "css": ".ds-product{display:grid;grid-template-columns:112px minmax(0,1fr);gap:20px;padding:24px 0;border-bottom:1px solid var(--linea,#dfe4e0);color:var(--tinta,#202925);text-decoration:none;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);line-height:1.55;}.ds-product:hover h2{color:var(--verde,#17624c);text-decoration:underline;text-underline-offset:4px}.ds-photo{aspect-ratio:1;display:grid;place-items:center;background:var(--suave,#f3f5f3);color:var(--secundario,#5b655f);font-size:11px;text-align:center}.ds-info{min-width:0}.ds-name{display:flex;justify-content:space-between;align-items:baseline;gap:12px}.ds-name h2{margin:0;font-size:19px;font-weight:650;line-height:1.35;overflow-wrap:anywhere}.ds-name span{font-size:12px;color:var(--secundario,#5b655f)}.ds-info p{margin:4px 0 0;font-size:14px;color:var(--secundario,#5b655f)}.ds-price{display:block;margin-top:12px;font-size:20px;font-weight:650;font-variant-numeric:tabular-nums}.ds-product-footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--secundario,#5b655f)}.ds-link{color:var(--verde,#17624c);font-weight:600}.ds-focus:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px}@media(max-width:800px){.ds-product{grid-template-columns:88px minmax(0,1fr);gap:16px}}"
+      "name": "Tarjeta de producto",
+      "kind": "card",
+      "refersTo": "product-card",
+      "description": "Enlace vertical con fotografía o iniciales y precio rosa.",
+      "html": "<a class=\"ds-card\" href=\"#/\"><div class=\"ds-photo\"><span class=\"ds-initials\" role=\"img\" aria-label=\"Camisa básica, sin fotografía\"><span aria-hidden=\"true\">CB</span></span></div><div class=\"ds-card-info\"><div class=\"ds-card-name\"><h2>Camisa básica</h2><span class=\"ds-demo\">Demo</span></div><p class=\"ds-card-category\">Ropa</p><p class=\"ds-card-sizes\">M</p><div class=\"ds-card-price\"><strong>$169.90</strong></div><div class=\"ds-card-footer\"><span>5 disponibles</span><span class=\"ds-card-link\">Ver variantes</span></div></div></a>",
+      "css": ".ds-card{display:flex;flex-direction:column;min-width:0;border:1px solid var(--linea,#334149);text-decoration:none;background:var(--superficie,#151c20);color:var(--tinta,#e9f0f2);font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;line-height:1.65}.ds-card:hover{border-color:var(--rosa,#ff4297)}.ds-card:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}.ds-photo{position:relative;background:#202b30;display:grid;place-items:center;aspect-ratio:4/5;overflow:hidden;min-width:0;width:100%}.ds-card:nth-child(2n+1) .ds-photo{background:#251820}.ds-initials{position:relative;display:grid;place-items:center;width:100%;height:100%;font-size:64px;font-weight:700;color:#82949d;letter-spacing:-.035em;text-transform:uppercase}.ds-initials:before{content:\"\";position:absolute;inset:12% 17%;border:1px solid #425159;transform:skew(-6deg);opacity:.7}.ds-card-info{display:flex;flex-direction:column;flex:1;min-width:0;padding:18px}.ds-card-name{display:flex;justify-content:space-between;align-items:start;gap:8px}.ds-card-name h2{margin:0;font-size:16px;font-weight:700;line-height:1.4;text-transform:uppercase;overflow-wrap:anywhere}.ds-demo{display:inline-block;width:fit-content;color:var(--secundario,#afbec6);font-size:10px;font-weight:400;text-transform:uppercase;white-space:nowrap}.ds-card-category,.ds-card-sizes{color:var(--secundario,#afbec6);font-size:12px;text-transform:uppercase;margin:7px 0 0}.ds-card-sizes{margin-top:4px;min-height:20px}.ds-card-price{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px}.ds-card-price strong{font-size:18px;font-weight:700;color:var(--rosa,#ff4297);font-variant-numeric:tabular-nums}.ds-card-footer{margin-top:auto;padding-top:14px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--secundario,#afbec6)}.ds-card-link{color:var(--rosa,#ff4297);font-weight:600;font-size:13px}@media(max-width:560px){.ds-card{font-size:13px}.ds-card-info{padding:12px}.ds-card-name{display:block}.ds-card-name h2{font-size:13px;min-height:36px}.ds-demo{display:block;margin-top:4px}.ds-card-price{margin-top:12px}.ds-card-price strong{font-size:14px}.ds-card-category,.ds-card-sizes{font-size:10px}.ds-initials{font-size:44px}.ds-card-footer{font-size:10px;gap:6px}.ds-card-link{font-size:10px}}"
     },
     {
       "name": "Control de cantidad",
       "kind": "input",
       "refersTo": "quantity-control",
-      "description": "Grupo editable de cantidad con foco alrededor del conjunto.",
-      "html": "<div class=\"ds-quantity\"><button type=\"button\" aria-label=\"Disminuir cantidad de Camisa básica M\">−</button><input type=\"number\" min=\"1\" step=\"1\" inputmode=\"numeric\" value=\"2\" aria-label=\"Cantidad de Camisa básica M\"><button type=\"button\" aria-label=\"Aumentar cantidad de Camisa básica M\">+</button></div>",
-      "css": ".ds-quantity{display:flex;align-items:center;border:1px solid var(--linea,#dfe4e0);border-radius:4px;background:var(--superficie,#fff);overflow:hidden;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:15px;line-height:1.55}.ds-quantity input{border:0;border-radius:0;width:54px;height:40px;text-align:center;padding:0;appearance:textfield;background:var(--superficie,#fff);color:var(--tinta,#202925);font:inherit;font-variant-numeric:tabular-nums}.ds-quantity input::-webkit-inner-spin-button{appearance:none}.ds-quantity button{width:38px;height:40px;border:0;background:var(--superficie,#fff);color:var(--verde,#17624c);font:inherit;font-size:20px;cursor:pointer}.ds-quantity button:hover{background:var(--suave,#f3f5f3)}.ds-quantity:focus-within{outline:3px solid var(--foco,#287b61);outline-offset:3px}.ds-quantity input:focus-visible{outline:none}.ds-quantity button:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-quantity button:disabled{cursor:not-allowed;opacity:.55}@media(max-width:560px){.ds-quantity button{width:30px}.ds-quantity input{width:40px}}"
-    },
-    {
-      "name": "Resumen de pedido",
-      "kind": "custom",
-      "refersTo": "order-summary",
-      "description": "Resumen abierto con cliente, líneas y total; aparece al existir un carrito.",
-      "html": "<aside class=\"ds-summary\" aria-label=\"Resumen del pedido\"><h2>Pedido en preparación</h2><p class=\"ds-client\">DEMO WEB · Cliente</p><div class=\"ds-summary-content\"><ul class=\"ds-summary-lines\"><li><div><strong>Camisa básica</strong><span>M · 2 unidades</span></div><strong>$339.80</strong></li><li><div><strong>Gorra</strong><span>Única · 1 unidad</span></div><strong>$199.00</strong></li></ul><div class=\"ds-total\"><span>Total</span><strong>$538.80</strong></div></div><a class=\"ds-button ds-wide\" href=\"#/carrito\">Ver carrito</a><p class=\"ds-note\">El pedido se registra como pendiente. No representa un pago.</p></aside>",
-      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:4px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:14px;font-weight:650;line-height:1.55;text-decoration:none;white-space:nowrap;cursor:pointer;background:var(--verde,#17624c);color:var(--superficie,#fff)}.ds-button:hover{background:var(--verde-hover,#104b39)}.ds-button:focus-visible{outline:3px solid var(--foco,#287b61);outline-offset:4px;}.ds-button:disabled{cursor:not-allowed;opacity:.55}.ds-summary{border-left:1px solid var(--linea,#dfe4e0);padding:0 0 0 24px;font-family:var(--fuente,\"Public Sans\",system-ui,sans-serif);font-size:15px;line-height:1.55;color:var(--tinta,#202925)}.ds-summary h2{margin:0;font-size:18px;font-weight:650;line-height:1.35}.ds-client{margin:12px 0 0;color:var(--secundario,#5b655f);overflow-wrap:anywhere}.ds-summary-lines{list-style:none;padding:0;margin:24px 0 0}.ds-summary-lines li{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--linea,#dfe4e0);font-size:13px}.ds-summary-lines li>strong{white-space:nowrap;font-variant-numeric:tabular-nums}.ds-summary-lines li div{display:grid;gap:4px;min-width:0;overflow-wrap:anywhere}.ds-summary-lines span{color:var(--secundario,#5b655f);font-size:12px}.ds-total{display:flex;justify-content:space-between;gap:16px;align-items:center;padding-top:20px;margin-top:20px;border-top:1px solid var(--linea,#dfe4e0)}.ds-total strong{font-size:24px;font-variant-numeric:tabular-nums}.ds-wide{width:100%;margin-top:20px}.ds-note{font-size:14px;color:var(--secundario,#5b655f);margin:16px 0 0}.ds-summary-content{animation:ds-summary-updated 180ms cubic-bezier(.16,1,.3,1)}@keyframes ds-summary-updated{from{opacity:.72}to{opacity:1}}@media(max-width:800px){.ds-summary{border-left:0;border-top:1px solid var(--linea,#dfe4e0);padding:24px 0 0}}@media(prefers-reduced-motion:reduce){.ds-summary-content{animation:none}}"
+      "description": "Grupo de cantidad con iconos SVG y foco alrededor del conjunto.",
+      "html": "<div class=\"ds-quantity\"><button type=\"button\" aria-label=\"Disminuir cantidad\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/></svg></button><input type=\"number\" min=\"1\" step=\"1\" value=\"2\" aria-label=\"Cantidad\"><button type=\"button\" aria-label=\"Aumentar cantidad\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M12 5v14\"/></svg></button></div>",
+      "css": ".ds-quantity{display:inline-flex;width:fit-content;align-items:center;border:1px solid var(--linea,#334149);background:var(--superficie,#151c20);font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;font-weight:400;line-height:1.65}.ds-quantity input{min-width:0;border:0;border-radius:0;width:44px;height:44px;text-align:center;padding:0;appearance:textfield;background:var(--superficie,#151c20);color:var(--tinta,#e9f0f2);font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;font-weight:400;line-height:1.65;font-variant-numeric:tabular-nums;caret-color:var(--rosa,#ff4297)}.ds-quantity input::-webkit-inner-spin-button{appearance:none}.ds-quantity button{display:grid;place-items:center;flex-shrink:0;width:44px;height:44px;border:0;background:var(--superficie,#151c20);color:var(--rosa,#ff4297);font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:18px;cursor:pointer}.ds-quantity button:hover{background:var(--suave,#1d282d)}.ds-quantity:focus-within{outline:2px solid var(--foco,#ff72b1);outline-offset:3px}.ds-quantity input:focus-visible{outline:none}.ds-quantity button:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}.ds-quantity button:disabled{cursor:not-allowed;opacity:.45}"
     }
   ],
   "narrative": {
-    "northStar": "Mostrador de tienda",
-    "overview": "“Mostrador de tienda” organiza una interfaz de trabajo sobria, cercana y en español. Los artículos, las variantes y los importes mandan; el verde profundo identifica acciones y disponibilidad sobre un fondo blanco.\n\nPublic Sans local mantiene una voz común. Las filas abiertas, los divisores finos y los controles compactos permiten comparar sin convertir cada dato en una tarjeta. Las fotografías reales se muestran cuando existen; su ausencia se indica con texto, sin reservar un bloque grande en el detalle.",
+    "northStar": "Catálogo oscuro de Gabo Store",
+    "overview": "El catálogo oscuro reúne la identidad de las seis referencias aprobadas: lienzo casi negro, paneles carbón, bordes finos, selección rosa y marca rosada de dos líneas con camiseta. Es una interfaz directa, compacta y en español; los artículos, las variantes y los importes se comparan dentro de una estructura repetida.\n\nRoboto Mono local sostiene la lectura y los controles; Public Sans local pertenece al logotipo SVG. El rosa señala selección, navegación activa, importes y avance. El verde identifica la preparación del mensaje de WhatsApp y las confirmaciones correctas. Las fotografías comerciales se muestran cuando existen; cuando faltan o fallan, un bloque de iniciales conserva el lugar del artículo.",
     "keyCharacteristics": [
-      "Public Sans e importes con cifras tabulares.",
-      "Filas abiertas, controles compactos y separación por espacio y líneas.",
-      "Verde para acciones y disponibilidad; rojo para errores.",
-      "La misma jerarquía de líneas y totales durante todo el pedido.",
-      "Una transición breve del resumen, desactivada con movimiento reducido."
+      "Negro y carbón con contornos finos, sin sombras de panel.",
+      "Roboto Mono en la interfaz y Public Sans únicamente en la marca.",
+      "Rosa en selección, importes y acciones; verde en WhatsApp y confirmación.",
+      "Tarjetas de producto con imagen o iniciales, adaptadas a dos, tres o cuatro columnas.",
+      "Controles rectos, foco visible y movimiento breve compatible con movimiento reducido."
     ],
     "rules": [
       {
-        "name": "Verde con función",
-        "body": "El verde identifica acción, selección o estado. La lectura principal usa tinta oscura y el contexto usa gris de apoyo.",
+        "name": "Rosa de selección",
+        "body": "Selección, importes y acciones principales comparten el rosa. El estado seleccionado combina texto y borde rosa con fondo vino.",
         "section": "colors"
       },
       {
-        "name": "Una voz, cifras alineadas",
-        "body": "Public Sans sostiene toda la interfaz. Los precios y totales usan cifras tabulares.",
+        "name": "Una interfaz monoespaciada",
+        "body": "Roboto Mono sostiene títulos, texto, controles e importes; Public Sans se reserva para la marca. Precios, cantidades y totales usan cifras tabulares.",
         "section": "typography"
       },
       {
-        "name": "Agrupar sin encerrar",
-        "body": "El espacio y los divisores agrupan artículos y datos del pedido. No se añade un contenedor por cada dato.",
+        "name": "Panel plano",
+        "body": "Paneles, tarjetas y campos se separan con carbón y contornos finos. El halo difuso se conserva únicamente en la marca.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "**Do** mantener nombre, variante, cantidad e importe fáciles de comparar.",
-      "**Do** conservar etiquetas visibles, foco de teclado y mensajes de estado con texto.",
-      "**Do** usar imágenes reales y una indicación breve cuando falten.",
-      "**Do** reservar el botón principal para avanzar en la tarea."
+      "**Do** conservar negro, carbón y bordes finos como base de las superficies.",
+      "**Do** mantener Roboto Mono en la interfaz y Public Sans en el logotipo SVG.",
+      "**Do** compartir rosa entre selección, importes y acciones principales.",
+      "**Do** distinguir las acciones de WhatsApp con verde y texto oscuro.",
+      "**Do** mantener dos columnas de catálogo en móvil y las ampliaciones de tres y cuatro columnas documentadas.",
+      "**Do** conservar foco visible, etiquetas accesibles, cifras tabulares y movimiento reducido.",
+      "**Do** mostrar fotografías reales o el bloque de iniciales cuando no estén disponibles."
     ],
     "donts": [
-      "**Don't** volver a envolver cada artículo o panel en una tarjeta.",
-      "**Don't** usar un gran bloque de relleno cuando falte una fotografía.",
-      "**Don't** añadir ayudas, insignias o pasos que repitan la información inmediata.",
-      "**Don't** fabricar mercancía, fotografías ni afirmaciones comerciales."
+      "**Don't** restaurar la identidad anterior de fondo blanco, acciones verde profundo y filas abiertas.",
+      "**Don't** redondear tarjetas, campos o botones; el círculo pertenece al contador.",
+      "**Don't** extender el halo de la marca a paneles, tarjetas o controles.",
+      "**Don't** fabricar mercancía, fotografías ni afirmaciones comerciales.",
+      "**Don't** presentar la solicitud o la vista previa como un mensaje enviado, un pedido registrado o un pago."
     ]
   }
 }

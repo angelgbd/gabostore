@@ -1,283 +1,378 @@
 ---
 name: "GaboStore"
-description: "Mostrador de tienda: artículos, variantes y pedidos con claridad."
+description: "Catálogo oscuro con selección rosa y consulta por WhatsApp."
 colors:
-  fondo: "#fff"
-  superficie: "#fff"
-  tinta: "#202925"
-  secundario: "#5b655f"
-  verde: "#17624c"
-  verde-hover: "#104b39"
-  suave: "#f3f5f3"
-  linea: "#dfe4e0"
-  error: "#a22630"
-  error-fondo: "#fff2f2"
-  foco: "#287b61"
+  fondo: "#0d1214"
+  superficie: "#151c20"
+  tinta: "#e9f0f2"
+  secundario: "#afbec6"
+  rosa: "#ff4297"
+  rosa-hover: "#ff72b1"
+  verde: "#22d974"
+  suave: "#1d282d"
+  linea: "#334149"
+  error: "#ff8d96"
+  error-fondo: "#32191f"
+  foco: "#ff72b1"
+  cabecera: "#0a0e10"
+  marca: "#f4aac8"
+  seleccion: "#351626"
+  foto-fondo: "#202b30"
+  foto-alterno: "#251820"
+  foto-iniciales: "#82949d"
+  foto-linea: "#425159"
+  etiqueta-linea: "#843253"
+  whatsapp-tinta: "#07140c"
+  whatsapp-hover: "#58e995"
+  mensaje-fondo: "#102219"
+  mensaje-linea: "#246d43"
+  mensaje-tinta: "#c4e7d3"
 typography:
   headline:
-    fontFamily: "\"Public Sans\", system-ui, sans-serif"
-    fontSize: "32px"
-    fontWeight: 750
-    lineHeight: 1.2
-    letterSpacing: "-0.025em"
-  headline-mobile:
-    fontFamily: "\"Public Sans\", system-ui, sans-serif"
-    fontSize: "28px"
-    fontWeight: 750
-    lineHeight: 1.2
-    letterSpacing: "-0.025em"
-  title:
-    fontFamily: "\"Public Sans\", system-ui, sans-serif"
-    fontSize: "19px"
-    fontWeight: 650
-    lineHeight: 1.35
-  title-compact:
-    fontFamily: "\"Public Sans\", system-ui, sans-serif"
-    fontSize: "18px"
-    fontWeight: 650
-    lineHeight: 1.35
-  body:
-    fontFamily: "\"Public Sans\", system-ui, sans-serif"
-    fontSize: "15px"
-    fontWeight: 400
-    lineHeight: 1.55
-  note:
-    fontFamily: "\"Public Sans\", system-ui, sans-serif"
-    fontSize: "14px"
-    fontWeight: 400
-    lineHeight: 1.55
-  label:
-    fontFamily: "\"Public Sans\", system-ui, sans-serif"
-    fontSize: "14px"
-    fontWeight: 600
-    lineHeight: 1.55
-  action:
-    fontFamily: "\"Public Sans\", system-ui, sans-serif"
-    fontSize: "14px"
-    fontWeight: 650
-    lineHeight: 1.55
-  meta:
-    fontFamily: "\"Public Sans\", system-ui, sans-serif"
-    fontSize: "13px"
-    fontWeight: 400
-    lineHeight: 1.55
-  tag:
-    fontFamily: "\"Public Sans\", system-ui, sans-serif"
-    fontSize: "12px"
-    fontWeight: 600
-    lineHeight: 1.55
-  price:
-    fontFamily: "\"Public Sans\", system-ui, sans-serif"
-    fontSize: "20px"
-    fontWeight: 650
-    lineHeight: 1.55
-  total:
-    fontFamily: "\"Public Sans\", system-ui, sans-serif"
+    fontFamily: "\"Roboto Mono\", monospace"
     fontSize: "24px"
     fontWeight: 700
-    lineHeight: 1.55
-  brand:
-    fontFamily: "\"Public Sans\", system-ui, sans-serif"
+    lineHeight: 1.4
+    letterSpacing: "-0.025em"
+  headline-mobile:
+    fontFamily: "\"Roboto Mono\", monospace"
+    fontSize: "20px"
+    fontWeight: 700
+    lineHeight: 1.4
+    letterSpacing: "-0.025em"
+  catalog-title:
+    fontFamily: "\"Roboto Mono\", monospace"
+    fontSize: "18px"
+    fontWeight: 700
+    lineHeight: 1.4
+    letterSpacing: "-0.025em"
+  title:
+    fontFamily: "\"Roboto Mono\", monospace"
+    fontSize: "17px"
+    fontWeight: 700
+    lineHeight: 1.4
+  card-title:
+    fontFamily: "\"Roboto Mono\", monospace"
+    fontSize: "16px"
+    fontWeight: 700
+    lineHeight: 1.4
+  body:
+    fontFamily: "\"Roboto Mono\", monospace"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: 1.65
+  body-mobile:
+    fontFamily: "\"Roboto Mono\", monospace"
+    fontSize: "13px"
+    fontWeight: 400
+    lineHeight: 1.65
+  label:
+    fontFamily: "\"Roboto Mono\", monospace"
+    fontSize: "12px"
+    fontWeight: 600
+    lineHeight: 1.65
+    letterSpacing: "0.05em"
+  action:
+    fontFamily: "\"Roboto Mono\", monospace"
+    fontSize: "12px"
+    fontWeight: 700
+    lineHeight: 1.6
+    letterSpacing: "0.025em"
+  field:
+    fontFamily: "\"Roboto Mono\", monospace"
+    fontSize: "14px"
+    fontWeight: 600
+    lineHeight: 1.65
+    letterSpacing: "normal"
+  category:
+    fontFamily: "\"Roboto Mono\", monospace"
+    fontSize: "12px"
+    fontWeight: 600
+    lineHeight: 1.65
+    letterSpacing: "normal"
+  navigation:
+    fontFamily: "\"Roboto Mono\", monospace"
+    fontSize: "13px"
+    fontWeight: 600
+    lineHeight: 1.65
+  meta:
+    fontFamily: "\"Roboto Mono\", monospace"
+    fontSize: "12px"
+    fontWeight: 400
+    lineHeight: 1.65
+  tag:
+    fontFamily: "\"Roboto Mono\", monospace"
+    fontSize: "11px"
+    fontWeight: 600
+    lineHeight: 1.65
+  price:
+    fontFamily: "\"Roboto Mono\", monospace"
+    fontSize: "18px"
+    fontWeight: 700
+    lineHeight: 1.65
+  detail-price:
+    fontFamily: "\"Roboto Mono\", monospace"
     fontSize: "24px"
+    fontWeight: 700
+    lineHeight: 1.65
+  total:
+    fontFamily: "\"Roboto Mono\", monospace"
+    fontSize: "22px"
+    fontWeight: 700
+    lineHeight: 1.65
+  brand:
+    fontFamily: "\"Public Sans\", sans-serif"
+    fontSize: "30px"
     fontWeight: 800
-    lineHeight: 1.55
-    letterSpacing: "-0.035em"
+    letterSpacing: "-1px"
 rounded:
   none: "0px"
-  tag: "0px"
-  category: "0px"
-  control: "4px"
-  surface: "14px"
+  counter: "50%"
 spacing:
   xs: "4px"
   sm: "8px"
   md: "12px"
+  row: "14px"
   lg: "16px"
   control: "18px"
   section: "20px"
+  form: "22px"
   panel: "24px"
   block: "28px"
   shell: "32px"
   spacious: "40px"
+  detail: "48px"
 components:
   button-primary:
-    backgroundColor: "{colors.verde}"
-    textColor: "{colors.superficie}"
-    rounded: "{rounded.control}"
-    padding: "11px 18px"
+    backgroundColor: "{colors.rosa}"
+    textColor: "{colors.fondo}"
+    rounded: "{rounded.none}"
+    padding: "13px 18px"
     typography: "{typography.action}"
   button-primary-hover:
-    backgroundColor: "{colors.verde-hover}"
+    backgroundColor: "{colors.rosa-hover}"
   button-secondary:
-    backgroundColor: "{colors.superficie}"
-    textColor: "{colors.verde}"
-    rounded: "{rounded.control}"
-    padding: "11px 18px"
-    typography: "{typography.action}"
-  button-secondary-hover:
     backgroundColor: "{colors.suave}"
+    textColor: "{colors.tinta}"
+    rounded: "{rounded.none}"
+    padding: "13px 18px"
+    typography: "{typography.action}"
   button-text:
     backgroundColor: "transparent"
-    textColor: "{colors.verde}"
-    rounded: "{rounded.control}"
-    padding: "6px 0"
+    textColor: "{colors.secundario}"
+    rounded: "{rounded.none}"
+    padding: "0"
+  button-whatsapp:
+    backgroundColor: "{colors.verde}"
+    textColor: "{colors.whatsapp-tinta}"
+    rounded: "{rounded.none}"
+    padding: "13px 18px"
     typography: "{typography.action}"
+  button-whatsapp-hover:
+    backgroundColor: "{colors.whatsapp-hover}"
   field:
     backgroundColor: "{colors.superficie}"
     textColor: "{colors.tinta}"
-    rounded: "{rounded.control}"
-    padding: "0 12px"
-    height: "46px"
-    typography: "{typography.body}"
+    rounded: "{rounded.none}"
+    padding: "0 14px"
+    height: "48px"
+    typography: "{typography.field}"
   navigation:
+    backgroundColor: "{colors.cabecera}"
     textColor: "{colors.secundario}"
+    typography: "{typography.navigation}"
   category:
-    backgroundColor: "transparent"
+    backgroundColor: "{colors.superficie}"
     textColor: "{colors.secundario}"
-    rounded: "{rounded.category}"
-    padding: "10px 0"
-    typography: "{typography.note}"
+    rounded: "{rounded.none}"
+    padding: "9px 14px"
+    typography: "{typography.category}"
   category-active:
-    backgroundColor: "transparent"
-    textColor: "{colors.tinta}"
+    backgroundColor: "{colors.seleccion}"
+    textColor: "{colors.rosa}"
   tag:
     backgroundColor: "transparent"
-    textColor: "{colors.verde}"
-    rounded: "{rounded.tag}"
-    padding: "0"
+    textColor: "{colors.rosa}"
+    rounded: "{rounded.none}"
+    padding: "2px 6px"
     typography: "{typography.tag}"
   tag-neutral:
-    backgroundColor: "transparent"
     textColor: "{colors.secundario}"
-  product-row:
+    padding: "0"
+  product-card:
     backgroundColor: "{colors.superficie}"
     textColor: "{colors.tinta}"
     rounded: "{rounded.none}"
   quantity-control:
     backgroundColor: "{colors.superficie}"
-    textColor: "{colors.verde}"
-    rounded: "{rounded.control}"
+    textColor: "{colors.rosa}"
+    rounded: "{rounded.none}"
+  variant:
+    backgroundColor: "{colors.superficie}"
+    textColor: "{colors.tinta}"
+    rounded: "{rounded.none}"
+    padding: "8px 12px"
+  variant-selected:
+    backgroundColor: "{colors.seleccion}"
+    textColor: "{colors.rosa}"
   order-summary:
     backgroundColor: "{colors.superficie}"
     textColor: "{colors.tinta}"
     rounded: "{rounded.none}"
-    padding: "0 0 0 24px"
+    padding: "22px"
+  message-preview:
+    backgroundColor: "{colors.mensaje-fondo}"
+    textColor: "{colors.mensaje-tinta}"
+    rounded: "{rounded.none}"
+    padding: "24px"
 ---
 
 # Design System: GaboStore
 
 ## Overview
 
-**Creative North Star: "Mostrador de tienda"**
+**Creative North Star: "Catálogo oscuro de Gabo Store"**
 
-“Mostrador de tienda” organiza una interfaz de trabajo sobria, cercana y en español. Los artículos, las variantes y los importes mandan; el verde profundo identifica acciones y disponibilidad sobre un fondo blanco.
+El catálogo oscuro reúne la identidad de las seis referencias aprobadas: lienzo casi negro, paneles carbón, bordes finos, selección rosa y marca rosada de dos líneas con camiseta. Es una interfaz directa, compacta y en español; los artículos, las variantes y los importes se comparan dentro de una estructura repetida.
 
-Public Sans local mantiene una voz común. Las filas abiertas, los divisores finos y los controles compactos permiten comparar sin convertir cada dato en una tarjeta. Las fotografías reales se muestran cuando existen; su ausencia se indica con texto, sin reservar un bloque grande en el detalle.
+Roboto Mono local sostiene la lectura y los controles; Public Sans local pertenece al logotipo SVG. El rosa señala selección, navegación activa, importes y avance. El verde identifica la preparación del mensaje de WhatsApp y las confirmaciones correctas. Las fotografías comerciales se muestran cuando existen; cuando faltan o fallan, un bloque de iniciales conserva el lugar del artículo.
 
 **Key Characteristics:**
 
-- Public Sans e importes con cifras tabulares.
-- Filas abiertas, controles compactos y separación por espacio y líneas.
-- Verde para acciones y disponibilidad; rojo para errores.
-- La misma jerarquía de líneas y totales durante todo el pedido.
-- Una transición breve del resumen, desactivada con movimiento reducido.
+- Negro y carbón con contornos finos, sin sombras de panel.
+- Roboto Mono en la interfaz y Public Sans únicamente en la marca.
+- Rosa en selección, importes y acciones; verde en WhatsApp y confirmación.
+- Tarjetas de producto con imagen o iniciales, adaptadas a dos, tres o cuatro columnas.
+- Controles rectos, foco visible y movimiento breve compatible con movimiento reducido.
+
+La fuente normativa de los valores es web/styles.css; el logotipo y los iconos proceden de web/Icono.tsx. Se contrastaron los componentes de catálogo, detalle, solicitud, mensaje y resumen con PRODUCT.md, el contrato de superficie y las capturas de catálogo móvil/escritorio y mensaje móvil del cierre de la migración.
 
 ## Colors
 
-Los valores normativos están en el frontmatter. El blanco es el lienzo y las superficies comparten su tono; la agrupación no depende de fondos de tarjeta. Las rampas del sidecar son muestras sintéticas, no colores adicionales de la interfaz.
+Los valores del frontmatter conservan los hexadecimales implementados. Las rampas del sidecar son muestras sintéticas para inspección; no amplían la paleta de la interfaz.
 
 ### Primary
 
-Verde de mostrador para acciones y disponibilidad, verde de respuesta para hover y verde de foco para teclado.
+Rosa intenso identifica botones principales, precios, totales, enlaces, contador y selección. Rosa de respuesta aclara el hover del botón principal y coincide con el foco de teclado. El rosa suave de la marca conserva su función de identidad. El vino de selección se comparte entre categorías y variantes seleccionadas.
+
+**The Rosa de selección Rule.** Selección, importes y acciones principales comparten el rosa. El estado seleccionado combina texto y borde rosa con fondo vino.
 
 ### Secondary
 
-Rojo de error y papel de error se reservan para mensajes de error.
+Verde WhatsApp distingue generar y abrir el mensaje, y también aparece en confirmaciones correctas. El botón verde tiene tinta oscura y una respuesta más clara al hover. La vista previa utiliza su propio fondo verde oscuro, borde verde y texto verde claro; no convierte el resto del catálogo en una superficie verde.
+
+### Tertiary
+
+Error y fondo de error forman la pareja reservada para avisos de validación y fallos. Los errores de línea conservan texto explícito además del color.
 
 ### Neutral
 
-Tinta oscura para lectura, gris de apoyo para contexto, gris suave para miniaturas y avisos, y línea clara para campos y filas.
-
-**The Verde con función Rule.** El verde identifica acción, selección o estado. La lectura principal usa tinta oscura y el contexto usa gris de apoyo.
+El lienzo casi negro, la cabecera más oscura, los paneles carbón y el carbón suave forman las capas. Tinta clara sostiene la lectura; gris de apoyo distingue categorías, variantes, disponibilidad y notas. Línea carbón delimita campos, tarjetas y secciones. Los bloques de iniciales alternan carbón azulado y vino oscuro en el catálogo; su texto y contorno tienen grises propios.
 
 ## Typography
 
-Public Sans local, con respaldo system-ui y sans-serif. El archivo variable cubre pesos de (400–800) con font-display swap. El cuerpo conserva interlineado (1.55) y medida máxima de (70ch).
+**Display Font:** Roboto Mono, con respaldo monospace. No existe un rol de hero independiente.
+**Body Font:** Roboto Mono, con respaldo monospace.
+**Brand Font:** Public Sans, con respaldo sans-serif, dentro del SVG de la marca.
 
-Los títulos de página usan headline y su variante móvil; nombres y secciones usan title. El detalle destaca el precio a (24px), reducido a (22px) en teléfono. Los importes se alinean con cifras tabulares. Las etiquetas de campo, notas, metadatos y acciones conservan sus roles del frontmatter.
+Ambas familias se sirven como WOFF2 locales con licencias OFL y font-display swap. Roboto Mono cubre pesos (400–700) y Public Sans (400–800). La marca usa letras en dos líneas y camiseta; su tamaño tipográfico pertenece al sistema de coordenadas del SVG, no a los títulos de página.
 
-**The Una voz, cifras alineadas Rule.** Public Sans sostiene toda la interfaz. Los precios y totales usan cifras tabulares.
+### Hierarchy
+
+- **Headline:** títulos de página y detalle; los encabezados van en mayúsculas, peso (700), interlineado (1.4) y pueden partir palabras largas. La solicitud usa (20px). El detalle móvil baja a (19px); el encabezado de mensaje usa (26px), o (23px) en teléfono.
+- **Catalog title / Title / Card title:** el catálogo usa su título compacto y baja a (16px) en teléfono. Los encabezados de sección usan title; el nombre de tarjeta baja a (13px) en teléfono.
+- **Body / Field:** lectura general y campos, respectivamente. El campo etiquetado conserva peso (600), mientras que su placeholder usa (400). El cuerpo baja a body-mobile hasta el corte de teléfono. Los párrafos conservan un máximo de (70ch).
+- **Label / Action / Navigation:** etiquetas y controles en mayúsculas. Las categorías usan (12px), peso (600) y espaciado normal; los botones usan action. El enlace del personal baja a (10px) en teléfono.
+- **Meta / Tag:** contexto, disponibilidad y estados. Los metadatos de tarjeta bajan a (10px) en teléfono; Demo usa (10px), peso (400), sin contorno.
+- **Price / Detail price / Total:** importes rosa con cifras tabulares. En teléfono, el precio de tarjeta pasa a (14px), el de detalle a (20px) y el total a (19px).
+
+**The Una interfaz monoespaciada Rule.** Roboto Mono sostiene títulos, texto, controles e importes; Public Sans se reserva para la marca. Precios, cantidades y totales usan cifras tabulares.
 
 ## Layout
 
-Marco y cabecera centrados de hasta (1280px). El contenido de escritorio usa relleno (40px 32px 64px); la cabecera, laterales de (32px) y altura mínima de (68px).
+El marco y el interior de cabecera se centran hasta (1280px). El contenido usa relleno (32px 24px 64px); la cabecera usa (12px 24px), altura mínima (92px) y permanece arriba durante el desplazamiento.
 
-El catálogo presenta dos columnas de filas compactas con separación horizontal de (40px). Cada fila combina miniatura cuadrada de (112px) e información, con espacio de (20px). La búsqueda tiene un máximo de (600px); las categorías aparecen debajo como filtros subrayados. El contador refleja los resultados visibles.
+El catálogo tiene dos columnas de tarjetas desde el ancho móvil, tres desde (900px) y cuatro desde (1200px), con espacio (20px). La búsqueda ocupa el ancho disponible. Las categorías forman una fila desplazable horizontalmente, con espacio (8px) y divisor inferior; no fuerzan un salto de línea. La tarjeta reserva una imagen vertical (4:5) encima de la información.
 
-El resumen aparece cuando el personal tiene un carrito, no como panel vacío al entrar. Su columna mide (280px), con separación de (40px), y permanece sticky a (100px). El detalle con imagen conserva dos columnas. Sin imagen, usa una sola columna de hasta (680px) y una nota breve bajo la información. Carrito y confirmación reservan una columna de (300px) para cliente y total.
+El detalle de escritorio tiene dos columnas iguales separadas (48px), con imagen cuadrada y selección a la derecha. La solicitud pública reserva (360px) para importes y contacto, con espacio (40px). El carrito del personal reserva (320px), con espacio (36px). El resumen del personal usa (280px) cuando acompaña al catálogo y conserva dos columnas de tarjetas; los resúmenes laterales permanecen a (116px) del borde superior.
 
-- Hasta (1000px), el resumen baja a (250px), el espacio a (32px) y el catálogo con resumen pasa a una columna de artículos.
-- Hasta (800px), resumen y datos del pedido se apilan. Las filas usan miniaturas de (88px), espacio de (16px) y dos columnas cuando caben. Los laterales del marco bajan a (20px).
-- Hasta (560px), el catálogo queda en una columna. El marco usa laterales de (16px), la cabecera mide al menos (64px) y los títulos usan headline-mobile. La marca y el carrito mantienen la navegación. El enlace redundante al catálogo y la etiqueta de sesión se ocultan.
+- Hasta (1024px), la columna de solicitud baja a (320px), con espacio (28px); el resumen del personal baja a (260px), con espacio (24px).
+- Hasta (899px), detalle, solicitud y paneles del personal se apilan. El detalle se limita a (680px), con espacio (28px). Su acción de añadir queda fija al borde inferior, incluye el área segura del dispositivo y reserva (90px) de espacio para el contenido. Los resúmenes dejan de ser sticky.
+- Hasta (560px), el marco usa (24px 16px 40px), la cabecera (10px 16px) y altura mínima (76px). La marca pasa de (176 × 64px) a (132 × 48px). Se ocultan el enlace redundante al catálogo y la etiqueta de sesión. Las tarjetas mantienen dos columnas, espacio (12px) y relleno de información (12px), frente a (18px) en escritorio.
+- Las líneas de solicitud utilizan miniaturas (3:4), de (88px) de ancho en escritorio y (64px) en teléfono; el importe baja debajo de la descripción cuando corresponde.
 
-Los nombres y contactos largos pueden partirse; los importes de las líneas permanecen juntos. Las acciones y categorías admiten varias líneas. Formularios de acceso y nuevo pedido conservan sus máximos de (440px) y (520px).
+Acceso y nuevo pedido conservan máximos de (440px) y (520px). La pantalla del mensaje centra un bloque de hasta (760px). Los nombres y contactos largos se parten; los grupos de variantes y las acciones permiten envolver cuando hace falta.
 
 ## Elevation & Depth
 
-No hay sombras ni desenfoque. La cabecera es opaca; las filas se delimitan por abajo y los datos laterales se separan con una línea de (1px). En móvil esa separación pasa arriba. No se duplican los divisores entre la última línea y el bloque de datos.
+La profundidad procede de fondos opacos y bordes de (1px). No hay box-shadow en paneles, tarjetas ni controles. La única sombra es el halo difuso rosado del logotipo, aplicado mediante drop-shadow; pertenece a la marca y no establece una elevación para las superficies.
 
-**The Agrupar sin encerrar Rule.** El espacio y los divisores agrupan artículos y datos del pedido. No se añade un contenedor por cada dato.
+**The Panel plano Rule.** Paneles, tarjetas y campos se separan con carbón y contornos finos. El halo difuso se conserva únicamente en la marca.
+
+El resumen del personal anima su contenido de opacidad (0.72) a (1) durante (180ms), con curva cubic-bezier(.16,1,.3,1). No hay transición decorativa en los controles. La preferencia de movimiento reducido desactiva animaciones y transiciones.
 
 ## Shapes
 
-Controles con esquinas discretas según control. Las filas, filtros y etiquetas no usan cápsulas. El radio surface se conserva en las fotografías reales del detalle; no convierte la ausencia de imagen en una tarjeta.
+Botones, campos, categorías, variantes y paneles son rectangulares, con radio none. La excepción circular es el contador del carrito, con radio counter. Las imágenes se recortan sin redondear; los bloques sin fotografía usan iniciales y un rectángulo fino inclinado. La miniatura de solicitud omite ese rectángulo interior.
+
+Los iconos son SVG de trazo y color heredado, con extremos y uniones redondos. El tamaño habitual es (20px), con variantes según su función. La marca es SVG con texto y camiseta, no un raster comercial.
 
 ## Components
 
 ### Buttons
 
-Principal verde con texto blanco, secundario blanco con contorno y acción de texto para quitar. Altura mínima de (44px), salvo el de texto de (36px). El hover oscurece el principal o subraya acciones de texto. El foco usa contorno verde de (3px), separado (4px). Disabled usa opacidad (0.55) y cursor not-allowed.
+Controles rectos y compactos, con altura mínima (48px), relleno del frontmatter y mayúsculas. El principal es rosa con tinta del lienzo; el secundario usa carbón suave, tinta clara y borde. El secundario aclara su borde al hover. El botón de texto usa gris de apoyo, altura mínima (36px), sin relleno; al hover pasa a rosa y se subraya. WhatsApp utiliza la pareja verde y tinta oscura.
+
+El foco de teclado usa contorno (2px), separado (4px). Los botones deshabilitados conservan opacidad (0.45) y cursor not-allowed. Las acciones que ocupan el ancho disponible mantienen el mismo lenguaje.
 
 ### Categories and Tags
 
-Categorías como botones de texto con línea inferior; la activa tiene peso (650), texto oscuro y línea verde. Se conserva aria-pressed. Sobre pedido y Demo son texto compacto de estado, sin fondos de insignia.
+Las categorías son botones con borde completo, altura mínima (44px) y estado aria-pressed. Hover y selección usan rosa; la selección añade fondo vino. Su fila puede desplazarse horizontalmente.
 
-### Product Rows
+Sobre pedido y las categorías del detalle utilizan una etiqueta de contorno vino, texto rosa y relleno del frontmatter. Demo es una variante neutral sin borde ni relleno. Son información de estado, no botones.
 
-El enlace incluye miniatura, nombre, categoría, precio y disponibilidad. No tiene contorno completo, sombra ni relleno de tarjeta. El hover subraya el nombre y cambia su color. Una foto ausente ocupa solo la miniatura; en el detalle queda como nota de texto.
+### Product Cards
+
+Cada tarjeta es un enlace completo de borde fino, fondo carbón y disposición vertical. Imagen o iniciales arriba; nombre, categoría, tallas, precio y disponibilidad debajo. El hover cambia el borde a rosa. El pie se desplaza al fondo de la tarjeta y puede envolver. La foto real ocupa el bloque mediante object-fit cover; una ruta ausente o fallida muestra iniciales con nombre accesible. No se fabrican fotografías comerciales.
 
 ### Inputs and Variants
 
-Campos de altura (46px), etiquetas visibles y borde fino. El personal con carrito selecciona la variante directamente en una lista de radios que muestra disponibilidad; no hay un selector que repita la misma lista. Las variantes agotadas se ven y se deshabilitan cuando corresponde. Cantidad y botón para añadir comparten una fila que puede envolver.
+Campos y selectores comparten altura (48px), borde fino, fondo carbón y esquinas rectas. El cursor de texto es rosa y el placeholder usa gris de apoyo. La búsqueda incluye un SVG y relleno izquierdo (44px); su etiqueta permanece accesible. Los demás campos conservan etiquetas visibles.
 
-El control de cantidad del carrito conserva botones de (38px) e input de (54px), reducidos a (30px) y (40px) en teléfono. El foco rodea el grupo.
+Las variantes son radios dentro de rectángulos de al menos (48 × 44px), reducidos a (44px) de ancho mínimo en teléfono. Seleccionadas usan el mismo vino y rosa que las categorías. El foco rodea la opción; las agotadas que no pueden elegirse quedan deshabilitadas y tachadas.
+
+El control de cantidad es un grupo con botones SVG y campo de (44 × 44px). El borde y el foco engloban el conjunto; el foco del grupo se separa (3px). En las líneas del carrito del personal, los anchos bajan a (36px) para botones y (34px) para el campo en teléfono.
 
 ### Navigation
 
-Marca textual y enlaces, con la página actual subrayada. El acceso público se llama Acceso del personal. La sesión del empleado se indica en la cabecera; el correo está disponible como nombre accesible y título. Las etapas numeradas se reservan para carrito y revisión. No hay un pie que repita la marca.
+La cabecera sticky reúne marca, catálogo, carrito con contador y acceso del personal. La página actual y el hover usan rosa. El carrito es un control de borde fino y el contador se superpone en la esquina superior derecha. En teléfono se conservan marca, carrito y acceso o salida; el carrito baja a (40 × 40px).
 
-### Order Summary and Confirmation
+### Request, Summary and Message
 
-Cliente, líneas y total se leen en un panel abierto, separado por una regla. Los importes se alinean a la derecha. El resumen solo anima líneas y total: opacidad de (0.72) a (1) durante (180ms), curva cubic-bezier(.16,1,.3,1). Con prefers-reduced-motion se desactivan animaciones y transiciones.
+Las líneas de solicitud son paneles de borde completo con miniatura, descripción, cantidad, eliminación e importe. El resumen público utiliza divisores para importes y contacto; el del personal es un panel carbón con relleno. Los totales son rosa y se alinean a la derecha.
 
-La confirmación conserva líneas, datos de contacto y total. El resultado correcto muestra un SVG de confirmación y texto, sin un bloque decorativo. La indicación de que el pedido no representa pago ni reserva permanece visible.
+La preparación de WhatsApp emplea una marca de confirmación verde dentro de un cuadrado de borde fino y una vista previa verde oscura. El mensaje conserva saltos de línea, interlineado (1.85) y puede partir texto largo. La acción de abrir WhatsApp aparece deshabilitada cuando no puede abrirse; la nota explica el motivo.
 
 ### Messages and Empty States
 
-Avisos informativos sobrios y errores con su pareja roja. Estados vacíos alineados al contenido, con mensaje y acción de recuperación. La búsqueda sin resultados permite limpiar filtros. Los mensajes mantienen roles status y alert.
+Los avisos usan carbón suave y texto claro; los errores, su pareja dedicada. Los estados vacíos se alinean al contenido y ofrecen la acción de recuperación que corresponda. Los mensajes mantienen roles status o alert y comunican el resultado con texto.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- **Do** mantener nombre, variante, cantidad e importe fáciles de comparar.
-- **Do** conservar etiquetas visibles, foco de teclado y mensajes de estado con texto.
-- **Do** usar imágenes reales y una indicación breve cuando falten.
-- **Do** reservar el botón principal para avanzar en la tarea.
+- **Do** conservar negro, carbón y bordes finos como base de las superficies.
+- **Do** mantener Roboto Mono en la interfaz y Public Sans en el logotipo SVG.
+- **Do** compartir rosa entre selección, importes y acciones principales.
+- **Do** distinguir las acciones de WhatsApp con verde y texto oscuro.
+- **Do** mantener dos columnas de catálogo en móvil y las ampliaciones de tres y cuatro columnas documentadas.
+- **Do** conservar foco visible, etiquetas accesibles, cifras tabulares y movimiento reducido.
+- **Do** mostrar fotografías reales o el bloque de iniciales cuando no estén disponibles.
 
 ### Don't:
 
-- **Don't** volver a envolver cada artículo o panel en una tarjeta.
-- **Don't** usar un gran bloque de relleno cuando falte una fotografía.
-- **Don't** añadir ayudas, insignias o pasos que repitan la información inmediata.
+- **Don't** restaurar la identidad anterior de fondo blanco, acciones verde profundo y filas abiertas.
+- **Don't** redondear tarjetas, campos o botones; el círculo pertenece al contador.
+- **Don't** extender el halo de la marca a paneles, tarjetas o controles.
 - **Don't** fabricar mercancía, fotografías ni afirmaciones comerciales.
+- **Don't** presentar la solicitud o la vista previa como un mensaje enviado, un pedido registrado o un pago.
