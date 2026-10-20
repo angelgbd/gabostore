@@ -13,8 +13,10 @@ export function Fotografia({ ruta, nombre }: { ruta: string; nombre: string }) {
   const valida = /^https:\/\//.test(ruta) || /^\/(?!\/)/.test(ruta);
   return <div className={`fotografia${valida && !fallo ? '' : ' sin-imagen'}`}>{valida && !fallo
     ? <img src={ruta} alt={nombre} loading="lazy" onError={() => setFallo(true)} />
-    : <span className="sin-foto">Sin fotografía</span>}</div>;
+    : <span className="sin-foto" role="img" aria-label={`${nombre}, sin fotografía`}><span aria-hidden="true">{iniciales(nombre)}</span></span>}</div>;
 }
+
+function iniciales(nombre: string) { const palabras = nombre.trim().split(/\s+/); return (palabras.length > 1 ? `${palabras[0]?.[0] ?? ''}${palabras[1]?.[0] ?? ''}` : nombre.slice(0, 2)).toLocaleUpperCase('es'); }
 
 export function Aviso({ children, error = false }: { children: ReactNode; error?: boolean }) {
   return <div className={error ? 'aviso error' : 'aviso'} role={error ? 'alert' : 'status'}>{children}</div>;
