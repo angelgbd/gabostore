@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { solicitar, mensajeError } from './api.js';
+import { cargarConfiguracion } from './configuracion.js';
 
 export interface Personal { id: string; email: string; rol: 'ADMIN' | 'EMPLEADO' }
 
@@ -13,7 +14,7 @@ export function useSesion() {
   useEffect(() => {
     let vigente = true;
     let cancelar = () => {};
-    void solicitar<{ url: string; clavePublica: string }>('config').then(async config => {
+    void cargarConfiguracion().then(async config => {
       if (!vigente) return;
       const conexion = createClient(config.url, config.clavePublica, {
         auth: { storageKey: 'gabostore-personal', persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },

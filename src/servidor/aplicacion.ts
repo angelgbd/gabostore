@@ -5,11 +5,13 @@ import { crearCapaDatos } from '../index.js';
 import { crearClienteSupabase, type ClienteSupabase } from '../supabase.js';
 import { crearCapaNegocio, ErrorNegocio } from '../negocio/index.js';
 import { ErrorDatos } from '../errors.js';
+import { numeroWhatsApp } from '../negocio/SolicitudConsulta.js';
 
 export interface OpcionesServidor {
   url: string;
   clavePublica: string;
   carpetaWeb: string;
+  whatsappNumero?: string;
   conectar?: (token?: string) => ClienteSupabase;
 }
 
@@ -67,7 +69,7 @@ export function crearServidor(opciones: OpcionesServidor) {
       const metodo = peticion.method ?? 'GET';
       if (ruta.pathname.startsWith('/api/')) {
         if (metodo === 'GET' && ruta.pathname === '/api/config') {
-          return json(respuesta, { url: opciones.url, clavePublica: opciones.clavePublica });
+          return json(respuesta, { url: opciones.url, clavePublica: opciones.clavePublica, whatsappNumero: numeroWhatsApp(opciones.whatsappNumero) });
         }
         const personal = ruta.pathname.startsWith('/api/personal/');
         let negocio = negocioPublico;

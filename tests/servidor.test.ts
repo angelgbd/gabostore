@@ -25,9 +25,9 @@ before(async () => {
 });
 after(async () => { await new Promise<void>((resolver, rechazar) => servidor.close(error => error ? rechazar(error) : resolver())); });
 
-test('la configuración pública solo entrega URL y clave pública', async () => {
+test('la configuración pública entrega solo URL, clave pública y destino WhatsApp', async () => {
   const respuesta = await fetch(`${base}/api/config`);
-  assert.deepEqual(await respuesta.json(), { url: 'https://prueba.supabase.co', clavePublica: clave });
+  assert.deepEqual(await respuesta.json(), { url: 'https://prueba.supabase.co', clavePublica: clave, whatsappNumero: null });
   assert.match(respuesta.headers.get('Content-Security-Policy') ?? '', /frame-ancestors 'none'/);
 });
 
