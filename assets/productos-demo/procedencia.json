@@ -1,0 +1,23 @@
+{
+  "derivados": "Los archivos .webp de igual nombre derivan de cada PNG generado, reducidos a 960 × 1200 y codificados a calidad 85; conservan el encuadre. Sus archivos .webp.json contienen el prompt exacto.",
+  "imagenes": [
+    {
+      "archivo": "camisa-basica.png",
+      "herramienta": "image_gen (built-in)",
+      "tipo": "Imagen ilustrativa de demo",
+      "prompt": "Use case: product-mockup. Asset type: illustrative product image for the GaboStore demo catalog. Photorealistic studio product rendering, portrait 4:5 composition, single whole garment or accessory centered with generous safe margins so square crops also work. Matte charcoal seamless backdrop, soft frontal studio light, realistic fabric detail and gentle grounding shadow. A clean catalog shot, no person, no mannequin, no hanger, no packaging, no props, no text, no letters, no labels, no logo or watermark. This is an illustrative demo image, not evidence of a real item of stock. Primary request: one plain light gray cotton short sleeve button-up shirt with a small simple collar, neatly presented front facing, sleeves naturally arranged, full shirt visible."
+    },
+    {
+      "archivo": "camisa.png",
+      "herramienta": "image_gen (built-in)",
+      "tipo": "Imagen ilustrativa de demo",
+      "prompt": "Use case: product-mockup. Asset type: illustrative product image for the GaboStore demo catalog. Photorealistic studio product rendering, portrait 4:5 composition, single whole garment or accessory centered with generous safe margins so square crops also work. Matte charcoal seamless backdrop, soft frontal studio light, realistic fabric detail and gentle grounding shadow. A clean catalog shot, no person, no mannequin, no hanger, no packaging, no props, no text, no letters, no labels, no logo or watermark. This is an illustrative demo image, not evidence of a real item of stock. Primary request: one plain ivory cotton long sleeve button-up shirt with a simple collar, neatly presented front facing, sleeves naturally arranged, full shirt visible."
+    },
+    {
+      "archivo": "gorra.png",
+      "herramienta": "image_gen (built-in)",
+      "tipo": "Imagen ilustrativa de demo",
+      "prompt": "Use case: product-mockup. Asset type: illustrative product image for the GaboStore demo catalog. Photorealistic studio product rendering, portrait 4:5 composition, single whole garment or accessory centered with generous safe margins so square crops also work. Matte charcoal seamless backdrop, soft frontal studio light, realistic fabric detail and gentle grounding shadow. A clean catalog shot, no person, no mannequin, no hanger, no packaging, no props, no text, no letters, no labels, no logo or watermark. This is an illustrative demo image, not evidence of a real item of stock. Primary request: one unbranded plain slate gray baseball cap, three-quarter front view, curved brim and subtle woven fabric, full cap visible."
+    }
+  ]
+}
