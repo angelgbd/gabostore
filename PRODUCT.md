@@ -31,7 +31,8 @@ WhatsApp se abre mediante un enlace con texto precargado, enviado manualmente po
 - Las cantidades son enteras positivas. Los precios se obtienen desde los datos del servidor; no se aceptan precios del navegador.
 - Un pedido pendiente no registra un pago ni descuenta existencias.
 - Los productos sobre pedido requieren confirmación manual del proveedor por el personal antes de generar el pedido. El catálogo público no muestra su precio.
-- Los cinco estados del último dominio aprobado se conservan. Pagos, anticipos, ventas, apartados, envíos, devoluciones y administración del catálogo quedan fuera de este flujo básico.
+- El personal puede dar de alta artículos con variantes, editar su ficha, subir una fotografía y ajustar existencias; también consulta los pedidos registrados. No elimina artículos o variantes ni cambia estados desde esta ampliación.
+- Los cinco estados del último dominio aprobado se conservan. Pagos, anticipos, ventas, apartados, envíos, devoluciones y administración de cuentas quedan fuera de este flujo básico.
 
 ## Brand Commitments
 
@@ -39,7 +40,7 @@ Nombre GaboStore. Interfaz en español basada en las seis referencias móviles a
 
 ## Evidence on Hand
 
-Documento de visión y diagramas aportados por el usuario. Repositorios y migraciones existentes. Proyecto Supabase GaboStore y registros ficticios identificados como DEMO. No se aportaron logotipo ni fotografías comerciales definitivas.
+Documento de visión y diagramas aportados por el usuario. Repositorios y migraciones existentes. Proyecto Supabase GaboStore y registros ficticios identificados como DEMO. Tres imágenes generadas con imagegen, aprobadas como ilustrativas para los cuatro artículos actuales; no representan fotografías comerciales definitivas. Las nuevas fotografías del personal se cargan en Supabase Storage.
 
 ## Product Principles
 

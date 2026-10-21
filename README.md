@@ -4,7 +4,9 @@ Implementación con **Supabase/PostgreSQL, TypeScript y React**. Conserva los tr
 
 ## Qué está implementado
 
-- Artículos con variantes, fotografías como URL/ruta, precio base y marca `sobrePedido`.
+- Artículos con variantes, fotografía en Supabase Storage, precio base y marca `sobrePedido`.
+- Alta y edición básica para ADMIN/EMPLEADO; ajustes atómicos de existencias por variante.
+- Consulta del historial de pedidos en páginas de 20 registros, con acceso a su detalle.
 - Datos de contacto de clientes, capturados por el personal; no se crean cuentas de clientes.
 - Un carrito abierto por cliente y carritos anteriores conservados como historial.
 - Un pedido por carrito, con copia independiente de cantidades y precios.
@@ -49,6 +51,8 @@ La [guía del flujo básico](docs/FLUJO_BASICO.md) explica la prueba paso a paso
 - `scripts/verificar-conexion.mjs`: prueba de conexión y permisos públicos sobre Supabase real.
 - `scripts/demo-pedido.ts`: ejecuta los repositorios TypeScript y deja un pedido completo en Supabase real.
 - `scripts/verificar-flujo.ts`: prueba real de HTTP → negocio → datos → Supabase.
+- `scripts/verificar-catalogo.ts`: prueba real del alta, edición, carga de imagen y ajustes con una sesión EMPLEADO.
+- `assets/productos-demo/`: tres imágenes ilustrativas generadas, versiones WebP optimizadas y sus prompts/procedencia.
 
 ## Preparación local
 
@@ -192,7 +196,7 @@ Las consultas individuales devuelven `null` si el registro no existe o no es vis
 - Las cantidades deben ser enteras positivas; las existencias, enteras no negativas. Los identificadores están limitados al rango seguro de JavaScript.
 - Las fechas se guardan como `timestamptz` y se entregan como cadenas ISO 8601.
 - No se permite borrar artículos, variantes, clientes o pedidos desde los repositorios. El stock agotado y los pedidos se conservan.
-- La fotografía se almacena como URL/ruta. La carga física de archivos en Supabase Storage queda para la integración correspondiente.
+- La fotografía se almacena como URL. La web carga JPEG, PNG o WebP de hasta 5 MiB en el bucket público `catalogo`; las cargas requieren rol ADMIN o EMPLEADO y utilizan rutas nuevas para cada archivo.
 - Crear un carrito o pedido pendiente **no reserva ni descuenta stock y no registra un pago**. La capa de control no debe tratar esta operación como una venta.
 
 El modelo final no incluye anticipos, `APARTADO`, `PAGADO`, reservas de 48 horas, ventas, devoluciones, `activo` ni `requiereConsulta`. Las reglas del documento que dependen de esos datos no quedan implementadas en este esquema simplificado. Para incorporarlas después se necesitaría una ampliación explícita del modelo; `CONFIRMADO` no se interpreta automáticamente como un pago.
