@@ -1,5 +1,6 @@
 import { EstadoPedido, type Cliente, type Pedido } from '../models.js';
 import type { PedidoRepository } from '../repositories/PedidoRepository.js';
+import { paginacion } from '../validation.js';
 import { ControlCarrito, type LineaCarrito, totalPedido } from './ControlCarrito.js';
 import { ErrorNegocio, idValido } from './ErrorNegocio.js';
 
@@ -8,10 +9,16 @@ export interface PedidoDetalle extends Omit<Pedido, 'items'> {
   items: LineaCarrito[];
   total: number;
 }
-export type DatosPedidos = Pick<PedidoRepository, 'guardar' | 'obtenerPorId' | 'obtenerPorCarrito'>;
+export type DatosPedidos = Pick<PedidoRepository, 'guardar' | 'obtenerPorId' | 'obtenerPorCarrito' | 'listarResumen'>;
 
 export class ControlGeneracionPedido {
   constructor(private readonly carritos: ControlCarrito, private readonly pedidos: DatosPedidos) {}
+
+  async listar(desde = 0) {
+    paginacion(21, desde);
+    const pedidos = await this.pedidos.listarResumen(desde, 21);
+    return { pedidos: pedidos.slice(0, 20), desde, hayMas: pedidos.length > 20 };
+  }
 
   async generar(carritoId: number, confirmacionesProveedor: number[] = []): Promise<PedidoDetalle> {
     idValido(carritoId);

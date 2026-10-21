@@ -6,6 +6,8 @@ import { crearClienteSupabase, type ClienteSupabase } from '../supabase.js';
 import { crearCapaNegocio, ErrorNegocio } from '../negocio/index.js';
 import { ErrorDatos } from '../errors.js';
 import { numeroWhatsApp } from '../negocio/SolicitudConsulta.js';
+import { limiteFotografia, extensionesFotografia } from '../fotografias.js';
+import type { ArticuloNuevo, CambiosArticulo } from '../models.js';
 
 export interface OpcionesServidor {
   url: string;
@@ -25,8 +27,39 @@ function numero(valor: unknown): number {
 }
 
 function cadena(valor: unknown): string {
-  if (typeof valor !== 'string') throw new ErrorHTTP(400, 'Los datos de contacto deben ser texto.');
+  if (typeof valor !== 'string') throw new ErrorHTTP(400, 'Los campos de texto deben contener texto.');
   return valor;
+}
+
+function camposArticulo(datos: Record<string, unknown>): CambiosArticulo {
+  const ficha: CambiosArticulo = {};
+  if (datos.nombre !== undefined) ficha.nombre = cadena(datos.nombre);
+  if (datos.categoria !== undefined) ficha.categoria = cadena(datos.categoria);
+  if (datos.fotografia !== undefined) ficha.fotografia = cadena(datos.fotografia);
+  if (datos.precioBase !== undefined) {
+    if (typeof datos.precioBase !== 'number') throw new ErrorHTTP(400, 'El precio debe ser un número.');
+    ficha.precioBase = datos.precioBase;
+  }
+  if (datos.sobrePedido !== undefined) {
+    if (typeof datos.sobrePedido !== 'boolean') throw new ErrorHTTP(400, 'Sobre pedido debe ser verdadero o falso.');
+    ficha.sobrePedido = datos.sobrePedido;
+  }
+  return ficha;
+}
+
+async function imagen(peticion: IncomingMessage) {
+  const tipo = peticion.headers['content-type'] ?? '';
+  if (!extensionesFotografia[tipo]) throw new ErrorHTTP(415, 'Elige una imagen JPEG, PNG o WebP.');
+  if (Number(peticion.headers['content-length']) > limiteFotografia) {
+    peticion.resume(); throw new ErrorHTTP(413, 'La imagen supera el límite de 5 MiB.');
+  }
+  const partes: Buffer[] = []; let longitud = 0;
+  for await (const fragmento of peticion) {
+    const parte = Buffer.from(fragmento as Uint8Array); longitud += parte.length;
+    if (longitud > limiteFotografia) throw new ErrorHTTP(413, 'La imagen supera el límite de 5 MiB.');
+    partes.push(parte);
+  }
+  return { contenido: Buffer.concat(partes), tipo };
 }
 
 async function cuerpo(peticion: IncomingMessage): Promise<Record<string, unknown>> {
@@ -94,6 +127,34 @@ export function crearServidor(opciones: OpcionesServidor) {
         const articulo = ruta.pathname.match(/^\/api\/(?:personal\/)?catalogo\/(\d+)$/);
         if (metodo === 'GET' && articulo) return json(respuesta, await negocio.catalogo.detalle(Number(articulo[1]), personal));
         if (personal) {
+          if (metodo === 'POST' && ruta.pathname === '/api/personal/imagenes') {
+            const archivo = await imagen(peticion);
+            return json(respuesta, { fotografia: await negocio.catalogo.subirFotografia(archivo.contenido, archivo.tipo, identidad!.id) }, 201);
+          }
+          if (metodo === 'POST' && ruta.pathname === '/api/personal/catalogo') {
+            const datos = await cuerpo(peticion);
+            if (!Array.isArray(datos.variantes)) throw new ErrorHTTP(400, 'Agrega las variantes del artículo.');
+            const nuevo: ArticuloNuevo = { ...camposArticulo(datos), nombre: cadena(datos.nombre), categoria: cadena(datos.categoria),
+              precioBase: datos.precioBase as number, variantes: datos.variantes.map((entrada: unknown) => {
+                if (!entrada || typeof entrada !== 'object' || Array.isArray(entrada)) throw new ErrorHTTP(400, 'La variante no es válida.');
+                const v = entrada as Record<string, unknown>;
+                if (typeof v.existencia !== 'number') throw new ErrorHTTP(400, 'La existencia debe ser un número entero.');
+                return { tallaMedida: cadena(v.tallaMedida), existencia: v.existencia };
+              }) };
+            return json(respuesta, await negocio.catalogo.crear(nuevo), 201);
+          }
+          if (metodo === 'PATCH' && articulo) {
+            const datos = await cuerpo(peticion);
+            if ('variantes' in datos) throw new ErrorHTTP(400, 'Ajusta las existencias desde el control de cada variante.');
+            return json(respuesta, await negocio.catalogo.actualizar(Number(articulo[1]), camposArticulo(datos)));
+          }
+          const existencias = ruta.pathname.match(/^\/api\/personal\/catalogo\/(\d+)\/variantes\/(\d+)\/existencias$/);
+          if (metodo === 'POST' && existencias) {
+            const datos = await cuerpo(peticion);
+            if (typeof datos.cambio !== 'number') throw new ErrorHTTP(400, 'El ajuste debe ser un número entero.');
+            return json(respuesta, await negocio.catalogo.ajustarExistencia(Number(existencias[1]), Number(existencias[2]), datos.cambio));
+          }
+          if (metodo === 'GET' && ruta.pathname === '/api/personal/pedidos') return json(respuesta, await negocio.pedidos.listar(Number(ruta.searchParams.get('desde') ?? 0)));
           if (metodo === 'POST' && ruta.pathname === '/api/personal/carritos') {
             const datos = await cuerpo(peticion);
             return json(respuesta, await negocio.carritos.crear({ nombre: cadena(datos.nombre), telefono: cadena(datos.telefono),

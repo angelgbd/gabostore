@@ -16,7 +16,7 @@ function escenarioPedido() {
       f.carrito.cerrado = true;
       return persistido;
     },
-    obtenerPorId: async () => persistido, obtenerPorCarrito: async () => persistido,
+    obtenerPorId: async () => persistido, obtenerPorCarrito: async () => persistido, listarResumen: async () => [],
   });
   return { ...f, controlPedido: control, entradas };
 }

@@ -1,4 +1,6 @@
-import type { Articulo } from '../models.js';
+import type { Articulo, ArticuloNuevo, CambiosArticulo } from '../models.js';
+import type { ArticuloRepository } from '../repositories/ArticuloRepository.js';
+import { entero, importe, texto } from '../validation.js';
 import { ErrorNegocio, idValido } from './ErrorNegocio.js';
 
 export interface ConsultaArticulos {
@@ -12,9 +14,66 @@ export interface ArticuloCatalogo extends Omit<Articulo, 'precioBase'> {
   precioBase: number | null;
   existenciaTotal: number;
 }
+export type EscrituraArticulos = Pick<ArticuloRepository, 'crear' | 'actualizar' | 'ajustarExistencia' | 'subirFotografia'>;
 
 export class ControlCatalogo {
-  constructor(private readonly articulos: ConsultaArticulos) {}
+  constructor(private readonly articulos: ConsultaArticulos, private readonly escritura?: EscrituraArticulos) {}
+
+  async crear(datos: ArticuloNuevo): Promise<ArticuloCatalogo> {
+    const ficha = this.validarFicha(datos);
+    if (!Array.isArray(datos.variantes) || !datos.variantes.length) throw new ErrorNegocio('Agrega al menos una variante; utiliza Única si no tiene talla.');
+    const tallas = new Set<string>();
+    const variantes = datos.variantes.map(variante => {
+      const tallaMedida = texto(variante.tallaMedida, 'Talla / medida');
+      const clave = tallaMedida.toLocaleLowerCase('es');
+      if (tallas.has(clave)) throw new ErrorNegocio('Cada talla o medida debe aparecer una sola vez.');
+      tallas.add(clave); entero(variante.existencia, 0, 'Existencia');
+      return { tallaMedida, existencia: variante.existencia };
+    });
+    return this.presentar(await this.escribir().crear({ ...datos, ...ficha, variantes }), true);
+  }
+
+  async actualizar(id: number, cambios: CambiosArticulo): Promise<ArticuloCatalogo> {
+    await this.detalle(id, true);
+    const ficha = this.validarFicha(cambios);
+    if (!Object.keys(ficha).length) throw new ErrorNegocio('No hay datos para actualizar.');
+    return this.presentar(await this.escribir().actualizar(id, ficha), true);
+  }
+
+  async ajustarExistencia(id: number, varianteId: number, cambio: number): Promise<ArticuloCatalogo> {
+    idValido(varianteId);
+    if (!Number.isInteger(cambio) || !cambio || Math.abs(cambio) > 2147483647) throw new ErrorNegocio('El ajuste debe ser un entero distinto de cero.');
+    const articulo = await this.detalle(id, true);
+    if (!articulo.variantes.some(v => v.id === varianteId)) throw new ErrorNegocio('La variante no pertenece a este artículo.', 'NO_ENCONTRADO');
+    await this.escribir().ajustarExistencia(varianteId, cambio);
+    return this.detalle(id, true);
+  }
+
+  async subirFotografia(contenido: Uint8Array, tipo: string, usuarioId: string): Promise<string> {
+    return this.escribir().subirFotografia(contenido, tipo, usuarioId);
+  }
+
+  private escribir(): EscrituraArticulos {
+    if (!this.escritura) throw new ErrorNegocio('Esta operación requiere el acceso del personal.');
+    return this.escritura;
+  }
+
+  private validarFicha(datos: CambiosArticulo): CambiosArticulo {
+    const ficha: CambiosArticulo = {};
+    if (datos.nombre !== undefined) ficha.nombre = texto(datos.nombre, 'Nombre');
+    if (datos.categoria !== undefined) ficha.categoria = texto(datos.categoria, 'Categoría');
+    if (datos.precioBase !== undefined) { importe(datos.precioBase); ficha.precioBase = datos.precioBase; }
+    if (datos.sobrePedido !== undefined) {
+      if (typeof datos.sobrePedido !== 'boolean') throw new ErrorNegocio('Sobre pedido debe ser verdadero o falso.');
+      ficha.sobrePedido = datos.sobrePedido;
+    }
+    if (datos.fotografia !== undefined) {
+      const ruta = datos.fotografia.trim();
+      if (ruta && !/^https:\/\/[^\s]+$/.test(ruta)) throw new ErrorNegocio('La fotografía debe ser una URL HTTPS válida.');
+      ficha.fotografia = ruta;
+    }
+    return ficha;
+  }
 
   async listar(personal = false, limite = 100, desde = 0): Promise<ArticuloCatalogo[]> {
     const resultados = personal

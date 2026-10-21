@@ -11,6 +11,14 @@ export interface FiltroPedidos {
   desde?: number;
 }
 
+export interface PedidoResumen {
+  id: number;
+  fechaCreacion: string;
+  estado: EstadoPedido;
+  cliente: { id: number; nombre: string };
+  total: number;
+}
+
 function comprobarEstado(estado: EstadoPedido): void {
   if (!Object.values(EstadoPedido).includes(estado)) throw new ErrorDatos('Estado de pedido inválido.', 'VALIDACION');
 }
@@ -85,6 +93,17 @@ export class PedidoRepository {
     const { data, error } = await consulta;
     comprobarError(error);
     return (data ?? []).map(convertirPedido);
+  }
+
+  async listarResumen(desde = 0, limite = 21): Promise<PedidoResumen[]> {
+    paginacion(limite, desde);
+    const { data, error } = await this.db.from('pedidos')
+      .select('id, fecha_creacion, estado, carrito:carritos(cliente:clientes(id, nombre)), items_pedido(subtotal)')
+      .order('fecha_creacion', { ascending: false }).order('id', { ascending: false }).range(desde, desde + limite - 1);
+    comprobarError(error);
+    return (data ?? []).map(pedido => ({ id: pedido.id, fechaCreacion: pedido.fecha_creacion, estado: pedido.estado,
+      cliente: requerido(pedido.carrito?.cliente ?? null, 'No se encontró el cliente del pedido.'),
+      total: pedido.items_pedido.reduce((suma, item) => suma + Math.round(Number(item.subtotal) * 100), 0) / 100 }));
   }
 
   /** La capa de control decide cuándo corresponde cada cambio de estado. */

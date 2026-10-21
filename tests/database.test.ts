@@ -24,6 +24,16 @@ before(async () => {
     grant usage on schema auth, public to anon, authenticated, service_role;
     grant execute on function auth.jwt() to anon, authenticated, service_role;
     grant execute on function auth.uid() to anon, authenticated, service_role;
+    create schema storage;
+    create table storage.buckets (id text primary key, name text not null, public boolean default false,
+      file_size_limit bigint, allowed_mime_types text[]);
+    create table storage.objects (id uuid primary key default gen_random_uuid(), bucket_id text references storage.buckets(id), name text not null);
+    alter table storage.objects enable row level security;
+    create function storage.foldername(name text) returns text[] language sql immutable as $$
+      select (string_to_array(name, '/'))[1:array_length(string_to_array(name, '/'), 1)-1]
+    $$;
+    grant usage on schema storage to anon, authenticated, service_role;
+    grant select, insert, update, delete on storage.objects to anon, authenticated, service_role;
   `);
   const carpeta = new URL('../supabase/migrations/', import.meta.url);
   const archivos = (await readdir(carpeta)).filter(nombre => nombre.endsWith('.sql')).sort();
@@ -62,6 +72,22 @@ async function fixture() {
 function codigoEsperado(codigo: string) {
   return (error: unknown) => typeof error === 'object' && error !== null && 'code' in error && error.code === codigo;
 }
+
+test('Storage solo permite cargas del personal en su propia carpeta y no sobrescrituras', async () => {
+  const archivo = `productos/${personal.sub}/prueba.png`;
+  const insertar = (ruta: string) => db.query("insert into storage.objects(bucket_id,name) values ('catalogo',$1)", [ruta]);
+  await conRol('anon', {}, () => assert.rejects(insertar(archivo), codigoEsperado('42501')));
+  await conRol('authenticated', { sub: personal.sub, app_metadata: {} }, () => assert.rejects(insertar(archivo), codigoEsperado('42501')));
+  await conRol('authenticated', personal, async () => {
+    await insertar(archivo);
+    await assert.rejects(insertar('demo/no-permitido.png'), codigoEsperado('42501'));
+    await assert.rejects(insertar('productos/otro-usuario/archivo.png'), codigoEsperado('42501'));
+    const actualizado = await db.query("update storage.objects set name='cambio.png' returning id");
+    assert.equal(actualizado.rows.length, 0);
+  });
+  const bucket = await db.query<{ public: boolean; file_size_limit: number }>("select public,file_size_limit from storage.buckets where id='catalogo'");
+  assert.equal(bucket.rows[0]?.public, true); assert.equal(Number(bucket.rows[0]?.file_size_limit), 5242880);
+});
 
 test('precio y existencia inválidos se rechazan; una creación compuesta fallida se revierte', async () => {
   await assert.rejects(db.query("insert into public.articulos(nombre,categoria,precio_base) values ('Mal','X',-1)"), codigoEsperado('23514'));

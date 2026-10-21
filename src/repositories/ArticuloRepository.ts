@@ -1,8 +1,9 @@
 import type { ClienteSupabase } from '../supabase.js';
 import type { Articulo, ArticuloNuevo, CambiosArticulo, Variante, VarianteNueva } from '../models.js';
-import { comprobarError, requerido } from '../errors.js';
+import { comprobarError, requerido, ErrorDatos } from '../errors.js';
 import { convertirArticulo, convertirCatalogo, convertirVariante } from '../mappers.js';
 import { identificador, entero, importe, texto, paginacion } from '../validation.js';
+import { validarFotografia, extensionesFotografia } from '../fotografias.js';
 
 export class ArticuloRepository {
   constructor(private readonly db: ClienteSupabase) {}
@@ -92,5 +93,16 @@ export class ArticuloRepository {
     const { data, error } = await this.db.rpc('ajustar_existencia', { p_variante_id: varianteId, p_cambio: cambio }).single();
     comprobarError(error);
     return convertirVariante(requerido(data, 'No se obtuvo la variante actualizada.'));
+  }
+
+  async subirFotografia(contenido: Uint8Array, tipo: string, usuarioId: string): Promise<string> {
+    validarFotografia(contenido, tipo);
+    if (!/^[\da-f-]{36}$/i.test(usuarioId)) throw new Error('La identidad del personal no es válida.');
+    const ruta = `productos/${usuarioId}/${crypto.randomUUID()}.${extensionesFotografia[tipo]}`;
+    const { error } = await this.db.storage.from('catalogo').upload(ruta, contenido, {
+      contentType: tipo, upsert: false, cacheControl: '31536000',
+    });
+    if (error) throw new ErrorDatos('No se pudo subir la imagen. Intenta nuevamente.', 'STORAGE', error.message);
+    return this.db.storage.from('catalogo').getPublicUrl(ruta).data.publicUrl;
   }
 }

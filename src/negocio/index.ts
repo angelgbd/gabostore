@@ -12,6 +12,6 @@ export type { PedidoDetalle } from './ControlGeneracionPedido.js';
 
 export function crearCapaNegocio(datos: ReturnType<typeof crearCapaDatos>) {
   const carritos = new ControlCarrito(datos.carritos, datos.articulos);
-  return { catalogo: new ControlCatalogo(datos.articulos), carritos,
+  return { catalogo: new ControlCatalogo(datos.articulos, datos.articulos), carritos,
     pedidos: new ControlGeneracionPedido(carritos, datos.pedidos) };
 }

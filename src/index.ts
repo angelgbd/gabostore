@@ -8,7 +8,7 @@ export * from './database.types.js';
 export * from './errors.js';
 export * from './supabase.js';
 export { ArticuloRepository, CarritoRepository, PedidoRepository };
-export type { FiltroPedidos } from './repositories/PedidoRepository.js';
+export type { FiltroPedidos, PedidoResumen } from './repositories/PedidoRepository.js';
 export * from './negocio/index.js';
 
 export function crearCapaDatos(cliente: ClienteSupabase) {
