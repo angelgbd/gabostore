@@ -101,9 +101,12 @@ export class PedidoRepository {
       .select('id, fecha_creacion, estado, carrito:carritos(cliente:clientes(id, nombre)), items_pedido(subtotal)')
       .order('fecha_creacion', { ascending: false }).order('id', { ascending: false }).range(desde, desde + limite - 1);
     comprobarError(error);
-    return (data ?? []).map(pedido => ({ id: pedido.id, fechaCreacion: pedido.fecha_creacion, estado: pedido.estado,
-      cliente: requerido(pedido.carrito?.cliente ?? null, 'No se encontró el cliente del pedido.'),
-      total: pedido.items_pedido.reduce((suma, item) => suma + Math.round(Number(item.subtotal) * 100), 0) / 100 }));
+    return (data ?? []).map(pedido => {
+      const centavos = pedido.items_pedido.reduce((suma, item) => suma + Math.round(Number(item.subtotal) * 100), 0);
+      if (!Number.isSafeInteger(centavos)) throw new ErrorDatos('El total del pedido supera el importe permitido.', 'VALIDACION');
+      return { id: pedido.id, fechaCreacion: pedido.fecha_creacion, estado: pedido.estado,
+        cliente: requerido(pedido.carrito?.cliente ?? null, 'No se encontró el cliente del pedido.'), total: centavos / 100 };
+    });
   }
 
   /** La capa de control decide cuándo corresponde cada cambio de estado. */

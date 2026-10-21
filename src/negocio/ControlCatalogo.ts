@@ -1,6 +1,7 @@
 import type { Articulo, ArticuloNuevo, CambiosArticulo } from '../models.js';
 import type { ArticuloRepository } from '../repositories/ArticuloRepository.js';
 import { entero, importe, texto } from '../validation.js';
+import { ErrorDatos } from '../errors.js';
 import { ErrorNegocio, idValido } from './ErrorNegocio.js';
 
 export interface ConsultaArticulos {
@@ -45,7 +46,12 @@ export class ControlCatalogo {
     if (!Number.isInteger(cambio) || !cambio || Math.abs(cambio) > 2147483647) throw new ErrorNegocio('El ajuste debe ser un entero distinto de cero.');
     const articulo = await this.detalle(id, true);
     if (!articulo.variantes.some(v => v.id === varianteId)) throw new ErrorNegocio('La variante no pertenece a este artículo.', 'NO_ENCONTRADO');
-    await this.escribir().ajustarExistencia(varianteId, cambio);
+    try { await this.escribir().ajustarExistencia(varianteId, cambio); }
+    catch (error) {
+      if (error instanceof ErrorDatos && error.codigo === '23514') throw new ErrorNegocio('No puedes retirar más unidades de las disponibles. Actualiza la ficha y revisa el ajuste.');
+      if (error instanceof ErrorDatos && error.codigo === '22003') throw new ErrorNegocio('El ajuste supera la cantidad máxima de existencias permitida.');
+      throw error;
+    }
     return this.detalle(id, true);
   }
 
