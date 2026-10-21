@@ -235,7 +235,7 @@ components:
 
 El catálogo oscuro reúne la identidad de las seis referencias aprobadas: lienzo casi negro, paneles carbón, bordes finos, selección rosa y marca rosada de dos líneas con camiseta. Es una interfaz directa, compacta y en español; los artículos, las variantes y los importes se comparan dentro de una estructura repetida.
 
-Roboto Mono local sostiene la lectura y los controles; Public Sans local pertenece al logotipo SVG. El rosa señala selección, navegación activa, importes y avance. El verde identifica la preparación del mensaje de WhatsApp y las confirmaciones correctas. Las fotografías comerciales se muestran cuando existen; cuando faltan o fallan, un bloque de iniciales conserva el lugar del artículo.
+Roboto Mono local sostiene la lectura y los controles; Public Sans local pertenece al logotipo SVG. El rosa señala selección, navegación activa, importes y avance. El verde identifica la preparación del mensaje de WhatsApp y las confirmaciones correctas. Las fotografías comerciales se muestran cuando existen; las imágenes de demo aprobadas se identifican como ilustrativas. Cuando una imagen falta o falla, un bloque de iniciales conserva el lugar del artículo.
 
 **Key Characteristics:**
 
@@ -245,7 +245,7 @@ Roboto Mono local sostiene la lectura y los controles; Public Sans local pertene
 - Tarjetas de producto con imagen o iniciales, adaptadas a dos, tres o cuatro columnas.
 - Controles rectos, foco visible y movimiento breve compatible con movimiento reducido.
 
-La fuente normativa de los valores es web/styles.css; el logotipo y los iconos proceden de web/Icono.tsx. Se contrastaron los componentes de catálogo, detalle, solicitud, mensaje y resumen con PRODUCT.md, el contrato de superficie y las capturas de catálogo móvil/escritorio y mensaje móvil del cierre de la migración.
+La fuente normativa de los valores es web/styles.css; el logotipo y los iconos proceden de web/Icono.tsx. Se contrastaron los componentes de catálogo, detalle, solicitud, mensaje y resumen con PRODUCT.md y el contrato de superficie. La ampliación del personal se contrastó con web/App.tsx, web/PantallaProducto.tsx, web/PantallaPedidos.tsx, web/componentes.tsx y las capturas de alta y pedidos de .impeccable/review/ampliacion/. Conserva los tokens y las decisiones de identidad existentes.
 
 ## Colors
 
@@ -297,11 +297,15 @@ El catálogo tiene dos columnas de tarjetas desde el ancho móvil, tres desde (9
 El detalle de escritorio tiene dos columnas iguales separadas (48px), con imagen cuadrada y selección a la derecha. La solicitud pública reserva (360px) para importes y contacto, con espacio (40px). El carrito del personal reserva (320px), con espacio (36px). El resumen del personal usa (280px) cuando acompaña al catálogo y conserva dos columnas de tarjetas; los resúmenes laterales permanecen a (116px) del borde superior.
 
 - Hasta (1024px), la columna de solicitud baja a (320px), con espacio (28px); el resumen del personal baja a (260px), con espacio (24px).
-- Hasta (899px), detalle, solicitud y paneles del personal se apilan. El detalle se limita a (680px), con espacio (28px). Su acción de añadir queda fija al borde inferior, incluye el área segura del dispositivo y reserva (90px) de espacio para el contenido. Los resúmenes dejan de ser sticky.
+- Hasta (899px), detalle, solicitud, carrito y resumen del personal se apilan. El detalle se limita a (680px), con espacio (28px). Su acción de añadir queda fija al borde inferior, incluye el área segura del dispositivo y reserva (90px) de espacio para el contenido. Los resúmenes dejan de ser sticky.
 - Hasta (560px), el marco usa (24px 16px 40px), la cabecera (10px 16px) y altura mínima (76px). La marca pasa de (176 × 64px) a (132 × 48px). Se ocultan el enlace redundante al catálogo y la etiqueta de sesión. Las tarjetas mantienen dos columnas, espacio (12px) y relleno de información (12px), frente a (18px) en escritorio.
 - Las líneas de solicitud utilizan miniaturas (3:4), de (88px) de ancho en escritorio y (64px) en teléfono; el importe baja debajo de la descripción cuando corresponde.
 
 Acceso y nuevo pedido conservan máximos de (440px) y (520px). La pantalla del mensaje centra un bloque de hasta (760px). Los nombres y contactos largos se parten; los grupos de variantes y las acciones permiten envolver cuando hace falta.
+
+El editor de producto se limita a (1100px), con ficha y variantes en una columna fluida y fotografía en una columna de (300px); separa columnas (48px) y filas (36px). Hasta (899px), la fotografía ocupa (240px) y el espacio baja a (28px). Hasta (640px), ficha y fotografía se apilan, la vista previa conserva un máximo de (240px) y las acciones pueden envolver y compartir el ancho. Los campos de la ficha mantienen dos columnas con espacio (22px); el nombre ocupa ambas.
+
+Los ajustes de existencias forman una sección separada debajo del editor. Cada fila alinea variante, acción, unidades y aplicación; hasta (640px), la variante y el botón ocupan filas completas y los dos campos comparten una fila. La lista de pedidos alinea número, cliente, fecha, estado y total en cinco columnas. Hasta (1024px) compacta columnas y espacios; hasta (767px) oculta la cabecera y reorganiza cada fila en dos columnas: número y total arriba, cliente a todo el ancho, fecha y estado debajo. La paginación puede envolver.
 
 ## Elevation & Depth
 
@@ -333,7 +337,13 @@ Sobre pedido y las categorías del detalle utilizan una etiqueta de contorno vin
 
 ### Product Cards
 
-Cada tarjeta es un enlace completo de borde fino, fondo carbón y disposición vertical. Imagen o iniciales arriba; nombre, categoría, tallas, precio y disponibilidad debajo. El hover cambia el borde a rosa. El pie se desplaza al fondo de la tarjeta y puede envolver. La foto real ocupa el bloque mediante object-fit cover; una ruta ausente o fallida muestra iniciales con nombre accesible. No se fabrican fotografías comerciales.
+Cada tarjeta es un enlace completo de borde fino, fondo carbón y disposición vertical. Imagen o iniciales arriba; nombre, categoría, tallas, precio y disponibilidad debajo. El hover cambia el borde a rosa. El pie se desplaza al fondo de la tarjeta y puede envolver. La imagen ocupa el bloque mediante object-fit cover; en el detalle cuadrado utiliza object-fit contain para mostrarla completa. Una ruta ausente o fallida muestra iniciales con nombre accesible.
+
+### Product Imagery
+
+Las imágenes de demo aprobadas llevan «Imagen ilustrativa» en la esquina inferior izquierda, con fondo del lienzo, texto secundario y relleno compacto. El texto alternativo también identifica su condición de demo. La marca visual se omite en la miniatura de solicitud; las fotografías reales cargadas por el personal no reciben esa etiqueta. Esta distinción conserva el carácter comercial de una foto real sin presentar una ilustración como prueba de mercancía disponible.
+
+La entrega actual utiliza tres imágenes nativas de imagegen para cuatro productos semilla; los dos artículos Camisa comparten una imagen. Sus originales PNG, derivados WebP y prompts se conservan en assets/productos-demo/, con procedencia central en assets/productos-demo/procedencia.json y metadatos junto a cada derivado. Esta autorización corresponde a esas imágenes identificadas; no autoriza inventar mercancía ni afirmaciones comerciales.
 
 ### Inputs and Variants
 
@@ -342,6 +352,18 @@ Campos y selectores comparten altura (48px), borde fino, fondo carbón y esquina
 Las variantes son radios dentro de rectángulos de al menos (48 × 44px), reducidos a (44px) de ancho mínimo en teléfono. Seleccionadas usan el mismo vino y rosa que las categorías. El foco rodea la opción; las agotadas que no pueden elegirse quedan deshabilitadas y tachadas.
 
 El control de cantidad es un grupo con botones SVG y campo de (44 × 44px). El borde y el foco engloban el conjunto; el foco del grupo se separa (3px). En las líneas del carrito del personal, los anchos bajan a (36px) para botones y (34px) para el campo en teléfono.
+
+### Product Editor and Stock Adjustments
+
+Alta y edición comparten campos de ficha con etiquetas visibles, controles rectos y fotografía opcional. El alta añade filas de talla o medida y existencia inicial, con acción para añadir o quitar variantes; conserva al menos una. La fotografía presenta vista previa, selector nativo y nombre de archivo que puede partirse. Admite JPEG, PNG o WebP de hasta (5 MiB); una selección inválida muestra un error explícito. Guardar y cancelar aparecen después de un divisor que abarca ambas columnas. Durante la carga o el guardado, el estado se comunica con texto y los controles quedan deshabilitados.
+
+La edición muestra existencias actuales por variante en una sección propia, separada del guardado de ficha por espacio y divisor. Cada fila reúne Añadir/Retirar, unidades y «Aplicar ajuste» como acción secundaria. El resultado o error aparece en esa misma fila y la cantidad actual se actualiza al aplicar. La nota «Cada ajuste se guarda al aplicarlo» hace explícita su independencia de «Guardar cambios»; los ajustes no modifican pedidos anteriores.
+
+### Order List
+
+Los pedidos son filas enlazadas con divisores finos, sin convertir cada registro en una tarjeta. Número rosa, cliente con salto de texto largo, fecha secundaria, estado de contorno e importe con cifras tabulares mantienen la lectura por columnas; el importe se alinea a la derecha. La fila tiene altura mínima (88px), relleno (24px 20px) y fondo carbón al hover; conserva el foco visible compartido. En teléfono usa relleno (20px 0) y el orden descrito en Layout.
+
+La lista presenta hasta (20) registros por página, del más reciente al más antiguo. Anterior, rango visible y Siguiente cierran la lista; los botones de los límites quedan deshabilitados. Cada fila abre el detalle existente. Los estados de carga, error con reintento y lista vacía siguen los mensajes y acciones del sistema.
 
 ### Navigation
 
@@ -367,12 +389,15 @@ Los avisos usan carbón suave y texto claro; los errores, su pareja dedicada. Lo
 - **Do** distinguir las acciones de WhatsApp con verde y texto oscuro.
 - **Do** mantener dos columnas de catálogo en móvil y las ampliaciones de tres y cuatro columnas documentadas.
 - **Do** conservar foco visible, etiquetas accesibles, cifras tabulares y movimiento reducido.
-- **Do** mostrar fotografías reales o el bloque de iniciales cuando no estén disponibles.
+- **Do** mostrar fotografías reales, imágenes de demo aprobadas e identificadas, o el bloque de iniciales cuando no estén disponibles.
+- **Do** conservar la etiqueta «Imagen ilustrativa», el texto alternativo y la procedencia de las imágenes demo; las fotografías reales del personal no llevan esa etiqueta.
+- **Do** separar el guardado de ficha de los ajustes de existencias y mostrar el resultado junto a la variante afectada.
+- **Do** mantener número, cliente, fecha, estado y total en las filas de pedidos, reorganizados según el ancho disponible.
 
 ### Don't:
 
 - **Don't** restaurar la identidad anterior de fondo blanco, acciones verde profundo y filas abiertas.
 - **Don't** redondear tarjetas, campos o botones; el círculo pertenece al contador.
 - **Don't** extender el halo de la marca a paneles, tarjetas o controles.
-- **Don't** fabricar mercancía, fotografías ni afirmaciones comerciales.
+- **Don't** fabricar mercancía ni afirmaciones comerciales, ni presentar imágenes ilustrativas de demo como fotografías comerciales reales.
 - **Don't** presentar la solicitud o la vista previa como un mensaje enviado, un pedido registrado o un pago.
