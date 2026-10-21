@@ -96,7 +96,7 @@ export function crearServidor(opciones: OpcionesServidor) {
   return createServer(async (peticion, respuesta) => {
     respuesta.setHeader('X-Content-Type-Options', 'nosniff');
     respuesta.setHeader('Referrer-Policy', 'no-referrer');
-    respuesta.setHeader('Content-Security-Policy', `default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https: data:; connect-src 'self' ${new URL(opciones.url).origin}; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'`);
+    respuesta.setHeader('Content-Security-Policy', `default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https: data: blob:; connect-src 'self' ${new URL(opciones.url).origin}; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'`);
     try {
       const ruta = new URL(peticion.url ?? '/', 'http://localhost');
       const metodo = peticion.method ?? 'GET';

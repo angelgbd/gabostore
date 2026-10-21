@@ -16,6 +16,7 @@ import { PantallaSolicitud } from './PantallaSolicitud.js';
 import { PantallaMensaje } from './PantallaMensaje.js';
 import { cargarConfiguracion } from './configuracion.js';
 import { Icono, Logotipo } from './Icono.js';
+import { PantallaProducto } from './PantallaProducto.js';
 
 export function App() {
   const sesion = useSesion();
@@ -47,13 +48,13 @@ export function App() {
   }, []);
   useEffect(() => {
     if (ruta !== '/') window.scrollTo(0, 0);
-    document.title = `GaboStore · ${ruta === '/solicitud' ? 'Mi pedido' : ruta === '/mensaje' ? 'Mensaje de WhatsApp' : ruta === '/personal' ? 'Acceso del personal' : ruta === '/carrito' ? 'Carrito' : ruta === '/confirmar' ? 'Revisar pedido' : ruta.startsWith('/pedido/') ? 'Pedido registrado' : ruta.startsWith('/articulo/') ? 'Detalle del artículo' : 'Catálogo'}`;
+    document.title = `GaboStore · ${ruta === '/productos/nuevo' ? 'Nuevo producto' : ruta.startsWith('/productos/') ? 'Editar producto' : ruta === '/solicitud' ? 'Mi pedido' : ruta === '/mensaje' ? 'Mensaje de WhatsApp' : ruta === '/personal' ? 'Acceso del personal' : ruta === '/carrito' ? 'Carrito' : ruta === '/confirmar' ? 'Revisar pedido' : ruta.startsWith('/pedido/') ? 'Pedido registrado' : ruta.startsWith('/articulo/') ? 'Detalle del artículo' : 'Catálogo'}`;
   }, [ruta]);
   useEffect(() => {
     if (ruta === '/' && !cargando && !sesion.iniciando) window.scrollTo(0, posicionCatalogo.current);
   }, [ruta, cargando, sesion.iniciando]);
   useEffect(() => {
-    if (sesion.iniciando || ['/personal', '/carrito', '/confirmar', '/solicitud', '/mensaje'].includes(ruta)) return;
+    if (sesion.iniciando || ruta.startsWith('/productos/') || ['/personal', '/carrito', '/confirmar', '/solicitud', '/mensaje'].includes(ruta)) return;
     let actual = true;
     setCargando(true); setError('');
     const id = ruta.match(/^\/articulo\/(\d+)$/)?.[1];
@@ -93,10 +94,11 @@ export function App() {
       {carrito.error && <Aviso error>{carrito.error}</Aviso>}
       {sesion.personal && (ruta === '/carrito' || ruta === '/confirmar') && <ol className="pasos" aria-label="Etapas del pedido"><li><a href="#/">Artículos</a></li><li className={ruta === '/carrito' ? 'paso-actual' : ''}><a href="#/carrito">Carrito</a></li><li className={ruta === '/confirmar' ? 'paso-actual' : ''}>Confirmación</li></ol>}
       {error && !esCatalogo && <Aviso error>{error}</Aviso>}
-      {ruta === '/carrito' ? sesion.personal ? carrito.cargando ? <Cargando /> : <PantallaCarrito carrito={carrito.carrito} ocupado={carrito.ocupado} crear={carrito.crear} cambiar={carrito.cambiar} quitar={carrito.quitar} /> : <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> :
+      {ruta.startsWith('/productos/') ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error}/> : <PantallaProducto key={ruta} token={sesion.token!} {...(ruta.match(/^\/productos\/(\d+)\/editar$/)?.[1] ? { id: Number(ruta.match(/^\/productos\/(\d+)\/editar$/)![1]) } : {})}/> :
+        ruta === '/carrito' ? sesion.personal ? carrito.cargando ? <Cargando /> : <PantallaCarrito carrito={carrito.carrito} ocupado={carrito.ocupado} crear={carrito.crear} cambiar={carrito.cambiar} quitar={carrito.quitar} /> : <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> :
         ruta === '/confirmar' ? sesion.personal ? carrito.cargando ? <Cargando /> : <PantallaConfirmacionPedido carrito={carrito.carrito} registrando={registrando} registrar={registrar} /> : <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> :
         ruta.startsWith('/pedido/') ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> : cargando ? <Cargando /> : error ? <ErrorCarga mensaje={error} /> : <PantallaConfirmacionPedido carrito={null} pedido={pedido} registrando={false} registrar={registrar} /> :
-        <div className={`catalogo-layout${mostrarResumen ? ' con-pedido' : ''}`}><section className="contenido-catalogo">{cargando ? <Cargando /> : error ? <ErrorCarga mensaje={error} /> : ruta.startsWith('/articulo/') && detalle ? <PantallaDetalleArticulo key={detalle.id} articulo={detalle} personal={Boolean(sesion.personal)} tieneCarrito={Boolean(carrito.carrito)} ocupado={sesion.personal ? carrito.ocupado : consulta.ocupado} agregar={sesion.personal ? carrito.agregar : async (_articuloId, varianteId, cantidad) => consulta.agregar(detalle, varianteId, cantidad)} /> : <PantallaCatalogo articulos={articulos} busqueda={busqueda} categoria={categoria} setBusqueda={setBusqueda} setCategoria={setCategoria} nuevoPedido={Boolean(sesion.personal && !carrito.carrito)} />}</section>{mostrarResumen && <ResumenPedido carrito={carrito.carrito} cargando={carrito.cargando} />}</div>}
+        <div className={`catalogo-layout${mostrarResumen ? ' con-pedido' : ''}`}><section className="contenido-catalogo">{cargando ? <Cargando /> : error ? <ErrorCarga mensaje={error} /> : ruta.startsWith('/articulo/') && detalle ? <PantallaDetalleArticulo key={detalle.id} articulo={detalle} personal={Boolean(sesion.personal)} tieneCarrito={Boolean(carrito.carrito)} ocupado={sesion.personal ? carrito.ocupado : consulta.ocupado} agregar={sesion.personal ? carrito.agregar : async (_articuloId, varianteId, cantidad) => consulta.agregar(detalle, varianteId, cantidad)} /> : <PantallaCatalogo articulos={articulos} busqueda={busqueda} categoria={categoria} setBusqueda={setBusqueda} setCategoria={setCategoria} personal={Boolean(sesion.personal)} nuevoPedido={Boolean(sesion.personal && !carrito.carrito)} />}</section>{mostrarResumen && <ResumenPedido carrito={carrito.carrito} cargando={carrito.cargando} />}</div>}
     </>}</main>
   </>;
 }
