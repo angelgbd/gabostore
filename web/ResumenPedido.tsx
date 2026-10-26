@@ -4,7 +4,7 @@ import { dinero, nombreArticulo } from './componentes.js';
 export function ResumenPedido({ carrito, cargando }: { carrito: CarritoDetalle | null; cargando: boolean }) {
   return <aside className="resumen-pedido" aria-label="Resumen del pedido"><h2>Pedido en preparación</h2>
     {cargando ? <p className="nota">Cargando carrito…</p> : carrito ? <>
-      <p className="cliente-resumen">{carrito.cliente.nombre}</p>
+      <p className="cliente-resumen">{carrito.cliente?.nombre ?? 'Pedido web'}</p>
       <div className="contenido-resumen" key={carrito.items.map(item => `${item.varianteId}-${item.cantidad}-${item.precioUnitario}`).join('|')}>
       {carrito.items.length ? <ul className="resumen-lineas">{carrito.items.map(item => <li key={item.varianteId}><div><strong>{nombreArticulo(item.nombre)}</strong><span>{item.tallaMedida} · {item.cantidad} {item.cantidad === 1 ? 'unidad' : 'unidades'}</span></div><strong>{dinero(item.subtotal)}</strong></li>)}</ul> : <p className="nota">Elige un artículo y añade una variante para comenzar.</p>}
       <div className="total"><span>Total</span><strong>{dinero(carrito.total)}</strong></div>

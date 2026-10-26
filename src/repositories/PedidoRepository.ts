@@ -3,6 +3,7 @@ import { EstadoPedido, type Pedido, type PedidoNuevo } from '../models.js';
 import { comprobarError, ErrorDatos, requerido } from '../errors.js';
 import { convertirPedido } from '../mappers.js';
 import { entero, identificador, importe, paginacion } from '../validation.js';
+import type { RegistroPublicoDatos, SolicitudPedidoPublico } from '../negocio/ControlPedidoPublico.js';
 
 export interface FiltroPedidos {
   clienteId?: number;
@@ -15,7 +16,9 @@ export interface PedidoResumen {
   id: number;
   fechaCreacion: string;
   estado: EstadoPedido;
-  cliente: { id: number; nombre: string };
+  cliente: { id: number; nombre: string } | null;
+  origen: Pedido['origen'];
+  venceEn: string | null;
   total: number;
 }
 
@@ -25,6 +28,16 @@ function comprobarEstado(estado: EstadoPedido): void {
 
 export class PedidoRepository {
   constructor(private readonly db: ClienteSupabase) {}
+
+  async registrarPublico(solicitud: SolicitudPedidoPublico): Promise<RegistroPublicoDatos> {
+    const { data, error } = await this.db.rpc('registrar_pedido_publico', {
+      p_clave: solicitud.claveSolicitud, p_items: solicitud.items.map(i => ({ variante_id: i.varianteId, cantidad: i.cantidad })),
+    });
+    comprobarError(error);
+    const registro = requerido(data, 'No fue posible recuperar el pedido público.') as unknown as RegistroPublicoDatos;
+    if (!Number.isSafeInteger(registro.id) || !Array.isArray(registro.items) || !registro.venceEn) throw new ErrorDatos('Respuesta de registro no válida.', 'FORMATO');
+    return registro;
+  }
 
   /** Guarda la cabecera y todo el detalle en una transacción, cerrando su carrito. */
   async guardar(pedido: PedidoNuevo): Promise<Pedido> {
@@ -97,14 +110,14 @@ export class PedidoRepository {
   async listarResumen(desde = 0, limite = 21): Promise<PedidoResumen[]> {
     paginacion(limite, desde);
     const { data, error } = await this.db.from('pedidos')
-      .select('id, fecha_creacion, estado, carrito:carritos(cliente:clientes(id, nombre)), items_pedido(subtotal)')
+      .select('id, fecha_creacion, estado, origen, vence_en, carrito:carritos!pedidos_carrito_id_fkey(cliente:clientes(id, nombre)), items_pedido(subtotal)')
       .order('fecha_creacion', { ascending: false }).order('id', { ascending: false }).range(desde, desde + limite - 1);
     comprobarError(error);
     return (data ?? []).map(pedido => {
       const centavos = pedido.items_pedido.reduce((suma, item) => suma + Math.round(Number(item.subtotal) * 100), 0);
       if (!Number.isSafeInteger(centavos)) throw new ErrorDatos('El total del pedido supera el importe permitido.', 'VALIDACION');
       return { id: pedido.id, fechaCreacion: pedido.fecha_creacion, estado: pedido.estado,
-        cliente: requerido(pedido.carrito?.cliente ?? null, 'No se encontró el cliente del pedido.'), total: centavos / 100 };
+        cliente: pedido.carrito?.cliente ?? null, origen: pedido.origen as Pedido['origen'], venceEn: pedido.vence_en, total: centavos / 100 };
     });
   }
 

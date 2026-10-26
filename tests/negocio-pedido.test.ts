@@ -11,7 +11,7 @@ function escenarioPedido() {
   const control = new ControlGeneracionPedido(f.control, {
     guardar: async pedido => {
       entradas.push(pedido);
-      persistido = { ...pedido, id: 8, estado: pedido.estado ?? 'PENDIENTE', fechaCreacion: '2026-10-18T12:00:00Z',
+      persistido = { ...pedido, id: 8, estado: pedido.estado ?? 'PENDIENTE', fechaCreacion: '2026-10-18T12:00:00Z', origen: 'PERSONAL', venceEn: null,
         items: pedido.items.map(i => ({ ...i, subtotal: Math.round(i.cantidad * i.precioUnitario * 100) / 100 })) };
       f.carrito.cerrado = true;
       return persistido;

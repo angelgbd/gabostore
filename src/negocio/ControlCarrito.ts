@@ -17,7 +17,7 @@ export interface LineaCarrito extends ItemCarrito {
   fotografia: string;
 }
 export interface CarritoDetalle extends Omit<Carrito, 'items'> {
-  cliente: Cliente;
+  cliente: Cliente | null;
   items: LineaCarrito[];
   total: number;
 }
@@ -47,8 +47,8 @@ export class ControlCarrito {
     idValido(carritoId);
     const carrito = await this.carritos.obtenerPorId(carritoId);
     if (!carrito) throw new ErrorNegocio('No se encontró el carrito.', 'NO_ENCONTRADO');
-    const cliente = await this.carritos.obtenerCliente(carrito.clienteId);
-    if (!cliente) throw new ErrorNegocio('No se encontró el cliente del carrito.', 'NO_ENCONTRADO');
+    const cliente = carrito.clienteId === null ? null : await this.carritos.obtenerCliente(carrito.clienteId);
+    if (carrito.clienteId !== null && !cliente) throw new ErrorNegocio('No se encontró el cliente del carrito.', 'NO_ENCONTRADO');
     const items = await Promise.all(carrito.items.map(async item => {
       const articulo = await this.articulos.obtenerPorVariante(item.varianteId);
       const variante = articulo?.variantes.find(v => v.id === item.varianteId);

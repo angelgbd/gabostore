@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import type { ArticuloCatalogo } from '../src/negocio/ControlCatalogo.js';
 import { cantidadValida, generarMensajeConsulta, leerSolicitud, resumirConsulta, seleccionarConsulta, type SolicitudConsulta, type ResumenConsulta } from '../src/negocio/SolicitudConsulta.js';
 import { solicitar, mensajeError, ErrorAPI } from './api.js';
+import type { PedidoPublicoRegistrado } from '../src/negocio/ControlPedidoPublico.js';
+import { nuevoIntento, restaurarIntento } from './registroSolicitud.js';
 
 const clave = 'gabostore-consulta-publica-v1';
 export function useSolicitudConsulta() {
@@ -9,6 +11,10 @@ export function useSolicitudConsulta() {
     try { return leerSolicitud(sessionStorage.getItem(clave)); } catch { return leerSolicitud(null); }
   });
   const [articulos, setArticulos] = useState<ArticuloCatalogo[]>([]);
+  const [intento, setIntento] = useState(() => {
+    try { return restaurarIntento(sessionStorage.getItem(`${clave}-registro`), solicitud.items); }
+    catch { return nuevoIntento(solicitud.items); }
+  });
   const [cargando, setCargando] = useState(false);
   const [ocupado, setOcupado] = useState(false);
   const [error, setError] = useState('');
@@ -16,6 +22,7 @@ export function useSolicitudConsulta() {
   const revision = useRef(0);
   const enCurso = useRef(false);
   const ids = [...new Set(solicitud.items.map(i => i.articuloId))].join(',');
+  useEffect(() => { try { sessionStorage.setItem(`${clave}-registro`, JSON.stringify(intento)); } catch { /* Se conserva en memoria. */ } }, [intento]);
   useEffect(() => { try { sessionStorage.setItem(clave, JSON.stringify(solicitud)); } catch { /* La selección sigue en memoria si el navegador bloquea almacenamiento. */ } }, [solicitud]);
   useEffect(() => {
     let vigente = true;
@@ -38,18 +45,20 @@ export function useSolicitudConsulta() {
     setError('');
     const items = seleccionarConsulta(solicitud.items, articulo, varianteId, cantidad);
     setArticulos(anterior => [...anterior.filter(a => a.id !== articulo.id), articulo]);
-    setSolicitud(anterior => ({ ...anterior, items })); setVista(null);
+    setSolicitud({ items }); setIntento(nuevoIntento(items)); setVista(null);
   }
   function cambiar(varianteId: number, cantidad: number) {
     if (!cantidadValida(cantidad)) throw new Error('La cantidad debe ser un entero positivo.');
     const linea = resumirConsulta(solicitud.items, articulos).items.find(i => i.varianteId === varianteId);
     if (!linea) return;
     if (!linea.sobrePedido && cantidad > linea.existencia) throw new Error(`Hay ${linea.existencia} unidades disponibles.`);
-    setSolicitud(anterior => ({ ...anterior, items: anterior.items.map(i => i.varianteId === varianteId ? { ...i, cantidad } : i) }));
+    const items = solicitud.items.map(i => i.varianteId === varianteId ? { ...i, cantidad } : i);
+    setSolicitud({ items }); setIntento(nuevoIntento(items));
     setError(''); setVista(null);
   }
   function quitar(varianteId: number) {
-    setSolicitud(anterior => ({ ...anterior, items: anterior.items.filter(i => i.varianteId !== varianteId) }));
+    const items = solicitud.items.filter(i => i.varianteId !== varianteId);
+    setSolicitud({ items }); setIntento(nuevoIntento(items));
     setError(''); setVista(null);
   }
   async function preparar() {
@@ -57,6 +66,7 @@ export function useSolicitudConsulta() {
     enCurso.current = true; setOcupado(true); setError('');
     const actual = ++revision.current;
     try {
+      if (intento.registro) { setVista({ mensaje: intento.registro.mensaje, resumen: resumirConsulta(solicitud.items, articulos) }); return intento.registro.mensaje; }
       const datos = await consultar([...new Set(solicitud.items.map(i => i.articuloId))]);
       const resumen = resumirConsulta(solicitud.items, datos);
       setArticulos(datos);
@@ -66,5 +76,20 @@ export function useSolicitudConsulta() {
     } catch (e) { setVista(null); setError(mensajeError(e)); throw e; }
     finally { if (actual === revision.current) setCargando(false); setOcupado(false); enCurso.current = false; }
   }
-  return { solicitud, resumen: resumirConsulta(solicitud.items, articulos), vista, cargando, ocupado, error, agregar, cambiar, quitar, preparar };
+  async function registrar() {
+    if (enCurso.current) return;
+    enCurso.current = true; setOcupado(true); setError('');
+    try {
+      const registro = await solicitar<PedidoPublicoRegistrado>('pedidos/publicos', undefined, 'POST', {
+        claveSolicitud: intento.claveSolicitud, items: solicitud.items.map(({ varianteId, cantidad }) => ({ varianteId, cantidad })),
+      });
+      const guardado = { ...intento, registro };
+      try { sessionStorage.setItem(`${clave}-registro`, JSON.stringify(guardado)); } catch { /* Se conserva en memoria. */ }
+      setIntento(guardado); setVista({ mensaje: registro.mensaje, resumen: resumirConsulta(solicitud.items, articulos) });
+      return registro;
+    } catch (e) { setError(mensajeError(e)); throw e; }
+    finally { enCurso.current = false; setOcupado(false); }
+  }
+  function nueva() { setIntento(nuevoIntento(solicitud.items)); setVista(null); setError(''); }
+  return { solicitud, resumen: resumirConsulta(solicitud.items, articulos), vista, registro: intento.registro, cargando, ocupado, error, agregar, cambiar, quitar, preparar, registrar, nueva };
 }

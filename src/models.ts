@@ -41,22 +41,25 @@ export interface ItemCarrito {
 export interface Carrito {
   /** Identificador técnico para persistir y recuperar el carrito. */
   id: number;
-  clienteId: number;
+  clienteId: number | null;
   cerrado: boolean;
   items: ItemCarrito[];
 }
 
 export interface Pedido {
   id: number;
-  clienteId: number;
+  clienteId: number | null;
   carritoId: number;
   estado: EstadoPedido;
   fechaCreacion: string;
+  origen: 'PERSONAL' | 'PUBLICO';
+  venceEn: string | null;
   items: ItemCarrito[];
 }
 
 /** Datos de un pedido por guardar. PostgreSQL asigna ID, fecha y subtotales. */
-export type PedidoNuevo = Pick<Pedido, 'clienteId' | 'carritoId'> & {
+export type PedidoNuevo = Pick<Pedido, 'carritoId'> & {
+  clienteId: number;
   estado?: EstadoPedido;
   items: Omit<ItemCarrito, 'subtotal'>[];
 };

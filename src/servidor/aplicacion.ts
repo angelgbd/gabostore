@@ -8,12 +8,15 @@ import { ErrorDatos } from '../errors.js';
 import { numeroWhatsApp } from '../negocio/SolicitudConsulta.js';
 import { limiteFotografia, extensionesFotografia } from '../fotografias.js';
 import type { ArticuloNuevo, CambiosArticulo } from '../models.js';
+import { ControlPedidoPublico } from '../negocio/ControlPedidoPublico.js';
 
 export interface OpcionesServidor {
   url: string;
   clavePublica: string;
   carpetaWeb: string;
   whatsappNumero?: string;
+  claveServidor?: string;
+  conectarServidor?: () => ClienteSupabase;
   conectar?: (token?: string) => ClienteSupabase;
 }
 
@@ -91,6 +94,10 @@ export function crearServidor(opciones: OpcionesServidor) {
   }));
   const publico = conectar();
   const negocioPublico = crearCapaNegocio(crearCapaDatos(publico));
+  const clienteServidor = opciones.conectarServidor?.() ?? (opciones.claveServidor
+    ? crearClienteSupabase({ url: opciones.url, clavePublica: opciones.claveServidor }) : null);
+  const pedidosPublicos = clienteServidor ? new ControlPedidoPublico(crearCapaDatos(clienteServidor).pedidos) : null;
+  const solicitudes = new Map<string, { cantidad: number; hasta: number }>();
   const raiz = resolve(opciones.carpetaWeb);
 
   return createServer(async (peticion, respuesta) => {
@@ -103,6 +110,25 @@ export function crearServidor(opciones: OpcionesServidor) {
       if (ruta.pathname.startsWith('/api/')) {
         if (metodo === 'GET' && ruta.pathname === '/api/config') {
           return json(respuesta, { url: opciones.url, clavePublica: opciones.clavePublica, whatsappNumero: numeroWhatsApp(opciones.whatsappNumero) });
+        }
+        if (metodo === 'POST' && ruta.pathname === '/api/pedidos/publicos') {
+          if (!numeroWhatsApp(opciones.whatsappNumero) || !pedidosPublicos) throw new ErrorHTTP(503, 'El registro por WhatsApp todavía no está configurado.');
+          const origen = peticion.headers.origin;
+          if (peticion.headers['sec-fetch-site'] === 'cross-site' || (origen && origen !== `http://${peticion.headers.host}` && origen !== `https://${peticion.headers.host}`)) throw new ErrorHTTP(403, 'La solicitud debe originarse en GaboStore.');
+          const ahora = Date.now();
+          for (const [ip, valor] of solicitudes) if (valor.hasta <= ahora) solicitudes.delete(ip);
+          const ip = peticion.socket.remoteAddress ?? 'local';
+          const consumo = solicitudes.get(ip) ?? { cantidad: 0, hasta: ahora + 60_000 };
+          if (consumo.cantidad >= 10 || solicitudes.size >= 10_000) throw new ErrorHTTP(429, 'Demasiados intentos. Espera un minuto y vuelve a intentar.');
+          consumo.cantidad++; solicitudes.set(ip, consumo);
+          const datos = await cuerpo(peticion);
+          if (Object.keys(datos).some(k => !['claveSolicitud', 'items'].includes(k)) || !Array.isArray(datos.items)) throw new ErrorHTTP(400, 'Envía únicamente la clave de solicitud y sus artículos.');
+          const items = datos.items.map((item: unknown) => {
+            if (!item || typeof item !== 'object' || Array.isArray(item) || Object.keys(item).some(k => !['varianteId', 'cantidad'].includes(k))) throw new ErrorHTTP(400, 'Envía únicamente variante y cantidad.');
+            const linea = item as Record<string, unknown>;
+            return { varianteId: numero(linea.varianteId), cantidad: numero(linea.cantidad) };
+          });
+          return json(respuesta, await pedidosPublicos.registrar({ claveSolicitud: cadena(datos.claveSolicitud), items }), 201);
         }
         const personal = ruta.pathname.startsWith('/api/personal/');
         let negocio = negocioPublico;

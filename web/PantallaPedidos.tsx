@@ -24,7 +24,7 @@ export function PantallaPedidos({ token }: { token: string }) {
       : !pagina?.pedidos.length ? <div className="estado-vacio"><h2>Aún no hay pedidos registrados</h2><p>Cuando el personal registre un pedido, aparecerá aquí.</p><a className="boton secundario" href="#/carrito">Preparar pedido</a></div>
         : <><div className="cabecera-lista-pedidos" aria-hidden="true"><span>Pedido</span><span>Cliente</span><span>Fecha</span><span>Estado</span><span>Total</span></div>
           <ol className="lista-pedidos">{pagina.pedidos.map(p => <li key={p.id}><a href={`#/pedido/${p.id}`}>
-            <span className="numero-pedido">Pedido #{p.id}</span><span className="cliente-pedido"><span className="sr-only">Cliente: </span>{p.cliente.nombre}</span>
+            <span className="numero-pedido">Pedido #{p.id}</span><span className="cliente-pedido"><span className="sr-only">Cliente: </span>{p.cliente?.nombre ?? 'Pedido web'}</span>
             <time dateTime={p.fechaCreacion}>{fecha.format(new Date(p.fechaCreacion))}</time><span className="etiqueta estado-lista">{p.estado}</span><strong className="importe-pedido">{dinero(p.total)}</strong>
           </a></li>)}</ol>
           <nav className="paginacion-pedidos" aria-label="Páginas de pedidos"><button className="boton secundario" disabled={desde === 0} onClick={() => setDesde(n => Math.max(0, n - 20))}>Anterior</button><p role="status">Mostrando {desde + 1}–{desde + pagina.pedidos.length}</p><button className="boton secundario" disabled={!pagina.hayMas} onClick={() => setDesde(n => n + 20)}>Siguiente</button></nav>

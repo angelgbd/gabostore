@@ -5,7 +5,7 @@ import { ControlCarrito, type LineaCarrito, totalPedido } from './ControlCarrito
 import { ErrorNegocio, idValido } from './ErrorNegocio.js';
 
 export interface PedidoDetalle extends Omit<Pedido, 'items'> {
-  cliente: Cliente;
+  cliente: Cliente | null;
   items: LineaCarrito[];
   total: number;
 }
@@ -30,6 +30,7 @@ export class ControlGeneracionPedido {
       if (!existente) throw new ErrorNegocio('El carrito está cerrado y no se encontró su pedido.', 'CONFLICTO');
       return this.obtener(existente.id);
     }
+    if (carrito.clienteId === null) throw new ErrorNegocio('Este carrito público ya fue registrado.');
     if (!carrito.items.length) throw new ErrorNegocio('Agrega al menos un artículo antes de registrar el pedido.');
     for (const item of carrito.items) {
       if (item.sobrePedido && !confirmacionesProveedor.includes(item.varianteId)) {

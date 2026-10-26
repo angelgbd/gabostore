@@ -345,3 +345,33 @@ test('los contratos nuevos guardan sin correo y conservan los valores histórico
   const otro = await conRol('authenticated', personal, () => id('select public.abrir_carrito($1) as id', [f.cliente]));
   assert.equal((await db.query<{correo_cliente: string | null}>('select correo_cliente from public.carritos where id=$1', [otro])).rows[0]?.correo_cliente, null);
 });
+
+
+test('pedido público atómico: sin cliente, precio del servidor, sin descuento y reintento idéntico', async () => {
+  const f=await fixture(); const clave=crypto.randomUUID(); const items=JSON.stringify([{variante_id:f.variante,cantidad:2}]);
+  const contar=async()=> (await db.query<{n:number}>('select count(*)::int n from public.clientes')).rows[0]!.n;
+  const clientes=await contar();
+  const registrar=()=>conRol('service_role', {}, async()=> (await db.query<{r:{id:number;venceEn:string;fechaCreacion:string;items:{precioUnitario:number}[]}}>('select public.registrar_pedido_publico($1,$2::jsonb) r',[clave,items])).rows[0]!.r);
+  await conRol('anon',{},()=>assert.rejects(db.query('select public.registrar_pedido_publico($1,$2::jsonb)',[clave,items]),codigoEsperado('42501')));
+  await conRol('authenticated',personal,()=>assert.rejects(db.query('select public.registrar_pedido_publico($1,$2::jsonb)',[clave,items]),codigoEsperado('42501')));
+  const r=await registrar(); assert.equal(r.items[0]?.precioUnitario,149.9); assert.equal(Date.parse(r.venceEn)-Date.parse(r.fechaCreacion),120*3600000);
+  const fila=(await db.query<{cliente_id:null;creado_por:null;cerrado:boolean;correo_cliente:null}>(
+    'select p.cliente_id,p.creado_por,p.correo_cliente,c.cerrado from public.pedidos p join public.carritos c on c.id=p.carrito_id where p.id=$1',[r.id])).rows[0]!;
+  assert.equal(fila.cliente_id,null); assert.equal(fila.creado_por,null); assert.equal(fila.correo_cliente,null); assert.equal(fila.cerrado,true);
+  await db.query('update public.articulos set precio_base=300 where id=$1',[f.articulo]); assert.deepEqual(await registrar(),r);
+  assert.equal(await contar(),clientes); assert.equal((await db.query<{existencia:number}>('select existencia from public.variantes where id=$1',[f.variante])).rows[0]?.existencia,5);
+  await conRol('service_role',{},()=>assert.rejects(db.query('select public.registrar_pedido_publico($1,$2::jsonb)',[clave,JSON.stringify([{variante_id:f.variante,cantidad:3}])]),codigoEsperado('55000')));
+});
+
+test('registro público rechaza datos manipulados y no deja filas parciales; sobre pedido oculta precio', async()=>{
+  const f=await fixture();
+  const n=()=>db.query<{n:number}>('select count(*)::int n from public.pedidos'); const antes=(await n()).rows[0]!.n;
+  for(const items of [[],[{variante_id:f.variante,cantidad:0}],[{variante_id:f.variante,cantidad:6}],[{variante_id:f.variante,cantidad:1,precio_unitario:0}], [{variante_id:f.variante,cantidad:1},{variante_id:f.variante,cantidad:1}]]) {
+    await conRol('service_role',{},()=>assert.rejects(db.query('select public.registrar_pedido_publico($1,$2::jsonb)',[crypto.randomUUID(),JSON.stringify(items)])));
+  }
+  assert.equal((await n()).rows[0]?.n,antes);
+  await db.query('update public.articulos set sobre_pedido=true,precio_base=999 where id=$1',[f.articulo]);
+  const resultado=await conRol('service_role',{},()=>db.query<{r:{id:number;items:{precioUnitario:null;sobrePedido:boolean}[]}}>('select public.registrar_pedido_publico($1,$2::jsonb) r',[crypto.randomUUID(),JSON.stringify([{variante_id:f.variante,cantidad:20}])]));
+  assert.equal(resultado.rows[0]?.r.items[0]?.precioUnitario,null); assert.equal(resultado.rows[0]?.r.items[0]?.sobrePedido,true);
+  assert.equal((await db.query<{precio_unitario:number}>('select precio_unitario from public.items_pedido where pedido_id=$1',[resultado.rows[0]!.r.id])).rows[0]?.precio_unitario,'999.00');
+});

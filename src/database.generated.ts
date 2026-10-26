@@ -44,19 +44,19 @@ export type Database = {
       carritos: {
         Row: {
           cerrado: boolean
-          cliente_id: number
+          cliente_id: number | null
           correo_cliente: string | null
           id: number
         }
         Insert: {
           cerrado?: boolean
-          cliente_id: number
+          cliente_id?: number | null
           correo_cliente?: string | null
           id?: never
         }
         Update: {
           cerrado?: boolean
-          cliente_id?: number
+          cliente_id?: number | null
           correo_cliente?: string | null
           id?: never
         }
@@ -169,30 +169,42 @@ export type Database = {
       pedidos: {
         Row: {
           carrito_id: number
-          cliente_id: number
+          clave_solicitud: string | null
+          cliente_id: number | null
           correo_cliente: string | null
           creado_por: string | null
           estado: Database["public"]["Enums"]["estado_pedido"]
           fecha_creacion: string
           id: number
+          origen: string
+          resumen_publico: Json | null
+          vence_en: string | null
         }
         Insert: {
           carrito_id: number
-          cliente_id: number
+          clave_solicitud?: string | null
+          cliente_id?: number | null
           correo_cliente?: string | null
           creado_por?: string | null
           estado?: Database["public"]["Enums"]["estado_pedido"]
           fecha_creacion?: string
           id?: never
+          origen?: string
+          resumen_publico?: Json | null
+          vence_en?: string | null
         }
         Update: {
           carrito_id?: number
-          cliente_id?: number
+          clave_solicitud?: string | null
+          cliente_id?: number | null
           correo_cliente?: string | null
           creado_por?: string | null
           estado?: Database["public"]["Enums"]["estado_pedido"]
           fecha_creacion?: string
           id?: never
+          origen?: string
+          resumen_publico?: Json | null
+          vence_en?: string | null
         }
         Relationships: [
           {
@@ -201,6 +213,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "carritos"
             referencedColumns: ["id", "cliente_id"]
+          },
+          {
+            foreignKeyName: "pedidos_carrito_id_fkey"
+            columns: ["carrito_id"]
+            isOneToOne: true
+            referencedRelation: "carritos"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -315,6 +334,10 @@ export type Database = {
           sobre_pedido: boolean
           variantes: Json
         }[]
+      }
+      registrar_pedido_publico: {
+        Args: { p_clave: string; p_items: Json }
+        Returns: Json
       }
     }
     Enums: {
