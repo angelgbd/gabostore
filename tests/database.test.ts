@@ -332,3 +332,16 @@ test('guardar solo admite personal autenticado o el rol SQL real del backend', a
     assert.equal((await db.query('select * from public.items_pedido where pedido_id=$1', [pedido])).rows.length, 1);
   });
 });
+
+
+test('los contratos nuevos guardan sin correo y conservan los valores históricos', async () => {
+  const f = await fixture();
+  const antes = await db.query<{correo_cliente: string}>('select correo_cliente from public.carritos where id=$1', [f.carrito]);
+  const pedido = await conRol('authenticated', personal, () => id('select public.guardar_pedido($1,$2,$3::jsonb) as id',
+    [f.cliente, f.carrito, JSON.stringify([{variante_id: f.variante, cantidad: 1, precio_unitario: 149.9}])]));
+  const filas = await db.query<{correo_cliente: string | null}>('select correo_cliente from public.pedidos where id=$1', [pedido]);
+  assert.equal(filas.rows[0]?.correo_cliente, null);
+  assert.equal((await db.query<{correo_cliente: string}>('select correo_cliente from public.carritos where id=$1', [f.carrito])).rows[0]?.correo_cliente, antes.rows[0]?.correo_cliente);
+  const otro = await conRol('authenticated', personal, () => id('select public.abrir_carrito($1) as id', [f.cliente]));
+  assert.equal((await db.query<{correo_cliente: string | null}>('select correo_cliente from public.carritos where id=$1', [otro])).rows[0]?.correo_cliente, null);
+});

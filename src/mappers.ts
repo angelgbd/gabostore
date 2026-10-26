@@ -18,14 +18,14 @@ export function convertirArticulo(fila: ArticuloRow & { variantes: VarianteRow[]
 }
 export function convertirCarrito(fila: CarritoRow & { items_carrito: ItemRow[] }): Carrito {
   return {
-    id: fila.id, clienteId: fila.cliente_id, correoCliente: fila.correo_cliente,
+    id: fila.id, clienteId: fila.cliente_id, 
     cerrado: fila.cerrado, items: fila.items_carrito.map(convertirItem).sort((a, b) => a.varianteId - b.varianteId),
   };
 }
 export function convertirPedido(fila: PedidoRow & { items_pedido: ItemRow[] }): Pedido {
   return {
     id: fila.id, clienteId: fila.cliente_id, carritoId: fila.carrito_id,
-    correoCliente: fila.correo_cliente, estado: fila.estado, fechaCreacion: fila.fecha_creacion,
+    estado: fila.estado, fechaCreacion: fila.fecha_creacion,
     items: fila.items_pedido.map(convertirItem).sort((a, b) => a.varianteId - b.varianteId),
   };
 }

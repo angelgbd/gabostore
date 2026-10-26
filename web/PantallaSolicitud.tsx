@@ -33,7 +33,7 @@ export function PantallaSolicitud({ consulta }: { consulta: ReturnType<typeof us
     </li>)}</ul><a className="volver seguir" href="#/">Seguir consultando artículos</a></section>
       <aside className="resumen-solicitud"><dl className="importes-solicitud"><div><dt>Subtotal{resumen.parcial ? ' conocido' : ''}</dt><dd>{dinero(resumen.subtotal)}</dd></div><div><dt>Envío</dt><dd>A confirmar</dd></div></dl><div className="total"><span>{resumen.parcial ? 'Total parcial estimado' : 'Total estimado'}</span><strong>{dinero(resumen.subtotal)} <small>MXN</small></strong></div>
         {resumen.parcial && <p className="nota">Hay artículos con precio y disponibilidad por confirmar.</p>}
-        <form className="contacto-solicitud" onSubmit={e => { void generar(e); }}><label>Correo de contacto<input type="email" autoComplete="email" maxLength={254} required value={solicitud.correoContacto} disabled={ocupado} onChange={e => consulta.correo(e.target.value)} placeholder="cliente@email.com" /></label><p className="nota">Se utiliza únicamente como dato de contacto. No crea una cuenta.</p><button className="boton whatsapp ancho" type="submit" disabled={ocupado}><Icono nombre="whatsapp" tamano={18}/>{ocupado ? 'Comprobando artículos…' : 'Generar mensaje de WhatsApp'}</button></form>
+        <form className="contacto-solicitud" onSubmit={e => { void generar(e); }}><button className="boton whatsapp ancho" type="submit" disabled={ocupado}><Icono nombre="whatsapp" tamano={18}/>{ocupado ? 'Comprobando artículos…' : 'Generar mensaje de WhatsApp'}</button></form>
         <p className="nota nota-solicitud">La solicitud no registra un pedido, un pago ni una reserva.</p>
       </aside></div>}
   </>;

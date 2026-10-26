@@ -3,9 +3,10 @@ import assert from 'node:assert/strict';
 import { leerSolicitud, seleccionarConsulta, resumirConsulta, generarMensajeConsulta, numeroWhatsApp, enlaceWhatsApp } from '../src/negocio/SolicitudConsulta.js';
 import type { ArticuloCatalogo } from '../src/negocio/ControlCatalogo.js';
 const articulo: ArticuloCatalogo = { id: 1, nombre: 'Playera', categoria: 'Ropa', precioBase: 169.9, fotografia: '', sobrePedido: false, existenciaTotal: 5, variantes: [{ id: 2, tallaMedida: 'M', existencia: 5 }, { id: 3, tallaMedida: 'L', existencia: 0 }] };
-test('restaura selección y correo sin confiar en precios almacenados, y tolera datos dañados', () => {
-  assert.deepEqual(leerSolicitud('{roto'), { items: [], correoContacto: '' });
-  assert.deepEqual(leerSolicitud(JSON.stringify({ items: [{ articuloId: 1, varianteId: 2, cantidad: 1, precio: 0 }, { articuloId: 1, varianteId: 2, cantidad: 2 }, { articuloId: 1, varianteId: 3, cantidad: -1 }], correoContacto: 'demo@example.com' })), { items: [{ articuloId: 1, varianteId: 2, cantidad: 3 }], correoContacto: 'demo@example.com' });
+test('restaura selección sin correo sin confiar en precios almacenados, y tolera datos dañados', () => {
+  assert.deepEqual(leerSolicitud('{roto'), { items: [] });
+  assert.deepEqual(leerSolicitud(JSON.stringify({items: [], correoContacto: 'legado@example.com'})), {items: []});
+  assert.deepEqual(leerSolicitud(JSON.stringify({ items: [{ articuloId: 1, varianteId: 2, cantidad: 1, precio: 0 }, { articuloId: 1, varianteId: 2, cantidad: 2 }, { articuloId: 1, varianteId: 3, cantidad: -1 }] })), { items: [{ articuloId: 1, varianteId: 2, cantidad: 3 }] });
 });
 test('acumula variantes y rechaza agotadas, cantidades inválidas y exceso de existencia', () => {
   const items = seleccionarConsulta([], articulo, 2, 2);
@@ -22,17 +23,16 @@ test('resuelve precios actuales en centavos y detecta cambios de existencia o va
 });
 test('un artículo sobre pedido nunca revela precio público ni se suma como precio cero', () => {
   const especial = { ...articulo, sobrePedido: true, precioBase: 999, variantes: [{ id: 2, tallaMedida: 'M', existencia: 0 }] };
-  const solicitud = { items: seleccionarConsulta([], especial, 2, 1), correoContacto: 'demo@example.com' };
+  const solicitud = { items: seleccionarConsulta([], especial, 2, 1) };
   const resumen = resumirConsulta(solicitud.items, [especial]);
   const mensaje = generarMensajeConsulta(solicitud, resumen);
   assert.equal(resumen.parcial, true); assert.equal(resumen.items[0]?.precioUnitario, null);
   assert.match(mensaje, /Total parcial estimado/); assert.match(mensaje, /Precio y disponibilidad por confirmar/); assert.doesNotMatch(mensaje, /999/);
 });
-test('valida correo, carrito vacío y problemas antes de generar el texto', () => {
+test('valida carrito vacío y problemas antes de generar el texto', () => {
   const items = [{ articuloId: 1, varianteId: 2, cantidad: 1 }];
-  for (const correoContacto of ['', 'sin-correo', 'a b@example.com']) assert.throws(() => generarMensajeConsulta({ items, correoContacto }, resumirConsulta(items, [articulo])));
-  assert.throws(() => generarMensajeConsulta({ items: [], correoContacto: 'demo@example.com' }, resumirConsulta([], [])));
-  assert.throws(() => generarMensajeConsulta({ items, correoContacto: 'demo@example.com' }, resumirConsulta(items, [])));
+  assert.throws(() => generarMensajeConsulta({ items: [] }, resumirConsulta([], [])));
+  assert.throws(() => generarMensajeConsulta({ items }, resumirConsulta(items, [])));
 });
 test('WhatsApp solo usa un destino válido y codifica el mensaje sin enviarlo', () => {
   for (const numero of [undefined, '', '123', 'abc', '0000000000', '52 662 1234567']) assert.equal(numeroWhatsApp(numero), null);

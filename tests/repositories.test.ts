@@ -65,13 +65,13 @@ test('guardar recibe el objeto de pedido y envía cabecera y todo el detalle en 
       estado: 'PENDIENTE', fecha_creacion: '2026-10-17T12:00:00Z', items_pedido: [linea,
         { variante_id: 3, cantidad: 1, precio_unitario: 20, subtotal: 20 }] }));
   const pedido = await datos.pedidos.guardar({
-    clienteId: 5, carritoId: 4, correoCliente: ' CLIENTE@example.com ',
+    clienteId: 5, carritoId: 4,
     items: [{ varianteId: 2, cantidad: 3, precioUnitario: 0.1 }, { varianteId: 3, cantidad: 1, precioUnitario: 20 }],
   });
   assert.equal(peticiones.length, 2, 'Una escritura atómica seguida de una lectura.');
   assert.equal(peticiones[0]?.url.pathname, '/rest/v1/rpc/guardar_pedido');
   assert.deepEqual(JSON.parse(String(peticiones[0]?.opciones?.body)), {
-    p_cliente_id: 5, p_carrito_id: 4, p_correo_cliente: 'cliente@example.com', p_estado: 'PENDIENTE',
+    p_cliente_id: 5, p_carrito_id: 4, p_estado: 'PENDIENTE',
     p_items: [{ variante_id: 2, cantidad: 3, precio_unitario: 0.1 }, { variante_id: 3, cantidad: 1, precio_unitario: 20 }],
   });
   assert.equal(pedido.id, 6);
@@ -82,7 +82,7 @@ test('guardar recibe el objeto de pedido y envía cabecera y todo el detalle en 
 
 test('guardar valida el objeto completo antes de escribir y no oculta un fallo de lectura posterior', async () => {
   const { datos, peticiones } = simulacion(() => { throw new Error('No debe consultar la red'); });
-  const cabecera = { clienteId: 5, carritoId: 4, correoCliente: 'cliente@example.com' };
+  const cabecera = { clienteId: 5, carritoId: 4 };
   const linea = { varianteId: 2, cantidad: 1, precioUnitario: 10 };
   for (const items of [[], [linea, linea], [{ ...linea, cantidad: 0 }], [{ ...linea, precioUnitario: 0.125 }]]) {
     await assert.rejects(datos.pedidos.guardar({ ...cabecera, items }),
@@ -105,7 +105,7 @@ test('valores inválidos se rechazan antes de enviar una petición', async () =>
   const esValidacion = (error: unknown) => error instanceof ErrorDatos && error.codigo === 'VALIDACION';
   await assert.rejects(datos.articulos.crear({ nombre: 'X', categoria: 'Y', precioBase: 0.125 }), esValidacion);
   await assert.rejects(datos.carritos.guardarItem(1, 2, 0), esValidacion);
-  await assert.rejects(datos.carritos.abrir(1, 'sin-correo'), esValidacion);
+  await assert.rejects(datos.carritos.abrir(0), esValidacion);
   await assert.rejects(datos.pedidos.obtenerPorId(Number.MAX_SAFE_INTEGER + 1), esValidacion);
   await assert.rejects(datos.articulos.listarCatalogo(101), esValidacion);
   assert.equal(peticiones.length, 0);

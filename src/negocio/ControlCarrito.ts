@@ -7,7 +7,7 @@ export type DatosCarritos = Pick<CarritoRepository,
   'crearCliente' | 'obtenerCliente' | 'abrir' | 'obtenerPorId' | 'guardarItem' | 'quitarItem'>;
 export type DatosArticulosCarrito = Pick<ArticuloRepository, 'obtenerPorId' | 'obtenerPorVariante'>;
 
-export interface ContactoCliente extends ClienteNuevo { correoCliente: string }
+export type ContactoCliente = ClienteNuevo;
 export interface LineaCarrito extends ItemCarrito {
   articuloId: number;
   nombre: string;
@@ -34,16 +34,12 @@ export class ControlCarrito {
   async crear(contacto: ContactoCliente): Promise<CarritoDetalle> {
     const nombre = contacto.nombre?.trim();
     const telefono = contacto.telefono?.trim();
-    const correoCliente = contacto.correoCliente?.trim().toLowerCase();
     if (!nombre || nombre.length < 2 || nombre.length > 120) throw new ErrorNegocio('Escribe el nombre del cliente (2 a 120 caracteres).');
     if (!telefono || !/^[+\d\s().-]+$/.test(telefono) || !/^\d{7,15}$/.test(telefono.replace(/\D/g, ''))) {
       throw new ErrorNegocio('Escribe un teléfono válido de 7 a 15 dígitos.');
     }
-    if (!correoCliente || correoCliente.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correoCliente)) {
-      throw new ErrorNegocio('Escribe un correo válido para el pedido.');
-    }
     const cliente = await this.carritos.crearCliente({ nombre, telefono });
-    const carrito = await this.carritos.abrir(cliente.id, correoCliente);
+    const carrito = await this.carritos.abrir(cliente.id);
     return this.detalle(carrito.id);
   }
 

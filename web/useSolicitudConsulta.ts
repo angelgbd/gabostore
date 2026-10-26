@@ -52,7 +52,6 @@ export function useSolicitudConsulta() {
     setSolicitud(anterior => ({ ...anterior, items: anterior.items.filter(i => i.varianteId !== varianteId) }));
     setError(''); setVista(null);
   }
-  function correo(correoContacto: string) { setSolicitud(anterior => ({ ...anterior, correoContacto })); setError(''); setVista(null); }
   async function preparar() {
     if (enCurso.current) return;
     enCurso.current = true; setOcupado(true); setError('');
@@ -67,5 +66,5 @@ export function useSolicitudConsulta() {
     } catch (e) { setVista(null); setError(mensajeError(e)); throw e; }
     finally { if (actual === revision.current) setCargando(false); setOcupado(false); enCurso.current = false; }
   }
-  return { solicitud, resumen: resumirConsulta(solicitud.items, articulos), vista, cargando, ocupado, error, agregar, cambiar, quitar, correo, preparar };
+  return { solicitud, resumen: resumirConsulta(solicitud.items, articulos), vista, cargando, ocupado, error, agregar, cambiar, quitar, preparar };
 }

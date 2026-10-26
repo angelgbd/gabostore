@@ -41,7 +41,7 @@ export class ControlGeneracionPedido {
     }
     const guardado = await this.pedidos.guardar({
       clienteId: carrito.clienteId, carritoId: carrito.id,
-      correoCliente: carrito.correoCliente, estado: EstadoPedido.PENDIENTE,
+      estado: EstadoPedido.PENDIENTE,
       items: carrito.items.map(({ varianteId, cantidad, precioUnitario }) => ({ varianteId, cantidad, precioUnitario })),
     });
     return this.obtener(guardado.id);

@@ -38,7 +38,7 @@ async function main() {
     const v1 = primero.variantes.find(v => v.existencia >= 2)!;
     const v2 = segundo.variantes.find(v => v.existencia >= 2)!;
     const carrito = await api<CarritoDetalle>('personal/carritos', 'POST', {
-      nombre: `DEMO FLUJO ${new Date().toISOString()}`, telefono: '0000000000', correoCliente: 'demo.flujo@example.com',
+      nombre: `DEMO FLUJO ${new Date().toISOString()}`, telefono: '0000000000',
     });
     const ruta = `personal/carritos/${carrito.id}/items`;
     // Un precio enviado por el navegador se ignora; el negocio usa el catálogo del servidor.

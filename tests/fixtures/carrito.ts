@@ -4,7 +4,7 @@ import { ControlCarrito, type DatosCarritos } from '../../src/negocio/ControlCar
 export function escenarioCarrito() {
   const articulo: Articulo = { id: 1, nombre: 'Camisa', categoria: 'Ropa', precioBase: 149.9, fotografia: '', sobrePedido: false,
     variantes: [{ id: 2, tallaMedida: 'M', existencia: 5 }] };
-  const carrito: Carrito = { id: 4, clienteId: 3, correoCliente: 'ana@example.com', cerrado: false, items: [] };
+  const carrito: Carrito = { id: 4, clienteId: 3, cerrado: false, items: [] };
   const cliente = { id: 3, nombre: 'Ana', telefono: '6621234567' };
   const escrituras: unknown[][] = [];
   const repositorio: DatosCarritos = {

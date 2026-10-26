@@ -45,19 +45,19 @@ export type Database = {
         Row: {
           cerrado: boolean
           cliente_id: number
-          correo_cliente: string
+          correo_cliente: string | null
           id: number
         }
         Insert: {
           cerrado?: boolean
           cliente_id: number
-          correo_cliente: string
+          correo_cliente?: string | null
           id?: never
         }
         Update: {
           cerrado?: boolean
           cliente_id?: number
-          correo_cliente?: string
+          correo_cliente?: string | null
           id?: never
         }
         Relationships: [
@@ -170,7 +170,7 @@ export type Database = {
         Row: {
           carrito_id: number
           cliente_id: number
-          correo_cliente: string
+          correo_cliente: string | null
           creado_por: string | null
           estado: Database["public"]["Enums"]["estado_pedido"]
           fecha_creacion: string
@@ -179,7 +179,7 @@ export type Database = {
         Insert: {
           carrito_id: number
           cliente_id: number
-          correo_cliente: string
+          correo_cliente?: string | null
           creado_por?: string | null
           estado?: Database["public"]["Enums"]["estado_pedido"]
           fecha_creacion?: string
@@ -188,7 +188,7 @@ export type Database = {
         Update: {
           carrito_id?: number
           cliente_id?: number
-          correo_cliente?: string
+          correo_cliente?: string | null
           creado_por?: string | null
           estado?: Database["public"]["Enums"]["estado_pedido"]
           fecha_creacion?: string
@@ -238,10 +238,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      abrir_carrito: {
-        Args: { p_cliente_id: number; p_correo_cliente: string }
-        Returns: number
-      }
+      abrir_carrito:
+        | { Args: { p_cliente_id: number }; Returns: number }
+        | {
+            Args: { p_cliente_id: number; p_correo_cliente: string }
+            Returns: number
+          }
       ajustar_existencia: {
         Args: { p_cambio: number; p_variante_id: number }
         Returns: {
@@ -282,16 +284,26 @@ export type Database = {
         }
         Returns: undefined
       }
-      guardar_pedido: {
-        Args: {
-          p_carrito_id: number
-          p_cliente_id: number
-          p_correo_cliente: string
-          p_estado?: Database["public"]["Enums"]["estado_pedido"]
-          p_items: Json
-        }
-        Returns: number
-      }
+      guardar_pedido:
+        | {
+            Args: {
+              p_carrito_id: number
+              p_cliente_id: number
+              p_correo_cliente: string
+              p_estado?: Database["public"]["Enums"]["estado_pedido"]
+              p_items: Json
+            }
+            Returns: number
+          }
+        | {
+            Args: {
+              p_carrito_id: number
+              p_cliente_id: number
+              p_estado?: Database["public"]["Enums"]["estado_pedido"]
+              p_items: Json
+            }
+            Returns: number
+          }
       obtener_catalogo: {
         Args: { p_articulo_id?: number; p_desde?: number; p_limite?: number }
         Returns: {

@@ -2,7 +2,7 @@ import type { ClienteSupabase } from '../supabase.js';
 import type { Carrito, Cliente, ClienteNuevo } from '../models.js';
 import { comprobarError, requerido } from '../errors.js';
 import { convertirCarrito } from '../mappers.js';
-import { identificador, entero, importe, texto, correo } from '../validation.js';
+import { identificador, entero, importe, texto } from '../validation.js';
 
 /** Incluye persistencia de los datos de contacto del cliente, sin crear cuentas. */
 export class CarritoRepository {
@@ -38,10 +38,10 @@ export class CarritoRepository {
   }
 
   /** Recupera el abierto o crea otro si el anterior ya tiene un pedido. */
-  async abrir(clienteId: number, correoCliente: string): Promise<Carrito> {
+  async abrir(clienteId: number): Promise<Carrito> {
     identificador(clienteId, 'clienteId');
     const { data, error } = await this.db.rpc('abrir_carrito', {
-      p_cliente_id: clienteId, p_correo_cliente: correo(correoCliente),
+      p_cliente_id: clienteId,
     });
     comprobarError(error);
     return requerido(await this.obtenerPorId(requerido(data, 'No se obtuvo el carrito.')), 'No se encontró el carrito.');
@@ -82,11 +82,4 @@ export class CarritoRepository {
     return requerido(await this.obtenerPorId(carritoId), 'El carrito no existe o no es accesible.');
   }
 
-  async actualizarCorreo(carritoId: number, correoCliente: string): Promise<Carrito> {
-    identificador(carritoId, 'carritoId');
-    const { error } = await this.db.from('carritos').update({ correo_cliente: correo(correoCliente) })
-      .eq('id', carritoId).select('id').single();
-    comprobarError(error);
-    return requerido(await this.obtenerPorId(carritoId), 'El carrito no existe o no es accesible.');
-  }
 }

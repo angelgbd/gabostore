@@ -34,7 +34,7 @@ async function main(): Promise<void> {
     variantes: [{ tallaMedida: 'M', existencia: 10 }, { tallaMedida: 'L', existencia: 5 }],
   });
   const cliente = await datos.carritos.crearCliente({ nombre: `${marca} - Cliente`, telefono: '0000000000' });
-  const carrito = await datos.carritos.abrir(cliente.id, 'demo.typescript@example.com');
+  const carrito = await datos.carritos.abrir(cliente.id);
   const mediana = articulo.variantes.find(v => v.tallaMedida === 'M');
   const grande = articulo.variantes.find(v => v.tallaMedida === 'L');
   assert.ok(mediana && grande, 'Se deben recuperar las dos variantes creadas.');
@@ -43,7 +43,6 @@ async function main(): Promise<void> {
   const pedido: PedidoNuevo = {
     clienteId: cliente.id,
     carritoId: carrito.id,
-    correoCliente: 'demo.typescript@example.com',
     estado: EstadoPedido.PENDIENTE,
     items: [
       { varianteId: mediana.id, cantidad: 2, precioUnitario: 149.90 },
@@ -62,7 +61,6 @@ async function main(): Promise<void> {
   assert.deepEqual(recuperado, guardado);
   assert.equal(recuperado.clienteId, pedido.clienteId);
   assert.equal(recuperado.carritoId, pedido.carritoId);
-  assert.equal(recuperado.correoCliente, pedido.correoCliente);
   assert.equal(recuperado.estado, pedido.estado);
   const esperados = pedido.items.map(item => ({
     ...item, subtotal: Math.round(item.cantidad * item.precioUnitario * 100) / 100,

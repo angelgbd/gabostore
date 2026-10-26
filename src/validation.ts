@@ -25,14 +25,6 @@ export function texto(valor: string, campo: string): string {
   return valor.trim();
 }
 
-export function correo(valor: string): string {
-  const normalizado = texto(valor, 'correoCliente').toLowerCase();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizado)) {
-    throw new ErrorDatos('correoCliente debe ser un correo válido.', 'VALIDACION');
-  }
-  return normalizado;
-}
-
 export function paginacion(limite: number, desde: number): void {
   entero(limite, 1, 'limite');
   entero(desde, 0, 'desde');

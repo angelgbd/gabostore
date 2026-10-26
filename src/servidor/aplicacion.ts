@@ -157,8 +157,7 @@ export function crearServidor(opciones: OpcionesServidor) {
           if (metodo === 'GET' && ruta.pathname === '/api/personal/pedidos') return json(respuesta, await negocio.pedidos.listar(Number(ruta.searchParams.get('desde') ?? 0)));
           if (metodo === 'POST' && ruta.pathname === '/api/personal/carritos') {
             const datos = await cuerpo(peticion);
-            return json(respuesta, await negocio.carritos.crear({ nombre: cadena(datos.nombre), telefono: cadena(datos.telefono),
-              correoCliente: cadena(datos.correoCliente) }), 201);
+            return json(respuesta, await negocio.carritos.crear({ nombre: cadena(datos.nombre), telefono: cadena(datos.telefono) }), 201);
           }
           const carrito = ruta.pathname.match(/^\/api\/personal\/carritos\/(\d+)$/);
           if (metodo === 'GET' && carrito) return json(respuesta, await negocio.carritos.detalle(Number(carrito[1])));

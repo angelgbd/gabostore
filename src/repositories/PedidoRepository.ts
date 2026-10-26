@@ -2,7 +2,7 @@ import type { ClienteSupabase } from '../supabase.js';
 import { EstadoPedido, type Pedido, type PedidoNuevo } from '../models.js';
 import { comprobarError, ErrorDatos, requerido } from '../errors.js';
 import { convertirPedido } from '../mappers.js';
-import { correo, entero, identificador, importe, paginacion } from '../validation.js';
+import { entero, identificador, importe, paginacion } from '../validation.js';
 
 export interface FiltroPedidos {
   clienteId?: number;
@@ -32,7 +32,6 @@ export class PedidoRepository {
     identificador(pedido.carritoId, 'carritoId');
     const estado = pedido.estado ?? EstadoPedido.PENDIENTE;
     comprobarEstado(estado);
-    const correoCliente = correo(pedido.correoCliente);
     if (!Array.isArray(pedido.items) || pedido.items.length === 0) {
       throw new ErrorDatos('El pedido debe contener al menos un artículo.', 'VALIDACION');
     }
@@ -49,7 +48,7 @@ export class PedidoRepository {
     });
     const { data, error } = await this.db.rpc('guardar_pedido', {
       p_cliente_id: pedido.clienteId, p_carrito_id: pedido.carritoId,
-      p_correo_cliente: correoCliente, p_estado: estado, p_items: items,
+      p_estado: estado, p_items: items,
     });
     comprobarError(error);
     return requerido(await this.obtenerPorId(requerido(data, 'No se obtuvo el pedido guardado.')),

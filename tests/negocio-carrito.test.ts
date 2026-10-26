@@ -36,9 +36,8 @@ test('cambiar cantidad valida stock actual, quitar deja el carrito vacío y un s
 
 test('los datos de contacto se validan antes de crear registros', async () => {
   const f = escenarioCarrito();
-  await assert.rejects(f.control.crear({ nombre: 'Ana', telefono: 'abc', correoCliente: 'ana@example.com' }), /teléfono válido/);
-  await assert.rejects(f.control.crear({ nombre: 'Ana', telefono: '6621234567', correoCliente: 'incorrecto' }), /correo válido/);
+  await assert.rejects(f.control.crear({ nombre: 'Ana', telefono: 'abc' }), /teléfono válido/);
   assert.equal(f.escrituras.length, 0);
-  await f.control.crear({ nombre: ' Ana ', telefono: '6621234567', correoCliente: 'ANA@example.com' });
+  await f.control.crear({ nombre: ' Ana ', telefono: '6621234567' });
   assert.deepEqual(f.escrituras[0], ['cliente', { nombre: 'Ana', telefono: '6621234567' }]);
 });

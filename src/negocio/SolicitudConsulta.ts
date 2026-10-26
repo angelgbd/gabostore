@@ -2,7 +2,7 @@ import type { ArticuloCatalogo } from './ControlCatalogo.js';
 
 export interface SeleccionConsulta { articuloId: number; varianteId: number; cantidad: number }
 /** Solicitud temporal de consulta. No es un Pedido ni se persiste en Supabase. */
-export interface SolicitudConsulta { items: SeleccionConsulta[]; correoContacto: string }
+export interface SolicitudConsulta { items: SeleccionConsulta[] }
 export interface LineaConsulta extends SeleccionConsulta {
   nombre: string; categoria: string; tallaMedida: string; fotografia: string;
   precioUnitario: number | null; existencia: number; sobrePedido: boolean; problema: string;
@@ -10,9 +10,8 @@ export interface LineaConsulta extends SeleccionConsulta {
 export interface ResumenConsulta { items: LineaConsulta[]; subtotal: number; parcial: boolean; problemas: string[] }
 
 export function cantidadValida(cantidad: number): boolean { return Number.isSafeInteger(cantidad) && cantidad > 0; }
-export function correoValido(correo: string): boolean { return correo.trim().length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo.trim()); }
 export function leerSolicitud(almacenada: string | null): SolicitudConsulta {
-  const vacia: SolicitudConsulta = { items: [], correoContacto: '' };
+  const vacia: SolicitudConsulta = { items: [] };
   if (!almacenada) return vacia;
   try {
     const valor: unknown = JSON.parse(almacenada);
@@ -24,7 +23,7 @@ export function leerSolicitud(almacenada: string | null): SolicitudConsulta {
       if (repetida) { if (repetida.articuloId === item.articuloId && cantidadValida(repetida.cantidad + item.cantidad)) repetida.cantidad += item.cantidad; }
       else items.push({ articuloId: item.articuloId, varianteId: item.varianteId, cantidad: item.cantidad });
     }
-    return { items, correoContacto: 'correoContacto' in valor && typeof valor.correoContacto === 'string' ? valor.correoContacto.slice(0, 254) : '' };
+    return { items };
   } catch { return vacia; }
 }
 
@@ -61,12 +60,11 @@ export function resumirConsulta(items: SeleccionConsulta[], articulos: ArticuloC
 }
 
 const moneda = (valor: number) => new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(valor);
-export function generarMensajeConsulta(solicitud: SolicitudConsulta, resumen: ResumenConsulta): string {
+export function generarMensajeConsulta(_solicitud: SolicitudConsulta, resumen: ResumenConsulta): string {
   if (!resumen.items.length) throw new Error('Añade al menos un artículo a tu solicitud.');
-  if (!correoValido(solicitud.correoContacto)) throw new Error('Escribe un correo de contacto válido.');
   if (resumen.problemas.length) throw new Error('Revisa los artículos señalados antes de generar el mensaje.');
   const lineas = resumen.items.map(i => `• ${i.nombre.replace(/^DEMO TS \S+ - /, '').replace(/^DEMO GaboStore - /, '')}\n  Variante: ${i.tallaMedida} · ${i.cantidad} ${i.cantidad === 1 ? 'unidad' : 'unidades'} · ${i.precioUnitario === null ? 'Precio y disponibilidad por confirmar' : `${moneda(i.precioUnitario)} MXN c/u · ${moneda(Math.round(i.precioUnitario * 100) * i.cantidad / 100)} MXN`}`);
-  return `Hola Gabo Store,\n\nQuiero consultar el siguiente pedido:\n\n${lineas.join('\n\n')}\n\n${resumen.parcial ? 'Total parcial estimado' : 'Total estimado'}: ${moneda(resumen.subtotal)} MXN${resumen.parcial ? '\nHay artículos con precio por confirmar.' : ''}\nEnvío: a confirmar\nCorreo: ${solicitud.correoContacto.trim()}\n\nQuedo en espera de confirmación. Esta solicitud no representa un pago ni reserva unidades.`;
+  return `Hola Gabo Store,\n\nQuiero consultar el siguiente pedido:\n\n${lineas.join('\n\n')}\n\n${resumen.parcial ? 'Total parcial estimado' : 'Total estimado'}: ${moneda(resumen.subtotal)} MXN${resumen.parcial ? '\nHay artículos con precio por confirmar.' : ''}\nEnvío: a confirmar\n\nQuedo en espera de confirmación. Esta solicitud no representa un pago ni reserva unidades.`;
 }
 
 export function numeroWhatsApp(valor?: string | null): string | null {

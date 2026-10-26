@@ -25,7 +25,7 @@ test('la generación entrega un objeto completo al repositorio y el reintento re
   const f = escenarioPedido();
   await f.control.agregar(4, 1, 2, 2);
   const pedido = await f.controlPedido.generar(4);
-  assert.deepEqual(f.entradas, [{ clienteId: 3, carritoId: 4, correoCliente: 'ana@example.com', estado: 'PENDIENTE',
+  assert.deepEqual(f.entradas, [{ clienteId: 3, carritoId: 4, estado: 'PENDIENTE',
     items: [{ varianteId: 2, cantidad: 2, precioUnitario: 149.9 }] }]);
   assert.equal(pedido.id, 8);
   assert.equal(pedido.total, 299.8);
