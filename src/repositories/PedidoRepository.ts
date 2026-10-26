@@ -39,6 +39,13 @@ export class PedidoRepository {
     return registro;
   }
 
+  async confirmar(id: number, confirmacionesProveedor: number[] = []): Promise<Pedido> {
+    identificador(id); confirmacionesProveedor.forEach(v => identificador(v, 'varianteId'));
+    const { data, error } = await this.db.rpc('confirmar_pedido', { p_id: id, p_confirmaciones: confirmacionesProveedor });
+    comprobarError(error);
+    return requerido(await this.obtenerPorId(requerido(data, 'No fue posible confirmar el pedido.')), 'El pedido confirmado no está disponible.');
+  }
+
   /** Guarda la cabecera y todo el detalle en una transacción, cerrando su carrito. */
   async guardar(pedido: PedidoNuevo): Promise<Pedido> {
     identificador(pedido.clienteId, 'clienteId');

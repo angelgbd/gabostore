@@ -83,6 +83,13 @@ export function App() {
     } catch (e) { setError(mensajeError(e)); }
     finally { registroEnCurso.current = false; setRegistrando(false); }
   }
+  async function confirmarPedido(confirmacionesProveedor: number[]) {
+    if (!pedido || !sesion.token || registroEnCurso.current) return;
+    registroEnCurso.current = true; setRegistrando(true); setError('');
+    try { setPedido(await solicitar<PedidoDetalle>(`personal/pedidos/${pedido.id}/confirmar`, sesion.token, 'POST', { confirmacionesProveedor })); }
+    catch (e) { setError(mensajeError(e)); }
+    finally { registroEnCurso.current = false; setRegistrando(false); }
+  }
   const publico = !sesion.personal || ruta === '/solicitud' || ruta === '/mensaje';
   const unidades = publico ? consulta.solicitud.items.reduce((total, item) => total + item.cantidad, 0) : carrito.carrito?.items.reduce((total, item) => total + item.cantidad, 0) ?? 0;
   const esCatalogo = ruta === '/' || ruta.startsWith('/articulo/');
@@ -104,7 +111,7 @@ export function App() {
         ruta.startsWith('/productos/') ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error}/> : <PantallaProducto key={ruta} token={sesion.token!} {...(ruta.match(/^\/productos\/(\d+)\/editar$/)?.[1] ? { id: Number(ruta.match(/^\/productos\/(\d+)\/editar$/)![1]) } : {})}/> :
         ruta === '/carrito' ? sesion.personal ? carrito.cargando ? <Cargando /> : <PantallaCarrito carrito={carrito.carrito} ocupado={carrito.ocupado} crear={carrito.crear} cambiar={carrito.cambiar} quitar={carrito.quitar} /> : <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> :
         ruta === '/confirmar' ? sesion.personal ? carrito.cargando ? <Cargando /> : <PantallaConfirmacionPedido carrito={carrito.carrito} registrando={registrando} registrar={registrar} /> : <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> :
-        ruta.startsWith('/pedido/') ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> : cargando ? <Cargando /> : error ? <ErrorCarga mensaje={error} /> : <PantallaConfirmacionPedido carrito={null} pedido={pedido} registrando={false} registrar={registrar} /> :
+        ruta.startsWith('/pedido/') ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> : cargando ? <Cargando /> : error ? <ErrorCarga mensaje={error} /> : <PantallaConfirmacionPedido key={pedido?.id} carrito={null} pedido={pedido} registrando={registrando} registrar={registrar} confirmar={confirmarPedido} /> :
         <div className={`catalogo-layout${mostrarResumen ? ' con-pedido' : ''}`}><section className="contenido-catalogo">{cargando ? <Cargando /> : error ? <ErrorCarga mensaje={error} /> : ruta.startsWith('/articulo/') && detalle ? <PantallaDetalleArticulo key={detalle.id} articulo={detalle} personal={Boolean(sesion.personal)} tieneCarrito={Boolean(carrito.carrito)} ocupado={sesion.personal ? carrito.ocupado : consulta.ocupado} agregar={sesion.personal ? carrito.agregar : async (_articuloId, varianteId, cantidad) => consulta.agregar(detalle, varianteId, cantidad)} /> : <PantallaCatalogo articulos={articulos} busqueda={busqueda} categoria={categoria} setBusqueda={setBusqueda} setCategoria={setCategoria} personal={Boolean(sesion.personal)} nuevoPedido={Boolean(sesion.personal && !carrito.carrito)} />}</section>{mostrarResumen && <ResumenPedido carrito={carrito.carrito} cargando={carrito.cargando} />}</div>}
     </>}</main>
   </>;

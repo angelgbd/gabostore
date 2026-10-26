@@ -17,6 +17,7 @@ function escenarioPedido() {
       return persistido;
     },
     obtenerPorId: async () => persistido, obtenerPorCarrito: async () => persistido, listarResumen: async () => [],
+    confirmar: async () => { if (!persistido) throw new Error('No existe'); persistido.estado = 'CONFIRMADO'; return persistido; },
   });
   return { ...f, controlPedido: control, entradas };
 }
@@ -54,4 +55,11 @@ test('los artículos sobre pedido requieren una confirmación manual del proveed
   await assert.rejects(f.controlPedido.generar(4, [99]), /Confirma con el proveedor/);
   assert.equal(f.entradas.length, 0);
   assert.equal((await f.controlPedido.generar(4, [2])).estado, 'PENDIENTE');
+});
+
+
+test('confirmación del personal recupera el pedido actualizado sin cambiar sus importes', async()=>{
+  const f=escenarioPedido(); await f.control.agregar(4,1,2,1); const anterior=await f.controlPedido.generar(4);
+  const confirmado=await f.controlPedido.confirmar(anterior.id); assert.equal(confirmado.estado,'CONFIRMADO');
+  assert.deepEqual(confirmado.items,anterior.items); assert.equal(confirmado.total,anterior.total);
 });

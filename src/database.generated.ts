@@ -278,6 +278,10 @@ export type Database = {
           isSetofReturn: true
         }
       }
+      confirmar_pedido: {
+        Args: { p_confirmaciones?: number[]; p_id: number }
+        Returns: number
+      }
       crear_articulo: {
         Args: {
           p_categoria: string

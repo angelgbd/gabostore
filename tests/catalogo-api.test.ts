@@ -52,7 +52,7 @@ async function api(ruta: string, metodo = 'GET', datos?: unknown) {
 
 test('nuevas operaciones rechazan anónimos y cuentas sin rol de personal', async () => {
   for (const [ruta, metodo] of [['catalogo', 'POST'], ['catalogo/8', 'PATCH'], ['catalogo/8/variantes/9/existencias', 'POST'],
-    ['imagenes', 'POST'], ['pedidos', 'GET']] as const) {
+    ['imagenes', 'POST'], ['pedidos', 'GET'], ['pedidos/20/confirmar', 'POST']] as const) {
     assert.equal((await fetch(base + ruta, { method: metodo })).status, 401);
     assert.equal((await fetch(base + ruta, { method: metodo, headers: { Authorization: 'Bearer cliente' } })).status, 403);
   }

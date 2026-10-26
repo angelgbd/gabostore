@@ -37,7 +37,11 @@ before(async () => {
   `);
   const carpeta = new URL('../supabase/migrations/', import.meta.url);
   const archivos = (await readdir(carpeta)).filter(nombre => nombre.endsWith('.sql')).sort();
-  for (const archivo of archivos) await db.exec(await readFile(new URL(archivo, carpeta), 'utf8'));
+  for (const archivo of archivos) {
+    // PGlite no tiene el proceso pg_cron. Su programación se comprueba en Supabase real.
+    if (archivo.endsWith('_programar_limpieza.sql')) continue;
+    await db.exec(await readFile(new URL(archivo, carpeta), 'utf8'));
+  }
 });
 
 after(async () => { await db?.close(); });
@@ -374,4 +378,46 @@ test('registro público rechaza datos manipulados y no deja filas parciales; sob
   const resultado=await conRol('service_role',{},()=>db.query<{r:{id:number;items:{precioUnitario:null;sobrePedido:boolean}[]}}>('select public.registrar_pedido_publico($1,$2::jsonb) r',[crypto.randomUUID(),JSON.stringify([{variante_id:f.variante,cantidad:20}])]));
   assert.equal(resultado.rows[0]?.r.items[0]?.precioUnitario,null); assert.equal(resultado.rows[0]?.r.items[0]?.sobrePedido,true);
   assert.equal((await db.query<{precio_unitario:number}>('select precio_unitario from public.items_pedido where pedido_id=$1',[resultado.rows[0]!.r.id])).rows[0]?.precio_unitario,'999.00');
+});
+
+
+async function pedidoTemporal(horas:number,estado='PENDIENTE',publico=true) {
+  const f=await fixture();
+  const carrito=publico?await id('insert into public.carritos(cliente_id) values(null) returning id'):f.carrito;
+  await db.query('insert into public.items_carrito(carrito_id,variante_id,cantidad,precio_unitario) values($1,$2,1,149.9)',[carrito,f.variante]);
+  const pedido=publico?await id("with t as(select clock_timestamp()-make_interval(hours=>$3) fecha) insert into public.pedidos(cliente_id,carrito_id,origen,estado,fecha_creacion,vence_en,clave_solicitud,resumen_publico) select null,$1,'PUBLICO',$4::public.estado_pedido,t.fecha,t.fecha+interval '120 hours',$2,'[]'::jsonb from t returning id",[carrito,crypto.randomUUID(),horas,estado])
+    :await id("insert into public.pedidos(cliente_id,carrito_id,estado,fecha_creacion) values($1,$2,$3::public.estado_pedido,clock_timestamp()-interval '10 days') returning id",[f.cliente,carrito,estado]);
+  await db.query('insert into public.items_pedido(pedido_id,variante_id,cantidad,precio_unitario) values($1,$2,1,149.9)',[pedido,f.variante]);
+  await db.query('update public.carritos set cerrado=true where id=$1',[carrito]);return {...f,pedido,carrito};
+}
+
+test('confirmar requiere personal, comprueba stock/proveedor y mantiene importes y cantidades',async()=>{
+  const f=await pedidoTemporal(0);
+  await conRol('authenticated',{...personal,app_metadata:{}},()=>assert.rejects(db.query('select public.confirmar_pedido($1)',[f.pedido]),codigoEsperado('42501')));
+  await db.query('update public.variantes set existencia=0 where id=$1',[f.variante]);
+  await conRol('authenticated',personal,()=>assert.rejects(db.query('select public.confirmar_pedido($1)',[f.pedido]),codigoEsperado('22023')));
+  await db.query('update public.articulos set sobre_pedido=true where id=$1',[f.articulo]);
+  await conRol('authenticated',personal,()=>assert.rejects(db.query('select public.confirmar_pedido($1)',[f.pedido]),codigoEsperado('22023')));
+  await conRol('authenticated',personal,async()=>{
+    assert.equal((await db.query("update public.pedidos set estado='CONFIRMADO' where id=$1 returning id",[f.pedido])).rows.length,0,'El público no puede saltarse la operación de confirmación por PostgREST.');
+    assert.equal(await id('select public.confirmar_pedido($1,$2::bigint[]) id',[f.pedido,[f.variante]]),f.pedido);
+    assert.equal(await id('select public.confirmar_pedido($1) id',[f.pedido]),f.pedido);
+  });
+  assert.equal((await db.query<{estado:string}>('select estado from public.pedidos where id=$1',[f.pedido])).rows[0]?.estado,'CONFIRMADO');
+  assert.equal((await db.query<{existencia:number}>('select existencia from public.variantes where id=$1',[f.variante])).rows[0]?.existencia,0);
+  assert.equal((await db.query<{precio_unitario:string}>('select precio_unitario from public.items_pedido where pedido_id=$1',[f.pedido])).rows[0]?.precio_unitario,'149.90');
+});
+
+test('limpieza privada elimina solo públicos pendientes con 120 horas; respeta confirmados e historial',async()=>{
+  const vencido=await pedidoTemporal(120);const vigente=await pedidoTemporal(119);const confirmado=await pedidoTemporal(140,'CONFIRMADO');const antiguo=await pedidoTemporal(0,'PENDIENTE',false);
+  await conRol('authenticated',personal,()=>assert.rejects(db.query('select public.confirmar_pedido($1)',[vencido.pedido]),codigoEsperado('55000')));
+  await conRol('service_role',{},()=>assert.rejects(db.query("update public.pedidos set estado='CONFIRMADO' where id=$1",[vencido.pedido]),codigoEsperado('55000')));
+  for(const rol of ['anon','authenticated','service_role'] as const) await conRol(rol,personal,()=>assert.rejects(db.query('select private.limpiar_pedidos_publicos_vencidos()'),codigoEsperado('42501')));
+  assert.equal((await db.query<{n:number}>('select private.limpiar_pedidos_publicos_vencidos() n')).rows[0]?.n,1);
+  for(const tabla of ['items_pedido','pedidos']) assert.equal((await db.query('select * from public.'+tabla+' where '+(tabla==='pedidos'?'id':'pedido_id')+'=$1',[vencido.pedido])).rows.length,0);
+  for(const tabla of ['items_carrito','carritos']) assert.equal((await db.query('select * from public.'+tabla+' where '+(tabla==='carritos'?'id':'carrito_id')+'=$1',[vencido.carrito])).rows.length,0);
+  for(const f of [vigente,confirmado,antiguo]) assert.equal((await db.query('select id from public.pedidos where id=$1',[f.pedido])).rows.length,1);
+  assert.equal((await db.query('select id from public.variantes where id=$1',[vencido.variante])).rows.length,1);
+  await conRol('authenticated',personal,()=>id('select public.confirmar_pedido($1) id',[vigente.pedido]));
+  assert.equal((await db.query<{n:number}>('select private.limpiar_pedidos_publicos_vencidos() n')).rows[0]?.n,0);
 });

@@ -181,6 +181,14 @@ export function crearServidor(opciones: OpcionesServidor) {
             return json(respuesta, await negocio.catalogo.ajustarExistencia(Number(existencias[1]), Number(existencias[2]), datos.cambio));
           }
           if (metodo === 'GET' && ruta.pathname === '/api/personal/pedidos') return json(respuesta, await negocio.pedidos.listar(Number(ruta.searchParams.get('desde') ?? 0)));
+          const confirmar = ruta.pathname.match(/^\/api\/personal\/pedidos\/(\d+)\/confirmar$/);
+          if (metodo === 'POST' && confirmar) {
+            const datos = await cuerpo(peticion);
+            if (Object.keys(datos).some(k => k !== 'confirmacionesProveedor')) throw new ErrorHTTP(400, 'Envía únicamente las confirmaciones del proveedor.');
+            const confirmaciones = datos.confirmacionesProveedor ?? [];
+            if (!Array.isArray(confirmaciones)) throw new ErrorHTTP(400, 'Las confirmaciones deben ser una lista.');
+            return json(respuesta, await negocio.pedidos.confirmar(Number(confirmar[1]), confirmaciones.map(numero)));
+          }
           if (metodo === 'POST' && ruta.pathname === '/api/personal/carritos') {
             const datos = await cuerpo(peticion);
             return json(respuesta, await negocio.carritos.crear({ nombre: cadena(datos.nombre), telefono: cadena(datos.telefono) }), 201);

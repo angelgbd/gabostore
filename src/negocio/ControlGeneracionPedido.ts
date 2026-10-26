@@ -9,7 +9,7 @@ export interface PedidoDetalle extends Omit<Pedido, 'items'> {
   items: LineaCarrito[];
   total: number;
 }
-export type DatosPedidos = Pick<PedidoRepository, 'guardar' | 'obtenerPorId' | 'obtenerPorCarrito' | 'listarResumen'>;
+export type DatosPedidos = Pick<PedidoRepository, 'guardar' | 'obtenerPorId' | 'obtenerPorCarrito' | 'listarResumen' | 'confirmar'>;
 
 export class ControlGeneracionPedido {
   constructor(private readonly carritos: ControlCarrito, private readonly pedidos: DatosPedidos) {}
@@ -18,6 +18,15 @@ export class ControlGeneracionPedido {
     paginacion(21, desde);
     const pedidos = await this.pedidos.listarResumen(desde, 21);
     return { pedidos: pedidos.slice(0, 20), desde, hayMas: pedidos.length > 20 };
+  }
+
+  async confirmar(id: number, confirmacionesProveedor: number[] = []): Promise<PedidoDetalle> {
+    idValido(id);
+    if (!Array.isArray(confirmacionesProveedor)) throw new ErrorNegocio('La confirmación del proveedor no es válida.');
+    confirmacionesProveedor.forEach(idValido);
+    // Estado, plazo y disponibilidad se comprueban con el bloqueo del pedido en PostgreSQL.
+    await this.pedidos.confirmar(id, confirmacionesProveedor);
+    return this.obtener(id);
   }
 
   async generar(carritoId: number, confirmacionesProveedor: number[] = []): Promise<PedidoDetalle> {
