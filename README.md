@@ -7,17 +7,17 @@ Implementación con **Supabase/PostgreSQL, TypeScript y React**. Conserva los tr
 - Artículos con variantes, fotografía en Supabase Storage, precio base y marca `sobrePedido`.
 - Alta y edición básica para ADMIN/EMPLEADO; ajustes atómicos de existencias por variante.
 - Consulta del historial de pedidos en páginas de 20 registros, con acceso a su detalle.
-- Datos de contacto de clientes, capturados por el personal; no se crean cuentas de clientes.
+- Nombre y teléfono capturados por el personal; el flujo público utiliza solo el número de pedido. No se crean cuentas de clientes.
 - Un carrito abierto por cliente y carritos anteriores conservados como historial.
-- Un pedido por carrito, con copia independiente de cantidades y precios.
+- Un pedido por carrito, con copia independiente de cantidades y precios. Los públicos se registran al abrir WhatsApp, sin datos de contacto y con plazo de 120 horas.
 - `PedidoRepository.guardar(pedido)`: recibe un objeto con toda la cabecera y las líneas; persiste el conjunto de manera atómica.
 - Estados de la última imagen: `PENDIENTE`, `ENVIADO`, `ENTREGADO`, `CANCELADO` y `CONFIRMADO`.
 - Catálogo público con búsqueda y categorías: oculta artículos completamente agotados y conserva las tallas agotadas de los artículos que aún tienen otra talla disponible.
-- Solicitud pública local con carrito, correo y vista previa de WhatsApp; no crea registros en Supabase.
+- Selección pública local sin datos de contacto. La vista previa no escribe; la acción final registra un pedido pendiente antes de abrir WhatsApp.
 - Permisos de acceso para el personal y protección de datos de clientes, carritos y pedidos.
 - Ajustes atómicos de existencias, validaciones y errores identificables.
 
-También están implementados `ControlCatalogo`, `ControlCarrito`, `ControlGeneracionPedido` y `SolicitudConsulta`. El público prepara una consulta para WhatsApp; el personal autenticado registra el pedido real. La identidad oscura con acentos rosa se adapta a móvil y escritorio. El alcance termina en un pedido pendiente: no incluye pagos, ventas, reservas, gestión de envíos, devoluciones ni interfaces de administración.
+La capa de negocio implementa `ControlCatalogo`, `ControlCarrito`, `ControlGeneracionPedido`, `ControlPedidoPublico` y `SolicitudConsulta`. El público registra al abrir WhatsApp; el personal consulta y confirma pedidos. La identidad oscura usa acentos rojos y se adapta a móvil y escritorio. No incluye pagos, ventas, reservas, tarifas de envío, devoluciones ni administración de cuentas.
 
 ## Ejecutar la aplicación web
 
@@ -101,7 +101,7 @@ Para un empleado se utiliza `EMPLEADO`. Después de cambiar el rol, renovar la s
 
 Sin un JWT interno válido, la clave pública permite consultar el catálogo mediante `obtener_catalogo`, pero no acceder a los datos privados ni realizar escrituras. Las políticas requieren una identidad autenticada y el rol en `app_metadata`, que el usuario no puede editar, según la [documentación de RLS de Supabase](https://supabase.com/docs/guides/database/postgres/row-level-security). Las funciones con privilegios elevados están en el esquema interno `private`; la API pública expone funciones que delegan en operaciones concretas.
 
-El backend debe crear una instancia del cliente por petición si recibe el JWT del empleado. Esto evita compartir la identidad de un empleado entre peticiones. El cliente público usa clave pública y JWT del personal. Para la demo de terminal también se admite una clave secreta de servidor mediante un cliente independiente; nunca poner claves secretas o `service_role` en un navegador.
+El backend debe crear una instancia del cliente por petición si recibe el JWT del empleado. Esto evita compartir la identidad de un empleado entre peticiones. El cliente público usa clave pública y JWT del personal. Para el registro público y la demo de terminal se usa una clave secreta de servidor mediante un cliente independiente; nunca poner claves secretas o `service_role` en un navegador.
 
 ## Uso desde TypeScript
 
@@ -136,13 +136,13 @@ function datosDelPersonal(tokenUsuario: string) {
 // Dentro de una petición ya autenticada:
 // const datos = datosDelPersonal(jwtDelEmpleado);
 // const cliente = await datos.carritos.crearCliente({ nombre: 'Ana', telefono: '6621234567' });
-// const carrito = await datos.carritos.abrir(cliente.id, 'ana@example.com');
+// const carrito = await datos.carritos.abrir(cliente.id);
 // const pedido = await datos.pedidos.guardar({
-//   clienteId: cliente.id, carritoId: carrito.id, correoCliente: 'ana@example.com',
+//   clienteId: cliente.id, carritoId: carrito.id,
 //   items: [{ varianteId, cantidad: 2, precioUnitario: 149.90 }],
 // });
 // La compra siguiente obtiene un carrito nuevo:
-// const siguiente = await datos.carritos.abrir(cliente.id, 'ana@example.com');
+// const siguiente = await datos.carritos.abrir(cliente.id);
 ```
 
 También se puede pasar un `SupabaseClient<Database>` ya configurado a `crearCapaDatos`, por ejemplo si la aplicación gestiona su propia sesión. La conexión usa el [cliente oficial de Supabase](https://supabase.com/docs/reference/javascript/initializing).
@@ -164,22 +164,22 @@ También se puede pasar un `SupabaseClient<Database>` ya configurado a `crearCap
 ### CarritoRepository
 
 - `crearCliente(datos)`, `obtenerCliente(id)`, `actualizarCliente(id, cambios)`.
-- `abrir(clienteId, correoCliente)`: recupera el abierto o crea uno nuevo si el anterior está cerrado. Si ya existe uno abierto, conserva su correo actual.
+- `abrir(clienteId)`: recupera el abierto o crea uno nuevo si el anterior está cerrado. No pide correo.
 - `obtenerPorId(id)`, `obtenerAbierto(clienteId)`.
 - `guardarItem(carritoId, varianteId, cantidad, precioUnitario?)`: inserta o cambia una línea. La cantidad es el nuevo valor total, no un incremento.
 - `quitarItem(carritoId, varianteId)`.
-- `actualizarCorreo(carritoId, correoCliente)`: solo sobre un carrito abierto.
 
 Al añadir una variante sin indicar precio, se toma el precio base del artículo. Al cambiar la cantidad de una línea existente sin indicar precio, se conserva el precio previamente guardado. Un precio explícito solo debe enviarlo el personal autorizado.
 
 ### PedidoRepository
 
-- `guardar(pedido: PedidoNuevo)`: recibe cliente, carrito, correo, estado opcional (por defecto `PENDIENTE`) y todas las líneas `{ varianteId, cantidad, precioUnitario }`. Guarda cabecera y detalle en una transacción, sincroniza y cierra el carrito, y recupera el `Pedido` persistido. PostgreSQL asigna el ID, la fecha y los subtotales. No hay que insertar los detalles por separado.
+- `guardar(pedido: PedidoNuevo)`: recibe cliente, carrito, estado opcional (por defecto `PENDIENTE`) y todas las líneas `{ varianteId, cantidad, precioUnitario }`. Guarda cabecera y detalle en una transacción, sincroniza y cierra el carrito, y recupera el `Pedido` persistido. PostgreSQL asigna el ID, la fecha y los subtotales. No hay que insertar los detalles por separado.
 - `crearDesdeCarrito(carritoId)`: genera un pedido `PENDIENTE`, copia las líneas y cierra el carrito. Repetir la llamada devuelve el mismo pedido.
 - `obtenerPorId(id)`.
 - `obtenerPorCarrito(carritoId)`: recupera el pedido de un carrito cerrado para un reintento del flujo.
 - `listar({ clienteId?, estado?, limite?, desde? })`: consultas paginadas, con los pedidos más recientes primero.
-- `actualizarEstado(id, estado)`: persiste uno de los cinco estados válidos. La capa de control debe decidir cuándo corresponde una transición.
+- `confirmar(id, confirmacionesProveedor)`: comprueba plazo y disponibilidad en una transacción y pasa PENDIENTE a CONFIRMADO. No descuenta stock ni registra pagos.
+- `actualizarEstado(id, estado)`: operación previa para pedidos internos; la confirmación pública pasa exclusivamente por la RPC protegida.
 
 Las consultas individuales devuelven `null` si el registro no existe o no es visible para el usuario. Las escrituras fallidas lanzan `ErrorDatos`, con `codigo`, `message` y `detalle`.
 
@@ -195,7 +195,7 @@ Las consultas individuales devuelven `null` si el registro no existe o no es vis
 - `subtotal` es una columna generada; no se recibe del consumidor.
 - Las cantidades deben ser enteras positivas; las existencias, enteras no negativas. Los identificadores están limitados al rango seguro de JavaScript.
 - Las fechas se guardan como `timestamptz` y se entregan como cadenas ISO 8601.
-- No se permite borrar artículos, variantes, clientes o pedidos desde los repositorios. El stock agotado y los pedidos se conservan.
+- No se permite borrar artículos, variantes o clientes desde los repositorios. La rutina privada de Cron elimina únicamente nuevos pedidos públicos pendientes vencidos y sus carritos. El resto del historial se conserva.
 - La fotografía se almacena como URL. La web carga JPEG, PNG o WebP de hasta 5 MiB en el bucket público `catalogo`; las cargas requieren rol ADMIN o EMPLEADO y utilizan rutas nuevas para cada archivo.
 - Crear un carrito o pedido pendiente **no reserva ni descuenta stock y no registra un pago**. La capa de control no debe tratar esta operación como una venta.
 
@@ -223,7 +223,6 @@ El script crea un artículo con dos variantes, un cliente ficticio y un carrito 
 const pedido: PedidoNuevo = {
   clienteId: cliente.id,
   carritoId: carrito.id,
-  correoCliente: 'demo.typescript@example.com',
   estado: EstadoPedido.PENDIENTE,
   items: [
     { varianteId: mediana.id, cantidad: 2, precioUnitario: 149.90 },
@@ -245,7 +244,7 @@ Verificación real del 17 de octubre de 2026: el script guardó y recuperó el p
 
 ## Verificación
 
-`npm test` aplica las migraciones en PostgreSQL mediante PGlite, con roles y `auth.jwt()` de prueba. Verifica permisos públicos e internos, subtotales, restricciones, rollback del objeto completo, cierre del carrito, conservación del pedido, repetición sin duplicados y apertura de un carrito nuevo. Otras pruebas utilizan el cliente real de Supabase con HTTP simulado para comprobar las llamadas de los repositorios.
+`npm test` aplica las migraciones de datos y funciones en PostgreSQL mediante PGlite (el proceso pg_cron se comprueba en Supabase real), con roles y `auth.jwt()` de prueba. Verifica permisos públicos e internos, subtotales, restricciones, rollback del objeto completo, cierre del carrito, conservación del pedido, repetición sin duplicados y apertura de un carrito nuevo. Otras pruebas utilizan el cliente real de Supabase con HTTP simulado para comprobar las llamadas de los repositorios.
 
 `npm test` no se conecta al proyecto remoto. PGlite se usa solo como dependencia de desarrollo; no reemplaza Supabase en la implementación. Las operaciones compuestas usan [funciones de PostgreSQL invocadas mediante Supabase](https://supabase.com/docs/guides/database/functions).
 
@@ -254,3 +253,11 @@ Verificación real del 17 de octubre de 2026: el script guardó y recuperó el p
 `npm run verificar:flujo` autentica el personal de prueba y recorre la API HTTP real. Crea un carrito, añade, modifica y quita líneas, genera el pedido, verifica su autor y recupera la copia persistida. Comprueba que un precio enviado por el navegador se ignore, que el reintento no duplique el pedido y que no se descuente stock. Sus registros quedan identificados por `DEMO FLUJO` en Supabase.
 
 La revisión posterior a incorporar Auth señaló **Leaked Password Protection Disabled**, una configuración del proyecto: revisar la [protección de contraseñas filtradas](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection) en Supabase antes de una publicación. La revisión de rendimiento inicial solo señaló [índices aún sin uso](https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index). El índice señalado como faltante se añadió en la segunda migración.
+
+## Registro público y vencimiento · 26 de octubre de 2026
+
+`POST /api/pedidos/publicos` acepta `claveSolicitud` y líneas `{ varianteId, cantidad }`. Guarda un pedido web sin datos de cliente, con precios obtenidos del servidor y vencimiento de 120 horas. La misma clave y contenido recuperan el mismo pedido. El navegador recibe solo número, estado, fechas y mensaje público; nunca credenciales ni precios sobre pedido. La operación requiere número comercial válido y clave de servidor en el backend.
+
+`POST /api/personal/pedidos/:id/confirmar` requiere ADMIN o EMPLEADO y acepta `confirmacionesProveedor`. Comprueba estado, plazo y disponibilidad en una transacción. Confirmar no descuenta existencias ni registra pagos. Solo los nuevos pedidos públicos pendientes vencen: Supabase Cron ejecuta la limpieza privada cada minuto y elimina sus detalles y carrito. Se conserva el historial anterior y del personal. Los correos históricos quedan opcionales; el acceso del personal conserva su correo.
+
+`npm run verificar:whatsapp` prueba HTTP → negocio → repositorio → Supabase real con una sesión EMPLEADO, reintentos y confirmaciones concurrentes. No abre WhatsApp ni envía mensajes. Ver la [guía actualizada](docs/FLUJO_BASICO.md).

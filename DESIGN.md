@@ -1,27 +1,27 @@
 ---
 name: "GaboStore"
-description: "Catálogo oscuro con selección rosa y consulta por WhatsApp."
+description: "Catálogo oscuro con selección coral y pedidos por WhatsApp."
 colors:
   fondo: "#0d1214"
   superficie: "#151c20"
   tinta: "#e9f0f2"
   secundario: "#afbec6"
-  rosa: "#ff4297"
-  rosa-hover: "#ff72b1"
+  acento: "#ff5264"
+  acento-hover: "#ff7d88"
   verde: "#22d974"
   suave: "#1d282d"
   linea: "#334149"
   error: "#ff8d96"
   error-fondo: "#32191f"
-  foco: "#ff72b1"
+  foco: "#ff7d88"
   cabecera: "#0a0e10"
-  marca: "#f4aac8"
-  seleccion: "#351626"
+  marca: "#ffb0b4"
+  seleccion: "#361b1f"
   foto-fondo: "#202b30"
-  foto-alterno: "#251820"
+  foto-alterno: "#251b1d"
   foto-iniciales: "#82949d"
   foto-linea: "#425159"
-  etiqueta-linea: "#843253"
+  etiqueta-linea: "#8a3c46"
   whatsapp-tinta: "#07140c"
   whatsapp-hover: "#58e995"
   mensaje-fondo: "#102219"
@@ -144,13 +144,13 @@ spacing:
   detail: "48px"
 components:
   button-primary:
-    backgroundColor: "{colors.rosa}"
+    backgroundColor: "{colors.acento}"
     textColor: "{colors.fondo}"
     rounded: "{rounded.none}"
     padding: "13px 18px"
     typography: "{typography.action}"
   button-primary-hover:
-    backgroundColor: "{colors.rosa-hover}"
+    backgroundColor: "{colors.acento-hover}"
   button-secondary:
     backgroundColor: "{colors.suave}"
     textColor: "{colors.tinta}"
@@ -189,10 +189,10 @@ components:
     typography: "{typography.category}"
   category-active:
     backgroundColor: "{colors.seleccion}"
-    textColor: "{colors.rosa}"
+    textColor: "{colors.acento}"
   tag:
     backgroundColor: "transparent"
-    textColor: "{colors.rosa}"
+    textColor: "{colors.acento}"
     rounded: "{rounded.none}"
     padding: "2px 6px"
     typography: "{typography.tag}"
@@ -205,7 +205,7 @@ components:
     rounded: "{rounded.none}"
   quantity-control:
     backgroundColor: "{colors.superficie}"
-    textColor: "{colors.rosa}"
+    textColor: "{colors.acento}"
     rounded: "{rounded.none}"
   variant:
     backgroundColor: "{colors.superficie}"
@@ -214,7 +214,7 @@ components:
     padding: "8px 12px"
   variant-selected:
     backgroundColor: "{colors.seleccion}"
-    textColor: "{colors.rosa}"
+    textColor: "{colors.acento}"
   order-summary:
     backgroundColor: "{colors.superficie}"
     textColor: "{colors.tinta}"
@@ -233,19 +233,19 @@ components:
 
 **Creative North Star: "Catálogo oscuro de Gabo Store"**
 
-El catálogo oscuro reúne la identidad de las seis referencias aprobadas: lienzo casi negro, paneles carbón, bordes finos, selección rosa y marca rosada de dos líneas con camiseta. Es una interfaz directa, compacta y en español; los artículos, las variantes y los importes se comparan dentro de una estructura repetida.
+El catálogo oscuro reúne la identidad de las seis referencias aprobadas y su actualización coral: lienzo casi negro, paneles carbón, bordes finos, selección rojo coral y marca coral clara de dos líneas con camiseta. Es una interfaz directa, compacta y en español; los artículos, las variantes y los importes se comparan dentro de una estructura repetida.
 
-Roboto Mono local sostiene la lectura y los controles; Public Sans local pertenece al logotipo SVG. El rosa señala selección, navegación activa, importes y avance. El verde identifica la preparación del mensaje de WhatsApp y las confirmaciones correctas. Las fotografías comerciales se muestran cuando existen; las imágenes de demo aprobadas se identifican como ilustrativas. Cuando una imagen falta o falla, un bloque de iniciales conserva el lugar del artículo.
+Roboto Mono local sostiene la lectura y los controles; Public Sans local pertenece al logotipo SVG. El rojo coral señala selección, navegación activa, importes y avance. El verde identifica la preparación del mensaje de WhatsApp y las confirmaciones correctas. Las fotografías comerciales se muestran cuando existen; las imágenes de demo aprobadas se identifican como ilustrativas. Cuando una imagen falta o falla, un bloque de iniciales conserva el lugar del artículo.
 
 **Key Characteristics:**
 
 - Negro y carbón con contornos finos, sin sombras de panel.
 - Roboto Mono en la interfaz y Public Sans únicamente en la marca.
-- Rosa en selección, importes y acciones; verde en WhatsApp y confirmación.
+- Rojo coral en selección, importes y acciones; verde en WhatsApp y confirmación.
 - Tarjetas de producto con imagen o iniciales, adaptadas a dos, tres o cuatro columnas.
 - Controles rectos, foco visible y movimiento breve compatible con movimiento reducido.
 
-La fuente normativa de los valores es web/styles.css; el logotipo y los iconos proceden de web/Icono.tsx. Se contrastaron los componentes de catálogo, detalle, solicitud, mensaje y resumen con PRODUCT.md y el contrato de superficie. La ampliación del personal se contrastó con web/App.tsx, web/PantallaProducto.tsx, web/PantallaPedidos.tsx, web/componentes.tsx y las capturas de alta y pedidos de .impeccable/review/ampliacion/. Conserva los tokens y las decisiones de identidad existentes.
+La fuente normativa de los valores es web/styles.css; el logotipo y los iconos proceden de web/Icono.tsx. La actualización del 26 de octubre se contrastó con PRODUCT.md, el bloque vigente de .impeccable/surfaces/web-app-tsx.md y web/PantallaSolicitud.tsx, web/PantallaMensaje.tsx, web/useSolicitudConsulta.ts, web/PantallaCarrito.tsx, web/PantallaConfirmacionPedido.tsx, web/PantallaPedidos.tsx y web/App.tsx. La evidencia de revisión actual está en .impeccable/review/whatsapp/; la ampliación de productos conserva su evidencia en .impeccable/review/ampliacion/. Se mantienen composición, tipografía, fotografías, superficies oscuras y verde de WhatsApp.
 
 ## Colors
 
@@ -253,9 +253,9 @@ Los valores del frontmatter conservan los hexadecimales implementados. Las rampa
 
 ### Primary
 
-Rosa intenso identifica botones principales, precios, totales, enlaces, contador y selección. Rosa de respuesta aclara el hover del botón principal y coincide con el foco de teclado. El rosa suave de la marca conserva su función de identidad. El vino de selección se comparte entre categorías y variantes seleccionadas.
+Rojo coral identifica botones principales, precios, totales, enlaces, contador y selección. Coral de respuesta aclara el hover del botón principal y coincide con el foco de teclado. Coral claro de marca conserva su función de identidad. El vino de selección se comparte entre categorías y variantes seleccionadas; el contorno de las etiquetas usa su vino propio.
 
-**The Rosa de selección Rule.** Selección, importes y acciones principales comparten el rosa. El estado seleccionado combina texto y borde rosa con fondo vino.
+**The Rojo de selección Rule.** Selección, importes y acciones principales comparten el rojo coral. El estado seleccionado combina texto y borde coral con fondo vino.
 
 ### Secondary
 
@@ -284,7 +284,7 @@ Ambas familias se sirven como WOFF2 locales con licencias OFL y font-display swa
 - **Body / Field:** lectura general y campos, respectivamente. El campo etiquetado conserva peso (600), mientras que su placeholder usa (400). El cuerpo baja a body-mobile hasta el corte de teléfono. Los párrafos conservan un máximo de (70ch).
 - **Label / Action / Navigation:** etiquetas y controles en mayúsculas. Las categorías usan (12px), peso (600) y espaciado normal; los botones usan action. El enlace del personal baja a (10px) en teléfono.
 - **Meta / Tag:** contexto, disponibilidad y estados. Los metadatos de tarjeta bajan a (10px) en teléfono; Demo usa (10px), peso (400), sin contorno.
-- **Price / Detail price / Total:** importes rosa con cifras tabulares. En teléfono, el precio de tarjeta pasa a (14px), el de detalle a (20px) y el total a (19px).
+- **Price / Detail price / Total:** importes coral con cifras tabulares. En teléfono, el precio de tarjeta pasa a (14px), el de detalle a (20px) y el total a (19px).
 
 **The Una interfaz monoespaciada Rule.** Roboto Mono sostiene títulos, texto, controles e importes; Public Sans se reserva para la marca. Precios, cantidades y totales usan cifras tabulares.
 
@@ -294,14 +294,14 @@ El marco y el interior de cabecera se centran hasta (1280px). El contenido usa r
 
 El catálogo tiene dos columnas de tarjetas desde el ancho móvil, tres desde (900px) y cuatro desde (1200px), con espacio (20px). La búsqueda ocupa el ancho disponible. Las categorías forman una fila desplazable horizontalmente, con espacio (8px) y divisor inferior; no fuerzan un salto de línea. La tarjeta reserva una imagen vertical (4:5) encima de la información.
 
-El detalle de escritorio tiene dos columnas iguales separadas (48px), con imagen cuadrada y selección a la derecha. La solicitud pública reserva (360px) para importes y contacto, con espacio (40px). El carrito del personal reserva (320px), con espacio (36px). El resumen del personal usa (280px) cuando acompaña al catálogo y conserva dos columnas de tarjetas; los resúmenes laterales permanecen a (116px) del borde superior.
+El detalle de escritorio tiene dos columnas iguales separadas (48px), con imagen cuadrada y selección a la derecha. La solicitud pública reserva (360px) para importes y avance a la vista previa, con espacio (40px). El carrito del personal reserva (320px), con espacio (36px). El resumen del personal usa (280px) cuando acompaña al catálogo y conserva dos columnas de tarjetas; los resúmenes laterales permanecen a (116px) del borde superior.
 
 - Hasta (1024px), la columna de solicitud baja a (320px), con espacio (28px); el resumen del personal baja a (260px), con espacio (24px).
 - Hasta (899px), detalle, solicitud, carrito y resumen del personal se apilan. El detalle se limita a (680px), con espacio (28px). Su acción de añadir queda fija al borde inferior, incluye el área segura del dispositivo y reserva (90px) de espacio para el contenido. Los resúmenes dejan de ser sticky.
 - Hasta (560px), el marco usa (24px 16px 40px), la cabecera (10px 16px) y altura mínima (76px). La marca pasa de (176 × 64px) a (132 × 48px). Se ocultan el enlace redundante al catálogo y la etiqueta de sesión. Las tarjetas mantienen dos columnas, espacio (12px) y relleno de información (12px), frente a (18px) en escritorio.
 - Las líneas de solicitud utilizan miniaturas (3:4), de (88px) de ancho en escritorio y (64px) en teléfono; el importe baja debajo de la descripción cuando corresponde.
 
-Acceso y nuevo pedido conservan máximos de (440px) y (520px). La pantalla del mensaje centra un bloque de hasta (760px). Los nombres y contactos largos se parten; los grupos de variantes y las acciones permiten envolver cuando hace falta.
+Acceso y nuevo pedido conservan máximos de (440px) y (520px). La pantalla del mensaje centra un bloque de hasta (760px). Los nombres y teléfonos del personal se parten cuando son largos; los grupos de variantes y las acciones permiten envolver cuando hace falta.
 
 El editor de producto se limita a (1100px), con ficha y variantes en una columna fluida y fotografía en una columna de (300px); separa columnas (48px) y filas (36px). Hasta (899px), la fotografía ocupa (240px) y el espacio baja a (28px). Hasta (640px), ficha y fotografía se apilan, la vista previa conserva un máximo de (240px) y las acciones pueden envolver y compartir el ancho. Los campos de la ficha mantienen dos columnas con espacio (22px); el nombre ocupa ambas.
 
@@ -309,7 +309,7 @@ Los ajustes de existencias forman una sección separada debajo del editor. Cada 
 
 ## Elevation & Depth
 
-La profundidad procede de fondos opacos y bordes de (1px). No hay box-shadow en paneles, tarjetas ni controles. La única sombra es el halo difuso rosado del logotipo, aplicado mediante drop-shadow; pertenece a la marca y no establece una elevación para las superficies.
+La profundidad procede de fondos opacos y bordes de (1px). No hay box-shadow en paneles, tarjetas ni controles. La única sombra es el halo difuso coral del logotipo, aplicado mediante drop-shadow; pertenece a la marca y no establece una elevación para las superficies.
 
 **The Panel plano Rule.** Paneles, tarjetas y campos se separan con carbón y contornos finos. El halo difuso se conserva únicamente en la marca.
 
@@ -325,19 +325,19 @@ Los iconos son SVG de trazo y color heredado, con extremos y uniones redondos. E
 
 ### Buttons
 
-Controles rectos y compactos, con altura mínima (48px), relleno del frontmatter y mayúsculas. El principal es rosa con tinta del lienzo; el secundario usa carbón suave, tinta clara y borde. El secundario aclara su borde al hover. El botón de texto usa gris de apoyo, altura mínima (36px), sin relleno; al hover pasa a rosa y se subraya. WhatsApp utiliza la pareja verde y tinta oscura.
+Controles rectos y compactos, con altura mínima (48px), relleno del frontmatter y mayúsculas. El principal es rojo coral con tinta del lienzo; el secundario usa carbón suave, tinta clara y borde. El secundario aclara su borde al hover. El botón de texto usa gris de apoyo, altura mínima (36px), sin relleno; al hover pasa a rojo coral y se subraya. WhatsApp utiliza la pareja verde y tinta oscura.
 
 El foco de teclado usa contorno (2px), separado (4px). Los botones deshabilitados conservan opacidad (0.45) y cursor not-allowed. Las acciones que ocupan el ancho disponible mantienen el mismo lenguaje.
 
 ### Categories and Tags
 
-Las categorías son botones con borde completo, altura mínima (44px) y estado aria-pressed. Hover y selección usan rosa; la selección añade fondo vino. Su fila puede desplazarse horizontalmente.
+Las categorías son botones con borde completo, altura mínima (44px) y estado aria-pressed. Hover y selección usan rojo coral; la selección añade fondo vino. Su fila puede desplazarse horizontalmente.
 
-Sobre pedido y las categorías del detalle utilizan una etiqueta de contorno vino, texto rosa y relleno del frontmatter. Demo es una variante neutral sin borde ni relleno. Son información de estado, no botones.
+Sobre pedido y las categorías del detalle utilizan una etiqueta de contorno vino, texto rojo coral y relleno del frontmatter. Demo es una variante neutral sin borde ni relleno. Son información de estado, no botones.
 
 ### Product Cards
 
-Cada tarjeta es un enlace completo de borde fino, fondo carbón y disposición vertical. Imagen o iniciales arriba; nombre, categoría, tallas, precio y disponibilidad debajo. El hover cambia el borde a rosa. El pie se desplaza al fondo de la tarjeta y puede envolver. La imagen ocupa el bloque mediante object-fit cover; en el detalle cuadrado utiliza object-fit contain para mostrarla completa. Una ruta ausente o fallida muestra iniciales con nombre accesible.
+Cada tarjeta es un enlace completo de borde fino, fondo carbón y disposición vertical. Imagen o iniciales arriba; nombre, categoría, tallas, precio y disponibilidad debajo. El hover cambia el borde a rojo coral. El pie se desplaza al fondo de la tarjeta y puede envolver. La imagen ocupa el bloque mediante object-fit cover; en el detalle cuadrado utiliza object-fit contain para mostrarla completa. Una ruta ausente o fallida muestra iniciales con nombre accesible.
 
 ### Product Imagery
 
@@ -347,9 +347,9 @@ La entrega actual utiliza tres imágenes nativas de imagegen para cuatro product
 
 ### Inputs and Variants
 
-Campos y selectores comparten altura (48px), borde fino, fondo carbón y esquinas rectas. El cursor de texto es rosa y el placeholder usa gris de apoyo. La búsqueda incluye un SVG y relleno izquierdo (44px); su etiqueta permanece accesible. Los demás campos conservan etiquetas visibles.
+Campos y selectores comparten altura (48px), borde fino, fondo carbón y esquinas rectas. El cursor de texto es rojo coral y el placeholder usa gris de apoyo. La búsqueda incluye un SVG y relleno izquierdo (44px); su etiqueta permanece accesible. Los demás campos conservan etiquetas visibles.
 
-Las variantes son radios dentro de rectángulos de al menos (48 × 44px), reducidos a (44px) de ancho mínimo en teléfono. Seleccionadas usan el mismo vino y rosa que las categorías. El foco rodea la opción; las agotadas que no pueden elegirse quedan deshabilitadas y tachadas.
+Las variantes son radios dentro de rectángulos de al menos (48 × 44px), reducidos a (44px) de ancho mínimo en teléfono. Seleccionadas usan el mismo vino y coral que las categorías. El foco rodea la opción; las agotadas que no pueden elegirse quedan deshabilitadas y tachadas.
 
 El control de cantidad es un grupo con botones SVG y campo de (44 × 44px). El borde y el foco engloban el conjunto; el foco del grupo se separa (3px). En las líneas del carrito del personal, los anchos bajan a (36px) para botones y (34px) para el campo en teléfono.
 
@@ -361,19 +361,27 @@ La edición muestra existencias actuales por variante en una sección propia, se
 
 ### Order List
 
-Los pedidos son filas enlazadas con divisores finos, sin convertir cada registro en una tarjeta. Número rosa, cliente con salto de texto largo, fecha secundaria, estado de contorno e importe con cifras tabulares mantienen la lectura por columnas; el importe se alinea a la derecha. La fila tiene altura mínima (88px), relleno (24px 20px) y fondo carbón al hover; conserva el foco visible compartido. En teléfono usa relleno (20px 0) y el orden descrito en Layout.
+Los pedidos son filas enlazadas con divisores finos, sin convertir cada registro en una tarjeta. Número coral, cliente con salto de texto largo, fecha secundaria, estado de contorno e importe con cifras tabulares mantienen la lectura por columnas; el importe se alinea a la derecha. «Pedido web» ocupa la columna del cliente cuando el pedido público no tiene contacto. La fila tiene altura mínima (88px), relleno (24px 20px) y fondo carbón al hover; conserva el foco visible compartido. En teléfono usa relleno (20px 0) y el orden descrito en Layout.
 
 La lista presenta hasta (20) registros por página, del más reciente al más antiguo. Anterior, rango visible y Siguiente cierran la lista; los botones de los límites quedan deshabilitados. Cada fila abre el detalle existente. Los estados de carga, error con reintento y lista vacía siguen los mensajes y acciones del sistema.
 
 ### Navigation
 
-La cabecera sticky reúne marca, catálogo, carrito con contador y acceso del personal. La página actual y el hover usan rosa. El carrito es un control de borde fino y el contador se superpone en la esquina superior derecha. En teléfono se conservan marca, carrito y acceso o salida; el carrito baja a (40 × 40px).
+La cabecera sticky reúne marca, catálogo, carrito con contador y acceso del personal. La página actual y el hover usan rojo coral. El carrito es un control de borde fino y el contador se superpone en la esquina superior derecha. En teléfono se conservan marca, carrito y acceso o salida; el carrito baja a (40 × 40px).
 
 ### Request, Summary and Message
 
-Las líneas de solicitud son paneles de borde completo con miniatura, descripción, cantidad, eliminación e importe. El resumen público utiliza divisores para importes y contacto; el del personal es un panel carbón con relleno. Los totales son rosa y se alinean a la derecha.
+Las líneas de solicitud son paneles de borde completo con miniatura, descripción, cantidad, eliminación e importe. El resumen público utiliza divisores para importes estimados y la acción «Generar mensaje de WhatsApp», sin campos de nombre, teléfono o correo. La selección permanece local y la vista previa todavía no registra un pedido. El resumen del personal es un panel carbón con relleno. Los totales son rojo coral y se alinean a la derecha.
 
-La preparación de WhatsApp emplea una marca de confirmación verde dentro de un cuadrado de borde fino y una vista previa verde oscura. El mensaje conserva saltos de línea, interlineado (1.85) y puede partir texto largo. La acción de abrir WhatsApp aparece deshabilitada cuando no puede abrirse; la nota explica el motivo.
+La preparación de WhatsApp emplea una marca verde dentro de un cuadrado de borde fino y una vista previa verde oscura. El mensaje conserva saltos de línea, interlineado (1.85) y puede partir texto largo. Antes del registro, el encabezado muestra «Mensaje listo» y la acción dice «Registrar pedido y abrir WhatsApp». Mientras falte el número comercial, la acción queda deshabilitada con la explicación «WhatsApp pendiente de configurar. La vista previa está disponible».
+
+Al activar la acción disponible, se guarda primero el pedido PENDIENTE con sus detalles y después se abre WhatsApp. La pantalla cambia a número de pedido, estado y fecha límite de confirmación de (120 horas); el botón pasa a «Abrir WhatsApp del pedido». Reintentar conserva el mismo folio. Si el navegador no abre la ventana, un aviso confirma que el pedido quedó guardado y ofrece «Abrir mensaje guardado». «Editar para un nuevo pedido» permite cambiar la selección e iniciar otro intento. Al vencer el plazo, un aviso explica el resultado y «Preparar nuevo pedido» sustituye el avance bloqueado. Abrir WhatsApp no prueba que el mensaje se haya enviado: la nota mantiene explícitos el envío manual, la ausencia de pago y la ausencia de reserva.
+
+### Order Confirmation
+
+El detalle del personal presenta «Pedido registrado», folio y fecha junto a la etiqueta de estado. La confirmación de guardado usa SVG y texto verde. El panel lateral muestra nombre y teléfono para pedidos del personal, o «Pedido web» e identificación por número sin contacto para pedidos públicos. No muestra correo de contacto; el correo de acceso permanece en el formulario de sesión del personal.
+
+El vencimiento se rotula «Confirmar antes de» mientras el pedido está pendiente y «Plazo original» cuando cambia de estado. Un pedido pendiente vigente ofrece «Confirmar pedido»; las variantes sobre pedido requieren marcar cada disponibilidad consultada con el proveedor. La nota aclara que confirmar acepta disponibilidad sin registrar pago, reservar ni descontar existencias. El estado confirmado conserva el detalle y oculta esa acción. Si el plazo terminó, aparece el aviso de eliminación automática. Solo los nuevos pedidos públicos que continúan pendientes a las (120 horas) y sus carritos se eliminan mediante Cron; los anteriores y los del personal conservan su historial.
 
 ### Messages and Empty States
 
@@ -385,7 +393,7 @@ Los avisos usan carbón suave y texto claro; los errores, su pareja dedicada. Lo
 
 - **Do** conservar negro, carbón y bordes finos como base de las superficies.
 - **Do** mantener Roboto Mono en la interfaz y Public Sans en el logotipo SVG.
-- **Do** compartir rosa entre selección, importes y acciones principales.
+- **Do** compartir rojo coral entre selección, importes y acciones principales.
 - **Do** distinguir las acciones de WhatsApp con verde y texto oscuro.
 - **Do** mantener dos columnas de catálogo en móvil y las ampliaciones de tres y cuatro columnas documentadas.
 - **Do** conservar foco visible, etiquetas accesibles, cifras tabulares y movimiento reducido.
@@ -393,6 +401,8 @@ Los avisos usan carbón suave y texto claro; los errores, su pareja dedicada. Lo
 - **Do** conservar la etiqueta «Imagen ilustrativa», el texto alternativo y la procedencia de las imágenes demo; las fotografías reales del personal no llevan esa etiqueta.
 - **Do** separar el guardado de ficha de los ajustes de existencias y mostrar el resultado junto a la variante afectada.
 - **Do** mantener número, cliente, fecha, estado y total en las filas de pedidos, reorganizados según el ancho disponible.
+- **Do** distinguir selección local, vista previa, pedido registrado y confirmación con sus títulos, estados y acciones reales.
+- **Do** identificar los pedidos públicos por folio sin solicitar contacto; conservar nombre y teléfono en el flujo del personal.
 
 ### Don't:
 
@@ -400,4 +410,5 @@ Los avisos usan carbón suave y texto claro; los errores, su pareja dedicada. Lo
 - **Don't** redondear tarjetas, campos o botones; el círculo pertenece al contador.
 - **Don't** extender el halo de la marca a paneles, tarjetas o controles.
 - **Don't** fabricar mercancía ni afirmaciones comerciales, ni presentar imágenes ilustrativas de demo como fotografías comerciales reales.
-- **Don't** presentar la solicitud o la vista previa como un mensaje enviado, un pedido registrado o un pago.
+- **Don't** presentar la selección o la vista previa como un pedido ya registrado, ni la apertura de WhatsApp como prueba de envío.
+- **Don't** presentar un pedido pendiente o confirmado como un pago, una reserva o un descuento de existencias.

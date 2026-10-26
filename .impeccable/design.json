@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-21T18:05:22.849Z",
+  "generatedAt": "2026-10-26T18:07:36.867Z",
   "title": "Design System: GaboStore",
   "extensions": {
     "colorMeta": {
@@ -60,32 +60,32 @@
           "oklch(95.00% 0.0201 230.77)"
         ]
       },
-      "rosa": {
+      "acento": {
         "role": "primary",
-        "displayName": "Rosa de selección",
+        "displayName": "Rojo coral de selección",
         "tonalRamp": [
-          "oklch(15.00% 0.2323 358.25)",
-          "oklch(26.43% 0.2323 358.25)",
-          "oklch(37.86% 0.2323 358.25)",
-          "oklch(49.29% 0.2323 358.25)",
-          "oklch(60.71% 0.2323 358.25)",
-          "oklch(72.14% 0.2323 358.25)",
-          "oklch(83.57% 0.2323 358.25)",
-          "oklch(95.00% 0.2323 358.25)"
+          "oklch(15.00% 0.2081 18.84)",
+          "oklch(26.43% 0.2081 18.84)",
+          "oklch(37.86% 0.2081 18.84)",
+          "oklch(49.29% 0.2081 18.84)",
+          "oklch(60.71% 0.2081 18.84)",
+          "oklch(72.14% 0.2081 18.84)",
+          "oklch(83.57% 0.2081 18.84)",
+          "oklch(95.00% 0.2081 18.84)"
         ]
       },
-      "rosa-hover": {
+      "acento-hover": {
         "role": "primary",
-        "displayName": "Rosa de respuesta",
+        "displayName": "Coral de respuesta",
         "tonalRamp": [
-          "oklch(15.00% 0.1828 354.55)",
-          "oklch(26.43% 0.1828 354.55)",
-          "oklch(37.86% 0.1828 354.55)",
-          "oklch(49.29% 0.1828 354.55)",
-          "oklch(60.71% 0.1828 354.55)",
-          "oklch(72.14% 0.1828 354.55)",
-          "oklch(83.57% 0.1828 354.55)",
-          "oklch(95.00% 0.1828 354.55)"
+          "oklch(15.00% 0.1583 16.48)",
+          "oklch(26.43% 0.1583 16.48)",
+          "oklch(37.86% 0.1583 16.48)",
+          "oklch(49.29% 0.1583 16.48)",
+          "oklch(60.71% 0.1583 16.48)",
+          "oklch(72.14% 0.1583 16.48)",
+          "oklch(83.57% 0.1583 16.48)",
+          "oklch(95.00% 0.1583 16.48)"
         ]
       },
       "verde": {
@@ -132,7 +132,7 @@
       },
       "error": {
         "role": "tertiary",
-        "displayName": "Rosa de error",
+        "displayName": "Rojo claro de error",
         "tonalRamp": [
           "oklch(15.00% 0.1379 15.83)",
           "oklch(26.43% 0.1379 15.83)",
@@ -160,16 +160,16 @@
       },
       "foco": {
         "role": "primary",
-        "displayName": "Rosa de foco",
+        "displayName": "Coral de foco",
         "tonalRamp": [
-          "oklch(15.00% 0.1828 354.55)",
-          "oklch(26.43% 0.1828 354.55)",
-          "oklch(37.86% 0.1828 354.55)",
-          "oklch(49.29% 0.1828 354.55)",
-          "oklch(60.71% 0.1828 354.55)",
-          "oklch(72.14% 0.1828 354.55)",
-          "oklch(83.57% 0.1828 354.55)",
-          "oklch(95.00% 0.1828 354.55)"
+          "oklch(15.00% 0.1583 16.48)",
+          "oklch(26.43% 0.1583 16.48)",
+          "oklch(37.86% 0.1583 16.48)",
+          "oklch(49.29% 0.1583 16.48)",
+          "oklch(60.71% 0.1583 16.48)",
+          "oklch(72.14% 0.1583 16.48)",
+          "oklch(83.57% 0.1583 16.48)",
+          "oklch(95.00% 0.1583 16.48)"
         ]
       },
       "cabecera": {
@@ -188,30 +188,30 @@
       },
       "marca": {
         "role": "primary",
-        "displayName": "Rosa de marca",
+        "displayName": "Coral claro de marca",
         "tonalRamp": [
-          "oklch(15.00% 0.0943 353.38)",
-          "oklch(26.43% 0.0943 353.38)",
-          "oklch(37.86% 0.0943 353.38)",
-          "oklch(49.29% 0.0943 353.38)",
-          "oklch(60.71% 0.0943 353.38)",
-          "oklch(72.14% 0.0943 353.38)",
-          "oklch(83.57% 0.0943 353.38)",
-          "oklch(95.00% 0.0943 353.38)"
+          "oklch(15.00% 0.0928 15.91)",
+          "oklch(26.43% 0.0928 15.91)",
+          "oklch(37.86% 0.0928 15.91)",
+          "oklch(49.29% 0.0928 15.91)",
+          "oklch(60.71% 0.0928 15.91)",
+          "oklch(72.14% 0.0928 15.91)",
+          "oklch(83.57% 0.0928 15.91)",
+          "oklch(95.00% 0.0928 15.91)"
         ]
       },
       "seleccion": {
         "role": "primary",
-        "displayName": "Vino de selección",
+        "displayName": "Vino coral de selección",
         "tonalRamp": [
-          "oklch(15.00% 0.0548 349.52)",
-          "oklch(26.43% 0.0548 349.52)",
-          "oklch(37.86% 0.0548 349.52)",
-          "oklch(49.29% 0.0548 349.52)",
-          "oklch(60.71% 0.0548 349.52)",
-          "oklch(72.14% 0.0548 349.52)",
-          "oklch(83.57% 0.0548 349.52)",
-          "oklch(95.00% 0.0548 349.52)"
+          "oklch(15.00% 0.0430 10.97)",
+          "oklch(26.43% 0.0430 10.97)",
+          "oklch(37.86% 0.0430 10.97)",
+          "oklch(49.29% 0.0430 10.97)",
+          "oklch(60.71% 0.0430 10.97)",
+          "oklch(72.14% 0.0430 10.97)",
+          "oklch(83.57% 0.0430 10.97)",
+          "oklch(95.00% 0.0430 10.97)"
         ]
       },
       "foto-fondo": {
@@ -232,14 +232,14 @@
         "role": "neutral",
         "displayName": "Vino de fotografía",
         "tonalRamp": [
-          "oklch(15.00% 0.0251 341.81)",
-          "oklch(26.43% 0.0251 341.81)",
-          "oklch(37.86% 0.0251 341.81)",
-          "oklch(49.29% 0.0251 341.81)",
-          "oklch(60.71% 0.0251 341.81)",
-          "oklch(72.14% 0.0251 341.81)",
-          "oklch(83.57% 0.0251 341.81)",
-          "oklch(95.00% 0.0251 341.81)"
+          "oklch(15.00% 0.0162 5.00)",
+          "oklch(26.43% 0.0162 5.00)",
+          "oklch(37.86% 0.0162 5.00)",
+          "oklch(49.29% 0.0162 5.00)",
+          "oklch(60.71% 0.0162 5.00)",
+          "oklch(72.14% 0.0162 5.00)",
+          "oklch(83.57% 0.0162 5.00)",
+          "oklch(95.00% 0.0162 5.00)"
         ]
       },
       "foto-iniciales": {
@@ -274,14 +274,14 @@
         "role": "primary",
         "displayName": "Vino de etiqueta",
         "tonalRamp": [
-          "oklch(15.00% 0.1178 357.98)",
-          "oklch(26.43% 0.1178 357.98)",
-          "oklch(37.86% 0.1178 357.98)",
-          "oklch(49.29% 0.1178 357.98)",
-          "oklch(60.71% 0.1178 357.98)",
-          "oklch(72.14% 0.1178 357.98)",
-          "oklch(83.57% 0.1178 357.98)",
-          "oklch(95.00% 0.1178 357.98)"
+          "oklch(15.00% 0.1067 14.33)",
+          "oklch(26.43% 0.1067 14.33)",
+          "oklch(37.86% 0.1067 14.33)",
+          "oklch(49.29% 0.1067 14.33)",
+          "oklch(60.71% 0.1067 14.33)",
+          "oklch(72.14% 0.1067 14.33)",
+          "oklch(83.57% 0.1067 14.33)",
+          "oklch(95.00% 0.1067 14.33)"
         ]
       },
       "whatsapp-tinta": {
@@ -414,7 +414,7 @@
       },
       "price": {
         "displayName": "Precio de tarjeta",
-        "purpose": "Importe rosa con cifras tabulares, reducido a 14px en teléfono."
+        "purpose": "Importe coral con cifras tabulares, reducido a 14px en teléfono."
       },
       "detail-price": {
         "displayName": "Precio de detalle",
@@ -432,7 +432,7 @@
     "shadows": [
       {
         "name": "brand-glow",
-        "value": "drop-shadow(0 1px 5px #f775a454)",
+        "value": "drop-shadow(0 1px 5px #ff526440)",
         "purpose": "Filtro del logotipo SVG; no es una sombra de elevación para paneles."
       }
     ],
@@ -484,9 +484,9 @@
       "name": "Botón principal",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Acción rosa para avanzar o añadir un artículo.",
+      "description": "Acción coral para avanzar o añadir un artículo.",
       "html": "<button class=\"ds-primary\" type=\"button\">Agregar al carrito</button>",
-      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 18px;border:1px solid transparent;border-radius:0;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:.025em;text-decoration:none;text-align:center;cursor:pointer;background:var(--rosa,#ff4297);color:var(--fondo,#0d1214)}.ds-primary:hover{background:var(--rosa-hover,#ff72b1)}.ds-primary:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}.ds-primary:disabled{cursor:not-allowed;opacity:.45}"
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 18px;border:1px solid transparent;border-radius:0;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:.025em;text-decoration:none;text-align:center;cursor:pointer;background:var(--acento,#ff5264);color:var(--fondo,#0d1214)}.ds-primary:hover{background:var(--acento-hover,#ff7d88)}.ds-primary:focus-visible{outline:2px solid var(--foco,#ff7d88);outline-offset:4px}.ds-primary:disabled{cursor:not-allowed;opacity:.45}"
     },
     {
       "name": "Botón secundario",
@@ -494,7 +494,7 @@
       "refersTo": "button-secondary",
       "description": "Acción alternativa de superficie carbón y borde fino.",
       "html": "<a class=\"ds-secondary\" href=\"#/\">Volver al catálogo</a>",
-      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 18px;border:1px solid transparent;border-radius:0;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:.025em;text-decoration:none;text-align:center;cursor:pointer;background:var(--suave,#1d282d);color:var(--tinta,#e9f0f2);border-color:var(--linea,#334149)}.ds-secondary:hover{border-color:var(--secundario,#afbec6)}.ds-secondary:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}.ds-secondary:disabled{cursor:not-allowed;opacity:.45}"
+      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 18px;border:1px solid transparent;border-radius:0;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:.025em;text-decoration:none;text-align:center;cursor:pointer;background:var(--suave,#1d282d);color:var(--tinta,#e9f0f2);border-color:var(--linea,#334149)}.ds-secondary:hover{border-color:var(--secundario,#afbec6)}.ds-secondary:focus-visible{outline:2px solid var(--foco,#ff7d88);outline-offset:4px}.ds-secondary:disabled{cursor:not-allowed;opacity:.45}"
     },
     {
       "name": "Botón de texto",
@@ -502,15 +502,15 @@
       "refersTo": "button-text",
       "description": "Eliminación de una línea de la solicitud.",
       "html": "<button class=\"ds-text\" type=\"button\">Eliminar</button>",
-      "css": ".ds-text{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 18px;border:1px solid transparent;border-radius:0;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:.025em;text-decoration:none;text-align:center;cursor:pointer;background:none;color:var(--secundario,#afbec6);padding:0;min-height:36px;font-size:11px}.ds-text:hover{color:var(--rosa,#ff4297);text-decoration:underline}.ds-text:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}.ds-text:disabled{cursor:not-allowed;opacity:.45}"
+      "css": ".ds-text{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 18px;border:1px solid transparent;border-radius:0;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:.025em;text-decoration:none;text-align:center;cursor:pointer;background:none;color:var(--secundario,#afbec6);padding:0;min-height:36px;font-size:11px}.ds-text:hover{color:var(--acento,#ff5264);text-decoration:underline}.ds-text:focus-visible{outline:2px solid var(--foco,#ff7d88);outline-offset:4px}.ds-text:disabled{cursor:not-allowed;opacity:.45}"
     },
     {
       "name": "Botón de WhatsApp",
       "kind": "button",
       "refersTo": "button-whatsapp",
-      "description": "Acción verde para generar o abrir el mensaje.",
+      "description": "Acción verde para generar la vista previa o registrar el pedido pendiente antes de abrir WhatsApp; una apertura posterior conserva el folio. El destino sin configurar deshabilita el avance y muestra una explicación.",
       "html": "<button class=\"ds-whatsapp\" type=\"button\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 11.5a8 8 0 0 1-12 7L3 20l1.5-5A8 8 0 1 1 20 11.5Z\"/><path d=\"M8 7c0 4 2 6 6 7l2-2-2-1-1 1c-2-1-3-2-3-3l1-1-1-2Z\"/></svg>Generar mensaje de WhatsApp</button>",
-      "css": ".ds-whatsapp{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 18px;border:1px solid transparent;border-radius:0;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:.025em;text-decoration:none;text-align:center;cursor:pointer;background:var(--verde,#22d974);color:#07140c}.ds-whatsapp:hover{background:#58e995}.ds-whatsapp:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}.ds-whatsapp:disabled{cursor:not-allowed;opacity:.45}"
+      "css": ".ds-whatsapp{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 18px;border:1px solid transparent;border-radius:0;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:.025em;text-decoration:none;text-align:center;cursor:pointer;background:var(--verde,#22d974);color:#07140c}.ds-whatsapp:hover{background:#58e995}.ds-whatsapp:focus-visible{outline:2px solid var(--foco,#ff7d88);outline-offset:4px}.ds-whatsapp:disabled{cursor:not-allowed;opacity:.45}"
     },
     {
       "name": "Búsqueda de artículos",
@@ -518,7 +518,7 @@
       "refersTo": "field",
       "description": "Campo oscuro con icono SVG y etiqueta accesible.",
       "html": "<label class=\"ds-search\"><span class=\"ds-sr-only\">Buscar artículos</span><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><path d=\"m16 16 5 5\"/></svg><input class=\"ds-search-input\" type=\"search\" placeholder=\"Buscar artículos…\"></label>",
-      "css": ".ds-search{position:relative;display:block;margin-bottom:16px;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:600;line-height:1.65;text-transform:uppercase;letter-spacing:.05em;color:var(--tinta,#e9f0f2)}.ds-search>svg{position:absolute;left:15px;top:16px;color:var(--secundario,#afbec6);pointer-events:none}.ds-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}.ds-search-input{min-width:0;max-width:100%;width:100%;height:48px;border:1px solid var(--linea,#334149);border-radius:0;background:var(--superficie,#151c20);color:var(--tinta,#e9f0f2);padding:0 14px 0 44px;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;font-weight:600;line-height:1.65;letter-spacing:normal;caret-color:var(--rosa,#ff4297)}.ds-search-input::placeholder{color:var(--secundario,#afbec6);font-size:13px;font-weight:400}.ds-search-input:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}"
+      "css": ".ds-search{position:relative;display:block;margin-bottom:16px;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:600;line-height:1.65;text-transform:uppercase;letter-spacing:.05em;color:var(--tinta,#e9f0f2)}.ds-search>svg{position:absolute;left:15px;top:16px;color:var(--secundario,#afbec6);pointer-events:none}.ds-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}.ds-search-input{min-width:0;max-width:100%;width:100%;height:48px;border:1px solid var(--linea,#334149);border-radius:0;background:var(--superficie,#151c20);color:var(--tinta,#e9f0f2);padding:0 14px 0 44px;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;font-weight:600;line-height:1.65;letter-spacing:normal;caret-color:var(--acento,#ff5264)}.ds-search-input::placeholder{color:var(--secundario,#afbec6);font-size:13px;font-weight:400}.ds-search-input:focus-visible{outline:2px solid var(--foco,#ff7d88);outline-offset:4px}"
     },
     {
       "name": "Navegación principal",
@@ -526,31 +526,31 @@
       "refersTo": "navigation",
       "description": "Marca SVG, catálogo, carrito con contador y acceso del personal.",
       "html": "<header class=\"ds-header\"><div class=\"ds-header-inner\"><a class=\"ds-brand\" href=\"#/\" aria-label=\"GaboStore, catálogo\"><svg class=\"ds-logo\" viewBox=\"0 0 176 64\" role=\"presentation\" aria-hidden=\"true\"><g fill=\"currentColor\" font-family=\"Public Sans, sans-serif\" font-weight=\"800\" font-size=\"30\" letter-spacing=\"-1\"><text x=\"0\" y=\"28\">GABO</text><text x=\"0\" y=\"56\">STORE</text></g><g transform=\"translate(111 5)\" stroke=\"currentColor\" stroke-linejoin=\"round\"><path d=\"M19 9c0-5 8-5 8 0 0 3-4 3-4 6l18 10H5l18-10\" fill=\"none\" stroke-width=\"2\"/><path d=\"m13 23 10 4 10-4 13 10-8 10-5-4v20H13V39l-5 4-8-10Z\" fill=\"currentColor\" stroke-width=\"1\"/></g></svg></a><nav class=\"ds-nav\" aria-label=\"Navegación principal\"><a class=\"ds-catalog ds-current\" href=\"#/\" aria-current=\"page\">Catálogo</a><a class=\"ds-cart\" href=\"#/solicitud\" aria-label=\"Mi pedido, 3 artículos\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 3h2l2.5 12h11l2-9H6\"/><path d=\"M8 19h.01M18 19h.01\" stroke-width=\"3\"/></svg><span class=\"ds-count\">3</span></a><a class=\"ds-staff\" href=\"#/personal\">Personal</a></nav></div></header>",
-      "css": ".ds-header{background:#0a0e10;border-bottom:1px solid var(--linea,#334149);font-family:var(--fuente,\"Roboto Mono\",monospace);line-height:1.65}.ds-header-inner{max-width:1280px;padding:12px 24px;margin:auto;min-height:92px;display:flex;align-items:center;justify-content:space-between;gap:20px}.ds-brand{display:inline-flex;flex-shrink:0;color:#f4aac8;text-decoration:none}.ds-logo{display:block;width:176px;height:64px;filter:drop-shadow(0 1px 5px #f775a454)}.ds-nav{display:flex;align-items:center;gap:24px;min-width:0}.ds-nav a{font-size:13px;text-transform:uppercase;font-weight:600;min-height:44px;display:inline-flex;align-items:center;color:var(--secundario,#afbec6);text-decoration:none}.ds-nav a:hover,.ds-nav .ds-current{color:var(--rosa,#ff4297)}.ds-nav .ds-cart{position:relative;justify-content:center;min-width:44px;border:1px solid var(--linea,#334149);background:var(--superficie,#151c20)}.ds-count{position:absolute;right:-7px;top:-7px;min-width:20px;height:20px;padding:0 4px;border-radius:50%;background:var(--rosa,#ff4297);color:var(--fondo,#0d1214);font-size:11px;font-weight:700;text-align:center;line-height:20px;font-variant-numeric:tabular-nums}.ds-header a:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}@media(max-width:560px){.ds-header-inner{padding:10px 16px;min-height:76px;gap:12px}.ds-logo{width:132px;height:48px}.ds-nav{gap:16px}.ds-nav .ds-catalog{display:none}.ds-nav a{font-size:11px}.ds-nav .ds-cart{min-width:40px;min-height:40px}.ds-nav .ds-staff{font-size:10px}}"
+      "css": ".ds-header{background:#0a0e10;border-bottom:1px solid var(--linea,#334149);font-family:var(--fuente,\"Roboto Mono\",monospace);line-height:1.65}.ds-header-inner{max-width:1280px;padding:12px 24px;margin:auto;min-height:92px;display:flex;align-items:center;justify-content:space-between;gap:20px}.ds-brand{display:inline-flex;flex-shrink:0;color:#ffb0b4;text-decoration:none}.ds-logo{display:block;width:176px;height:64px;filter:drop-shadow(0 1px 5px #ff526440)}.ds-nav{display:flex;align-items:center;gap:24px;min-width:0}.ds-nav a{font-size:13px;text-transform:uppercase;font-weight:600;min-height:44px;display:inline-flex;align-items:center;color:var(--secundario,#afbec6);text-decoration:none}.ds-nav a:hover,.ds-nav .ds-current{color:var(--acento,#ff5264)}.ds-nav .ds-cart{position:relative;justify-content:center;min-width:44px;border:1px solid var(--linea,#334149);background:var(--superficie,#151c20)}.ds-count{position:absolute;right:-7px;top:-7px;min-width:20px;height:20px;padding:0 4px;border-radius:50%;background:var(--acento,#ff5264);color:var(--fondo,#0d1214);font-size:11px;font-weight:700;text-align:center;line-height:20px;font-variant-numeric:tabular-nums}.ds-header a:focus-visible{outline:2px solid var(--foco,#ff7d88);outline-offset:4px}@media(max-width:560px){.ds-header-inner{padding:10px 16px;min-height:76px;gap:12px}.ds-logo{width:132px;height:48px}.ds-nav{gap:16px}.ds-nav .ds-catalog{display:none}.ds-nav a{font-size:11px}.ds-nav .ds-cart{min-width:40px;min-height:40px}.ds-nav .ds-staff{font-size:10px}}"
     },
     {
       "name": "Filtros de categoría",
       "kind": "chip",
       "refersTo": "category",
-      "description": "Fila desplazable de filtros; selección rosa con fondo vino.",
+      "description": "Fila desplazable de filtros; selección coral con fondo vino.",
       "html": "<div class=\"ds-categories\" aria-label=\"Filtrar por categoría\"><button class=\"ds-category ds-selected\" type=\"button\" aria-pressed=\"true\">Todas</button><button class=\"ds-category\" type=\"button\" aria-pressed=\"false\">Ropa</button><button class=\"ds-category\" type=\"button\" aria-pressed=\"false\">Accesorios</button></div>",
-      "css": ".ds-categories{display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;padding:0 0 16px;margin-bottom:24px;border-bottom:1px solid var(--linea,#334149)}.ds-category{background:var(--superficie,#151c20);color:var(--secundario,#afbec6);border:1px solid var(--linea,#334149);min-height:44px;padding:9px 14px;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:600;line-height:1.65;text-transform:uppercase;white-space:nowrap;cursor:pointer}.ds-category:hover{border-color:var(--rosa,#ff4297);color:var(--rosa,#ff4297)}.ds-category.ds-selected{color:var(--rosa,#ff4297);background:#351626;border-color:var(--rosa,#ff4297)}.ds-category:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}@media(max-width:560px){.ds-categories{margin-bottom:18px}}"
+      "css": ".ds-categories{display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;padding:0 0 16px;margin-bottom:24px;border-bottom:1px solid var(--linea,#334149)}.ds-category{background:var(--superficie,#151c20);color:var(--secundario,#afbec6);border:1px solid var(--linea,#334149);min-height:44px;padding:9px 14px;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:12px;font-weight:600;line-height:1.65;text-transform:uppercase;white-space:nowrap;cursor:pointer}.ds-category:hover{border-color:var(--acento,#ff5264);color:var(--acento,#ff5264)}.ds-category.ds-selected{color:var(--acento,#ff5264);background:#361b1f;border-color:var(--acento,#ff5264)}.ds-category:focus-visible{outline:2px solid var(--foco,#ff7d88);outline-offset:4px}@media(max-width:560px){.ds-categories{margin-bottom:18px}}"
     },
     {
       "name": "Etiquetas de estado",
       "kind": "chip",
       "refersTo": "tag",
-      "description": "Estado de contorno rosa, también usado en pedidos, y variante neutral Demo. «Imagen ilustrativa» identifica por separado las imágenes demo aprobadas.",
+      "description": "Estado de contorno coral, también usado en pedidos, y variante neutral Demo. «Imagen ilustrativa» identifica por separado las imágenes demo aprobadas.",
       "html": "<span class=\"ds-tag\">Sobre pedido</span> <span class=\"ds-tag ds-neutral\">Demo</span>",
-      "css": ".ds-tag{display:inline-block;width:fit-content;color:var(--rosa,#ff4297);border:1px solid #843253;padding:2px 6px;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:11px;font-weight:600;line-height:1.65;text-transform:uppercase;white-space:nowrap}.ds-tag.ds-neutral{border:0;color:var(--secundario,#afbec6);padding:0;font-weight:400;font-size:10px}"
+      "css": ".ds-tag{display:inline-block;width:fit-content;color:var(--acento,#ff5264);border:1px solid #8a3c46;padding:2px 6px;font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:11px;font-weight:600;line-height:1.65;text-transform:uppercase;white-space:nowrap}.ds-tag.ds-neutral{border:0;color:var(--secundario,#afbec6);padding:0;font-weight:400;font-size:10px}"
     },
     {
       "name": "Tarjeta de producto",
       "kind": "card",
       "refersTo": "product-card",
-      "description": "Enlace vertical con imagen o iniciales y precio rosa. Las imágenes demo aprobadas llevan «Imagen ilustrativa» y texto alternativo identificador; sus fuentes y prompts se conservan en assets/productos-demo/procedencia.json y junto a los derivados. Las fotografías reales del personal no llevan la etiqueta.",
+      "description": "Enlace vertical con imagen o iniciales y precio rojo coral. Las imágenes demo aprobadas llevan «Imagen ilustrativa» y texto alternativo identificador; sus fuentes y prompts se conservan en assets/productos-demo/procedencia.json y junto a los derivados. Las fotografías reales del personal no llevan la etiqueta.",
       "html": "<a class=\"ds-card\" href=\"#/\"><div class=\"ds-photo\"><span class=\"ds-initials\" role=\"img\" aria-label=\"Camisa básica, sin fotografía\"><span aria-hidden=\"true\">CB</span></span></div><div class=\"ds-card-info\"><div class=\"ds-card-name\"><h2>Camisa básica</h2><span class=\"ds-demo\">Demo</span></div><p class=\"ds-card-category\">Ropa</p><p class=\"ds-card-sizes\">M</p><div class=\"ds-card-price\"><strong>$169.90</strong></div><div class=\"ds-card-footer\"><span>5 disponibles</span><span class=\"ds-card-link\">Ver variantes</span></div></div></a>",
-      "css": ".ds-card{display:flex;flex-direction:column;min-width:0;border:1px solid var(--linea,#334149);text-decoration:none;background:var(--superficie,#151c20);color:var(--tinta,#e9f0f2);font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;line-height:1.65}.ds-card:hover{border-color:var(--rosa,#ff4297)}.ds-card:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}.ds-photo{position:relative;background:#202b30;display:grid;place-items:center;aspect-ratio:4/5;overflow:hidden;min-width:0;width:100%}.ds-card:nth-child(2n+1) .ds-photo{background:#251820}.ds-initials{position:relative;display:grid;place-items:center;width:100%;height:100%;font-size:64px;font-weight:700;color:#82949d;letter-spacing:-.035em;text-transform:uppercase}.ds-initials:before{content:\"\";position:absolute;inset:12% 17%;border:1px solid #425159;transform:skew(-6deg);opacity:.7}.ds-card-info{display:flex;flex-direction:column;flex:1;min-width:0;padding:18px}.ds-card-name{display:flex;justify-content:space-between;align-items:start;gap:8px}.ds-card-name h2{margin:0;font-size:16px;font-weight:700;line-height:1.4;text-transform:uppercase;overflow-wrap:anywhere}.ds-demo{display:inline-block;width:fit-content;color:var(--secundario,#afbec6);font-size:10px;font-weight:400;text-transform:uppercase;white-space:nowrap}.ds-card-category,.ds-card-sizes{color:var(--secundario,#afbec6);font-size:12px;text-transform:uppercase;margin:7px 0 0}.ds-card-sizes{margin-top:4px;min-height:20px}.ds-card-price{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px}.ds-card-price strong{font-size:18px;font-weight:700;color:var(--rosa,#ff4297);font-variant-numeric:tabular-nums}.ds-card-footer{margin-top:auto;padding-top:14px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--secundario,#afbec6)}.ds-card-link{color:var(--rosa,#ff4297);font-weight:600;font-size:13px}@media(max-width:560px){.ds-card{font-size:13px}.ds-card-info{padding:12px}.ds-card-name{display:block}.ds-card-name h2{font-size:13px;min-height:36px}.ds-demo{display:block;margin-top:4px}.ds-card-price{margin-top:12px}.ds-card-price strong{font-size:14px}.ds-card-category,.ds-card-sizes{font-size:10px}.ds-initials{font-size:44px}.ds-card-footer{font-size:10px;gap:6px}.ds-card-link{font-size:10px}}"
+      "css": ".ds-card{display:flex;flex-direction:column;min-width:0;border:1px solid var(--linea,#334149);text-decoration:none;background:var(--superficie,#151c20);color:var(--tinta,#e9f0f2);font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;line-height:1.65}.ds-card:hover{border-color:var(--acento,#ff5264)}.ds-card:focus-visible{outline:2px solid var(--foco,#ff7d88);outline-offset:4px}.ds-photo{position:relative;background:#202b30;display:grid;place-items:center;aspect-ratio:4/5;overflow:hidden;min-width:0;width:100%}.ds-card:nth-child(2n+1) .ds-photo{background:#251b1d}.ds-initials{position:relative;display:grid;place-items:center;width:100%;height:100%;font-size:64px;font-weight:700;color:#82949d;letter-spacing:-.035em;text-transform:uppercase}.ds-initials:before{content:\"\";position:absolute;inset:12% 17%;border:1px solid #425159;transform:skew(-6deg);opacity:.7}.ds-card-info{display:flex;flex-direction:column;flex:1;min-width:0;padding:18px}.ds-card-name{display:flex;justify-content:space-between;align-items:start;gap:8px}.ds-card-name h2{margin:0;font-size:16px;font-weight:700;line-height:1.4;text-transform:uppercase;overflow-wrap:anywhere}.ds-demo{display:inline-block;width:fit-content;color:var(--secundario,#afbec6);font-size:10px;font-weight:400;text-transform:uppercase;white-space:nowrap}.ds-card-category,.ds-card-sizes{color:var(--secundario,#afbec6);font-size:12px;text-transform:uppercase;margin:7px 0 0}.ds-card-sizes{margin-top:4px;min-height:20px}.ds-card-price{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px}.ds-card-price strong{font-size:18px;font-weight:700;color:var(--acento,#ff5264);font-variant-numeric:tabular-nums}.ds-card-footer{margin-top:auto;padding-top:14px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--secundario,#afbec6)}.ds-card-link{color:var(--acento,#ff5264);font-weight:600;font-size:13px}@media(max-width:560px){.ds-card{font-size:13px}.ds-card-info{padding:12px}.ds-card-name{display:block}.ds-card-name h2{font-size:13px;min-height:36px}.ds-demo{display:block;margin-top:4px}.ds-card-price{margin-top:12px}.ds-card-price strong{font-size:14px}.ds-card-category,.ds-card-sizes{font-size:10px}.ds-initials{font-size:44px}.ds-card-footer{font-size:10px;gap:6px}.ds-card-link{font-size:10px}}"
     },
     {
       "name": "Control de cantidad",
@@ -558,37 +558,52 @@
       "refersTo": "quantity-control",
       "description": "Grupo de cantidad con iconos SVG y foco alrededor del conjunto.",
       "html": "<div class=\"ds-quantity\"><button type=\"button\" aria-label=\"Disminuir cantidad\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/></svg></button><input type=\"number\" min=\"1\" step=\"1\" value=\"2\" aria-label=\"Cantidad\"><button type=\"button\" aria-label=\"Aumentar cantidad\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M12 5v14\"/></svg></button></div>",
-      "css": ".ds-quantity{display:inline-flex;width:fit-content;align-items:center;border:1px solid var(--linea,#334149);background:var(--superficie,#151c20);font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;font-weight:400;line-height:1.65}.ds-quantity input{min-width:0;border:0;border-radius:0;width:44px;height:44px;text-align:center;padding:0;appearance:textfield;background:var(--superficie,#151c20);color:var(--tinta,#e9f0f2);font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;font-weight:400;line-height:1.65;font-variant-numeric:tabular-nums;caret-color:var(--rosa,#ff4297)}.ds-quantity input::-webkit-inner-spin-button{appearance:none}.ds-quantity button{display:grid;place-items:center;flex-shrink:0;width:44px;height:44px;border:0;background:var(--superficie,#151c20);color:var(--rosa,#ff4297);font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:18px;cursor:pointer}.ds-quantity button:hover{background:var(--suave,#1d282d)}.ds-quantity:focus-within{outline:2px solid var(--foco,#ff72b1);outline-offset:3px}.ds-quantity input:focus-visible{outline:none}.ds-quantity button:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}.ds-quantity button:disabled{cursor:not-allowed;opacity:.45}"
+      "css": ".ds-quantity{display:inline-flex;width:fit-content;align-items:center;border:1px solid var(--linea,#334149);background:var(--superficie,#151c20);font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;font-weight:400;line-height:1.65}.ds-quantity input{min-width:0;border:0;border-radius:0;width:44px;height:44px;text-align:center;padding:0;appearance:textfield;background:var(--superficie,#151c20);color:var(--tinta,#e9f0f2);font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;font-weight:400;line-height:1.65;font-variant-numeric:tabular-nums;caret-color:var(--acento,#ff5264)}.ds-quantity input::-webkit-inner-spin-button{appearance:none}.ds-quantity button{display:grid;place-items:center;flex-shrink:0;width:44px;height:44px;border:0;background:var(--superficie,#151c20);color:var(--acento,#ff5264);font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:18px;cursor:pointer}.ds-quantity button:hover{background:var(--suave,#1d282d)}.ds-quantity:focus-within{outline:2px solid var(--foco,#ff7d88);outline-offset:3px}.ds-quantity input:focus-visible{outline:none}.ds-quantity button:focus-visible{outline:2px solid var(--foco,#ff7d88);outline-offset:4px}.ds-quantity button:disabled{cursor:not-allowed;opacity:.45}"
     },
     {
       "name": "Ficha de producto y ajustes separados",
       "kind": "custom",
       "description": "Alta y edición comparten ficha y fotografía, apiladas hasta 640px. Guardar ficha y aplicar existencias son acciones independientes; cada ajuste comunica su resultado junto a la variante.",
       "html": "<div class=\"ds-product-editor\"><form class=\"ds-editor\"><fieldset class=\"ds-fields\"><legend class=\"ds-sr-only\">Datos del producto</legend><div class=\"ds-field-grid\"><label class=\"ds-full\">Nombre<input value=\"Camisa básica\" required></label><label>Categoría<input value=\"Ropa\" required></label><label>Precio base · MXN<input type=\"number\" min=\"0\" step=\"0.01\" value=\"169.90\" required></label></div></fieldset><fieldset class=\"ds-editor-photo\"><legend>Fotografía</legend><div class=\"ds-photo-fallback\" role=\"img\" aria-label=\"Camisa básica, sin fotografía\"><span aria-hidden=\"true\">CB</span></div><label class=\"ds-file\">Seleccionar imagen<input type=\"file\" accept=\"image/jpeg,image/png,image/webp\"></label><p class=\"ds-note\">Opcional · JPEG, PNG o WebP · hasta 5 MiB</p></fieldset><div class=\"ds-save\"><button class=\"ds-btn\" type=\"button\">Guardar cambios</button><button class=\"ds-btn ds-secondary\" type=\"button\">Cancelar</button></div></form><section class=\"ds-stock\"><h2>Existencias por variante</h2><p class=\"ds-note\">Cada ajuste se guarda al aplicarlo. No modifica pedidos anteriores.</p><form class=\"ds-stock-row\"><div class=\"ds-stock-current\"><h3>M</h3><p><strong>5</strong> disponibles</p></div><label>Acción<select aria-label=\"Acción para M\"><option>Añadir</option><option>Retirar</option></select></label><label>Unidades<input type=\"number\" min=\"1\" step=\"1\" value=\"1\" aria-label=\"Unidades para M\"></label><button class=\"ds-btn ds-secondary\" type=\"button\">Aplicar ajuste</button></form></section></div>",
-      "css": ".ds-product-editor{font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;line-height:1.65;color:var(--tinta,#e9f0f2)}.ds-editor{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:36px 48px;max-width:1100px;align-items:start}.ds-editor fieldset{min-width:0;max-width:none;border:0;padding:0;margin:0}.ds-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}.ds-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.ds-full{grid-column:1/-1}.ds-product-editor label{display:grid;gap:9px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}.ds-product-editor input,.ds-product-editor select{min-width:0;max-width:100%;width:100%;height:48px;border:1px solid var(--linea,#334149);border-radius:0;background:var(--superficie,#151c20);color:var(--tinta,#e9f0f2);padding:0 14px;font-family:inherit;font-size:14px;font-weight:600;letter-spacing:normal;caret-color:var(--rosa,#ff4297)}.ds-editor-photo legend{font-size:17px;font-weight:700;text-transform:uppercase;margin-bottom:16px;padding:0}.ds-photo-fallback{position:relative;background:#202b30;display:grid;place-items:center;aspect-ratio:4/5;overflow:hidden;min-width:0;width:100%;font-size:64px;font-weight:700;color:#82949d;letter-spacing:-.035em}.ds-photo-fallback:before{content:\"\";position:absolute;inset:12% 17%;border:1px solid #425159;transform:skew(-6deg);opacity:.7}.ds-file{margin-top:20px}.ds-file input{height:auto;min-height:48px;padding:8px;font-size:11px;cursor:pointer}.ds-file input::file-selector-button{background:var(--suave,#1d282d);color:var(--tinta,#e9f0f2);border:1px solid var(--linea,#334149);padding:8px;font:inherit;cursor:pointer;margin-right:8px}.ds-note{font-size:12px;color:var(--secundario,#afbec6);margin:8px 0 0;letter-spacing:normal;text-transform:none;line-height:1.7}.ds-editor-photo .ds-note{font-size:11px;margin-top:12px}.ds-save{grid-column:1/-1;border-top:1px solid var(--linea,#334149);padding-top:24px;display:flex;gap:12px;flex-wrap:wrap}.ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 18px;border:1px solid transparent;border-radius:0;font-family:inherit;font-size:12px;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:.025em;text-align:center;cursor:pointer;background:var(--rosa,#ff4297);color:var(--fondo,#0d1214)}.ds-btn:hover{background:var(--rosa-hover,#ff72b1)}.ds-secondary{background:var(--suave,#1d282d);color:var(--tinta,#e9f0f2);border-color:var(--linea,#334149)}.ds-secondary:hover{background:var(--suave,#1d282d);border-color:var(--secundario,#afbec6)}.ds-product-editor :focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}.ds-btn:disabled{cursor:not-allowed;opacity:.45}.ds-stock{border-top:1px solid var(--linea,#334149);padding-top:28px;margin-top:44px;max-width:1100px}.ds-stock h2{margin:0;font-size:17px;font-weight:700;text-transform:uppercase;line-height:1.4;overflow-wrap:anywhere}.ds-stock h3{margin:0;font-size:15px;font-weight:700;text-transform:uppercase;line-height:1.4}.ds-stock-row{display:grid;grid-template-columns:minmax(0,1fr) 120px 100px auto;gap:20px;align-items:end;padding:24px 0;border-bottom:1px solid var(--linea,#334149);margin-top:12px}.ds-stock-current{align-self:center;min-width:0}.ds-stock-current p{font-size:12px;color:var(--secundario,#afbec6);margin:6px 0 0}.ds-stock-current strong{font-size:18px;color:var(--tinta,#e9f0f2);font-variant-numeric:tabular-nums}@media(max-width:899px){.ds-editor{grid-template-columns:minmax(0,1fr) 240px;gap:28px}.ds-stock-row{grid-template-columns:minmax(0,1fr) 100px 80px auto;gap:12px}}@media(max-width:640px){.ds-editor{grid-template-columns:minmax(0,1fr)}.ds-photo-fallback{max-width:240px}.ds-stock-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}.ds-stock-current,.ds-stock-row>.ds-btn{grid-column:1/-1}.ds-save .ds-btn{flex:1}}"
+      "css": ".ds-product-editor{font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;line-height:1.65;color:var(--tinta,#e9f0f2)}.ds-editor{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:36px 48px;max-width:1100px;align-items:start}.ds-editor fieldset{min-width:0;max-width:none;border:0;padding:0;margin:0}.ds-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}.ds-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.ds-full{grid-column:1/-1}.ds-product-editor label{display:grid;gap:9px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}.ds-product-editor input,.ds-product-editor select{min-width:0;max-width:100%;width:100%;height:48px;border:1px solid var(--linea,#334149);border-radius:0;background:var(--superficie,#151c20);color:var(--tinta,#e9f0f2);padding:0 14px;font-family:inherit;font-size:14px;font-weight:600;letter-spacing:normal;caret-color:var(--acento,#ff5264)}.ds-editor-photo legend{font-size:17px;font-weight:700;text-transform:uppercase;margin-bottom:16px;padding:0}.ds-photo-fallback{position:relative;background:#202b30;display:grid;place-items:center;aspect-ratio:4/5;overflow:hidden;min-width:0;width:100%;font-size:64px;font-weight:700;color:#82949d;letter-spacing:-.035em}.ds-photo-fallback:before{content:\"\";position:absolute;inset:12% 17%;border:1px solid #425159;transform:skew(-6deg);opacity:.7}.ds-file{margin-top:20px}.ds-file input{height:auto;min-height:48px;padding:8px;font-size:11px;cursor:pointer}.ds-file input::file-selector-button{background:var(--suave,#1d282d);color:var(--tinta,#e9f0f2);border:1px solid var(--linea,#334149);padding:8px;font:inherit;cursor:pointer;margin-right:8px}.ds-note{font-size:12px;color:var(--secundario,#afbec6);margin:8px 0 0;letter-spacing:normal;text-transform:none;line-height:1.7}.ds-editor-photo .ds-note{font-size:11px;margin-top:12px}.ds-save{grid-column:1/-1;border-top:1px solid var(--linea,#334149);padding-top:24px;display:flex;gap:12px;flex-wrap:wrap}.ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 18px;border:1px solid transparent;border-radius:0;font-family:inherit;font-size:12px;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:.025em;text-align:center;cursor:pointer;background:var(--acento,#ff5264);color:var(--fondo,#0d1214)}.ds-btn:hover{background:var(--acento-hover,#ff7d88)}.ds-secondary{background:var(--suave,#1d282d);color:var(--tinta,#e9f0f2);border-color:var(--linea,#334149)}.ds-secondary:hover{background:var(--suave,#1d282d);border-color:var(--secundario,#afbec6)}.ds-product-editor :focus-visible{outline:2px solid var(--foco,#ff7d88);outline-offset:4px}.ds-btn:disabled{cursor:not-allowed;opacity:.45}.ds-stock{border-top:1px solid var(--linea,#334149);padding-top:28px;margin-top:44px;max-width:1100px}.ds-stock h2{margin:0;font-size:17px;font-weight:700;text-transform:uppercase;line-height:1.4;overflow-wrap:anywhere}.ds-stock h3{margin:0;font-size:15px;font-weight:700;text-transform:uppercase;line-height:1.4}.ds-stock-row{display:grid;grid-template-columns:minmax(0,1fr) 120px 100px auto;gap:20px;align-items:end;padding:24px 0;border-bottom:1px solid var(--linea,#334149);margin-top:12px}.ds-stock-current{align-self:center;min-width:0}.ds-stock-current p{font-size:12px;color:var(--secundario,#afbec6);margin:6px 0 0}.ds-stock-current strong{font-size:18px;color:var(--tinta,#e9f0f2);font-variant-numeric:tabular-nums}@media(max-width:899px){.ds-editor{grid-template-columns:minmax(0,1fr) 240px;gap:28px}.ds-stock-row{grid-template-columns:minmax(0,1fr) 100px 80px auto;gap:12px}}@media(max-width:640px){.ds-editor{grid-template-columns:minmax(0,1fr)}.ds-photo-fallback{max-width:240px}.ds-stock-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}.ds-stock-current,.ds-stock-row>.ds-btn{grid-column:1/-1}.ds-save .ds-btn{flex:1}}"
     },
     {
       "name": "Filas de pedidos",
       "kind": "custom",
-      "description": "Número, cliente, fecha, estado e importe en una fila enlazada. Hasta 767px se organizan en dos columnas, con el cliente a todo el ancho; la lista pagina de 20 en 20.",
-      "html": "<div class=\"ds-orders\"><div class=\"ds-orders-head\" aria-hidden=\"true\"><span>Pedido</span><span>Cliente</span><span>Fecha</span><span>Estado</span><span>Total</span></div><ol class=\"ds-orders-list\"><li><a href=\"#/pedido/1\"><span class=\"ds-order-number\">Pedido #1</span><span class=\"ds-order-client\">Cliente de ejemplo</span><time datetime=\"2026-10-21T17:52:35Z\">21 oct 2026, 10:52 a.m.</time><span class=\"ds-order-state\">Pendiente</span><strong class=\"ds-order-amount\">$538.80</strong></a></li></ol></div>",
-      "css": ".ds-orders{font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;line-height:1.65;color:var(--tinta,#e9f0f2)}.ds-orders-head,.ds-orders-list a{display:grid;grid-template-columns:110px minmax(0,1fr) 185px 110px 110px;gap:24px;align-items:center}.ds-orders-head{font-size:11px;text-transform:uppercase;color:var(--secundario,#afbec6);padding:12px 20px}.ds-orders-head>span:last-child{text-align:right}.ds-orders-list{list-style:none;padding:0;margin:0;border-top:1px solid var(--linea,#334149)}.ds-orders-list a{padding:24px 20px;border-bottom:1px solid var(--linea,#334149);text-decoration:none;min-height:88px;color:inherit}.ds-orders-list a:hover{background:var(--superficie,#151c20)}.ds-orders-list a:focus-visible{outline:2px solid var(--foco,#ff72b1);outline-offset:4px}.ds-order-number{font-weight:700;font-size:13px;color:var(--rosa,#ff4297)}.ds-order-client{font-size:13px;overflow-wrap:anywhere;min-width:0}.ds-orders-list time{font-size:12px;color:var(--secundario,#afbec6)}.ds-order-state{display:inline-block;width:fit-content;color:var(--rosa,#ff4297);border:1px solid #843253;padding:2px 6px;font-size:10px;font-weight:600;text-transform:uppercase;white-space:nowrap}.ds-order-amount{text-align:right;font-size:14px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}@media(max-width:1024px){.ds-orders-head,.ds-orders-list a{grid-template-columns:95px minmax(0,1fr) 150px 100px 95px;gap:14px}}@media(max-width:767px){.ds-orders-head{display:none}.ds-orders-list a{grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:20px 0}.ds-order-number{grid-column:1;grid-row:1}.ds-order-amount{grid-column:2;grid-row:1}.ds-order-client{grid-column:1/-1}.ds-orders-list time{grid-column:1}.ds-order-state{grid-column:2;justify-self:end}}"
+      "description": "Número, cliente o «Pedido web», fecha, estado e importe en una fila enlazada. Hasta 767px se organizan en dos columnas, con el cliente a todo el ancho; la lista pagina de 20 en 20. El detalle permite confirmar un pendiente vigente y muestra su plazo si existe.",
+      "html": "<div class=\"ds-orders\"><div class=\"ds-orders-head\" aria-hidden=\"true\"><span>Pedido</span><span>Cliente</span><span>Fecha</span><span>Estado</span><span>Total</span></div><ol class=\"ds-orders-list\"><li><a href=\"#/pedido/1\"><span class=\"ds-order-number\">Pedido #1</span><span class=\"ds-order-client\">Pedido web</span><time datetime=\"2026-10-21T17:52:35Z\">21 oct 2026, 10:52 a.m.</time><span class=\"ds-order-state\">PENDIENTE</span><strong class=\"ds-order-amount\">$538.80</strong></a></li></ol></div>",
+      "css": ".ds-orders{font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;line-height:1.65;color:var(--tinta,#e9f0f2)}.ds-orders-head,.ds-orders-list a{display:grid;grid-template-columns:110px minmax(0,1fr) 185px 110px 110px;gap:24px;align-items:center}.ds-orders-head{font-size:11px;text-transform:uppercase;color:var(--secundario,#afbec6);padding:12px 20px}.ds-orders-head>span:last-child{text-align:right}.ds-orders-list{list-style:none;padding:0;margin:0;border-top:1px solid var(--linea,#334149)}.ds-orders-list a{padding:24px 20px;border-bottom:1px solid var(--linea,#334149);text-decoration:none;min-height:88px;color:inherit}.ds-orders-list a:hover{background:var(--superficie,#151c20)}.ds-orders-list a:focus-visible{outline:2px solid var(--foco,#ff7d88);outline-offset:4px}.ds-order-number{font-weight:700;font-size:13px;color:var(--acento,#ff5264)}.ds-order-client{font-size:13px;overflow-wrap:anywhere;min-width:0}.ds-orders-list time{font-size:12px;color:var(--secundario,#afbec6)}.ds-order-state{display:inline-block;width:fit-content;color:var(--acento,#ff5264);border:1px solid #8a3c46;padding:2px 6px;font-size:10px;font-weight:600;text-transform:uppercase;white-space:nowrap}.ds-order-amount{text-align:right;font-size:14px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}@media(max-width:1024px){.ds-orders-head,.ds-orders-list a{grid-template-columns:95px minmax(0,1fr) 150px 100px 95px;gap:14px}}@media(max-width:767px){.ds-orders-head{display:none}.ds-orders-list a{grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:20px 0}.ds-order-number{grid-column:1;grid-row:1}.ds-order-amount{grid-column:2;grid-row:1}.ds-order-client{grid-column:1/-1}.ds-orders-list time{grid-column:1}.ds-order-state{grid-column:2;justify-self:end}}"
+    },
+    {
+      "name": "Mensaje de WhatsApp",
+      "kind": "custom",
+      "refersTo": "message-preview",
+      "description": "Vista previa pública sin contacto ni escritura. El botón de registro permanece bloqueado mientras falte el número comercial. Al registrar se guarda PENDIENTE antes de abrir WhatsApp, y el encabezado pasa a folio, estado y fecha de vencimiento de 120 horas. Reintentar reutiliza el folio; editar la selección inicia un nuevo intento. Abrir no acredita el envío manual.",
+      "html": "<section class=\"ds-message\"><h1>Mensaje listo</h1><p class=\"ds-message-intro\">Al continuar se guardará un pedido pendiente y se abrirá WhatsApp para que envíes el mensaje.</p><div class=\"ds-preview\"><h2>Vista previa · WhatsApp</h2><pre>Hola, quisiera consultar disponibilidad de los siguientes artículos:\n\nCamisa básica · Variante M · 2 unidades\nTotal estimado: $339.80 MXN</pre></div><div class=\"ds-message-actions\"><button class=\"ds-message-whatsapp\" type=\"button\" disabled>Registrar pedido y abrir WhatsApp</button><p class=\"ds-configuration\">WhatsApp pendiente de configurar. La vista previa está disponible.</p><a class=\"ds-message-secondary\" href=\"#/\">Volver al catálogo</a><a class=\"ds-message-link\" href=\"#/solicitud\">Editar mi pedido</a></div><p class=\"ds-message-note\">La vista previa todavía no registra un pedido. El personal tendrá cinco días para confirmarlo una vez registrado.</p></section>",
+      "css": ".ds-message{font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;line-height:1.65;color:var(--tinta,#e9f0f2);max-width:760px;margin:20px auto 0;text-align:center}.ds-message h1{margin:0;font-size:26px;font-weight:700;text-transform:uppercase;line-height:1.4;letter-spacing:-.025em;overflow-wrap:anywhere}.ds-message-intro{color:var(--secundario,#afbec6);font-size:13px;max-width:58ch;margin:16px auto 32px}.ds-preview{text-align:left;background:#102219;border:1px solid #246d43;padding:24px;margin-top:28px;color:#c4e7d3}.ds-preview h2{font-size:12px;line-height:1.4;font-weight:700;text-transform:uppercase;color:var(--verde,#22d974);margin:0 0 18px}.ds-preview pre{font-family:inherit;font-size:13px;line-height:1.85;white-space:pre-wrap;overflow-wrap:anywhere;margin:0}.ds-message-actions{display:grid;gap:14px;margin-top:32px}.ds-message-whatsapp,.ds-message-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:13px 18px;border:1px solid transparent;border-radius:0;font-family:inherit;font-size:12px;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:.025em;text-decoration:none;text-align:center;cursor:pointer;background:var(--verde,#22d974);color:#07140c}.ds-message-whatsapp:hover{background:#58e995}.ds-message-whatsapp:disabled{cursor:not-allowed;opacity:.45}.ds-message-secondary{background:var(--suave,#1d282d);color:var(--tinta,#e9f0f2);border-color:var(--linea,#334149)}.ds-message-secondary:hover{border-color:var(--secundario,#afbec6)}.ds-message :focus-visible{outline:2px solid var(--foco,#ff7d88);outline-offset:4px}.ds-configuration{margin:0 auto;color:#c4e7d3;font-size:12px}.ds-message-link{color:var(--acento,#ff5264);font-size:13px;font-weight:600;text-underline-offset:4px;margin:8px auto}.ds-message-note{font-size:11px;color:var(--secundario,#afbec6);margin:24px auto 0;max-width:70ch;line-height:1.7}@media(max-width:560px){.ds-message{font-size:13px;margin-top:16px}.ds-message h1{font-size:23px}.ds-message-intro{font-size:12px}.ds-preview{padding:18px}.ds-preview pre{font-size:12px}}"
+    },
+    {
+      "name": "Confirmación del personal",
+      "kind": "custom",
+      "description": "Detalle guardado con folio, fecha, estado, plazo y panel «Pedido web» sin contacto. El personal conserva nombre y teléfono en sus propios pedidos, sin correo de contacto; el correo de acceso sigue vigente. Confirmar requiere disponibilidad consultada del proveedor para variantes sobre pedido y no registra pago, reserva ni descuento de existencias. CONFIRMADO oculta la acción. Solo los nuevos públicos que sigan pendientes al vencer 120 horas y sus carritos se eliminan por Cron; se conservan anteriores y del personal.",
+      "html": "<section class=\"ds-confirmation\"><div class=\"ds-confirmation-heading\"><div><h1>Pedido registrado</h1><p>Pedido #14 · 26 oct 2026, 10:00 a.m.</p></div><span class=\"ds-confirmation-state\">Pendiente</span></div><div class=\"ds-confirmation-saved\" role=\"status\"><svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"m8 12 3 3 5-6\"/></svg><p>El pedido y sus detalles quedaron guardados. Puedes continuar con otro pedido.</p></div><aside class=\"ds-order-details\"><h2>Pedido web</h2><dl><div><dt>Identificación</dt><dd>Por número de pedido, sin datos de contacto.</dd></div><div><dt>Confirmar antes de</dt><dd>31 oct 2026, 10:00 a.m.</dd></div></dl><div class=\"ds-confirmation-total\"><span>Total</span><strong>$339.80</strong></div><p class=\"ds-confirmation-note\">Este pedido no registra un pago ni reserva unidades.</p></aside><form class=\"ds-confirmation-form\"><fieldset><legend>Confirmación del proveedor</legend><p class=\"ds-confirmation-note\">Confirma únicamente las variantes cuya disponibilidad ya consultaste con el proveedor.</p><label><input type=\"checkbox\" required><span>Disponibilidad confirmada: Camisa básica, variante M.</span></label></fieldset><p class=\"ds-confirmation-note\">Confirmar acepta el pedido y su disponibilidad. No descuenta existencias ni registra un pago.</p><button class=\"ds-confirm-order\" type=\"button\">Confirmar pedido</button></form></section>",
+      "css": ".ds-confirmation{font-family:var(--fuente,\"Roboto Mono\",monospace);font-size:14px;line-height:1.65;color:var(--tinta,#e9f0f2)}.ds-confirmation h1,.ds-confirmation h2{margin:0;font-weight:700;text-transform:uppercase;line-height:1.4;overflow-wrap:anywhere}.ds-confirmation h1{font-size:24px;letter-spacing:-.025em}.ds-confirmation h2{font-size:17px}.ds-confirmation-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px}.ds-confirmation-heading p{color:var(--secundario,#afbec6);font-size:13px;margin:8px 0 0}.ds-confirmation-state{display:inline-block;width:fit-content;color:var(--acento,#ff5264);border:1px solid #8a3c46;padding:2px 6px;font-size:11px;font-weight:600;text-transform:uppercase;white-space:nowrap}.ds-confirmation-saved{display:flex;align-items:center;gap:12px;margin-bottom:28px;color:var(--verde,#22d974);font-size:14px}.ds-confirmation-saved svg{flex-shrink:0}.ds-confirmation-saved p{margin:0;max-width:70ch}.ds-order-details{padding:24px;border:1px solid var(--linea,#334149);background:var(--superficie,#151c20);max-width:320px}.ds-order-details dl{display:grid;gap:16px;margin:24px 0 0}.ds-order-details dt{font-size:11px;color:var(--secundario,#afbec6);text-transform:uppercase}.ds-order-details dd{margin:4px 0 0;font-size:13px;overflow-wrap:anywhere}.ds-confirmation-total{display:flex;justify-content:space-between;gap:20px;align-items:baseline;padding-top:20px;margin-top:20px;border-top:1px solid var(--linea,#334149);font-size:14px;font-weight:700;text-transform:uppercase}.ds-confirmation-total strong{font-size:22px;color:var(--acento,#ff5264);font-variant-numeric:tabular-nums;text-align:right}.ds-confirmation-note{font-size:12px;color:var(--secundario,#afbec6);margin:16px 0 0;max-width:70ch;line-height:1.7}.ds-confirmation-form{margin-top:30px}.ds-confirmation-form fieldset{border:1px solid var(--linea,#334149);padding:22px;max-width:740px;margin:0}.ds-confirmation-form legend{font-weight:650;padding:0 7px}.ds-confirmation-form label{display:flex;align-items:start;gap:12px;font-weight:400;margin-top:18px}.ds-confirmation-form input{width:20px;height:20px;flex-shrink:0;margin:1px 0 0;accent-color:var(--acento,#ff5264)}.ds-confirm-order{display:inline-flex;align-items:center;justify-content:center;min-height:48px;margin-top:30px;padding:13px 18px;border:1px solid transparent;border-radius:0;background:var(--acento,#ff5264);color:var(--fondo,#0d1214);font-family:inherit;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.025em;line-height:1.6;cursor:pointer}.ds-confirm-order:hover{background:var(--acento-hover,#ff7d88)}.ds-confirm-order:disabled{cursor:not-allowed;opacity:.45}.ds-confirmation :focus-visible{outline:2px solid var(--foco,#ff7d88);outline-offset:4px}@media(max-width:560px){.ds-confirmation{font-size:13px}.ds-confirmation h1{font-size:20px}.ds-confirmation-heading{gap:12px;margin-bottom:20px}.ds-order-details{padding:20px}.ds-confirmation-total{font-size:13px;gap:12px}.ds-confirmation-total strong{font-size:19px}}"
     }
   ],
   "narrative": {
     "northStar": "Catálogo oscuro de Gabo Store",
-    "overview": "El catálogo oscuro reúne la identidad de las seis referencias aprobadas: lienzo casi negro, paneles carbón, bordes finos, selección rosa y marca rosada de dos líneas con camiseta. Es una interfaz directa, compacta y en español; los artículos, las variantes y los importes se comparan dentro de una estructura repetida.\n\nRoboto Mono local sostiene la lectura y los controles; Public Sans local pertenece al logotipo SVG. El rosa señala selección, navegación activa, importes y avance. El verde identifica la preparación del mensaje de WhatsApp y las confirmaciones correctas. Las fotografías comerciales se muestran cuando existen; las imágenes de demo aprobadas se identifican como ilustrativas. Cuando una imagen falta o falla, un bloque de iniciales conserva el lugar del artículo.",
+    "overview": "El catálogo oscuro reúne la identidad de las seis referencias aprobadas y su actualización coral: lienzo casi negro, paneles carbón, bordes finos, selección rojo coral y marca coral clara de dos líneas con camiseta. Es una interfaz directa, compacta y en español; los artículos, las variantes y los importes se comparan dentro de una estructura repetida.\n\nRoboto Mono local sostiene la lectura y los controles; Public Sans local pertenece al logotipo SVG. El rojo coral señala selección, navegación activa, importes y avance. El verde identifica la preparación del mensaje de WhatsApp y las confirmaciones correctas. Las fotografías comerciales se muestran cuando existen; las imágenes de demo aprobadas se identifican como ilustrativas. Cuando una imagen falta o falla, un bloque de iniciales conserva el lugar del artículo.",
     "keyCharacteristics": [
       "Negro y carbón con contornos finos, sin sombras de panel.",
       "Roboto Mono en la interfaz y Public Sans únicamente en la marca.",
-      "Rosa en selección, importes y acciones; verde en WhatsApp y confirmación.",
+      "Rojo coral en selección, importes y acciones; verde en WhatsApp y confirmación.",
       "Tarjetas de producto con imagen o iniciales, adaptadas a dos, tres o cuatro columnas.",
       "Controles rectos, foco visible y movimiento breve compatible con movimiento reducido."
     ],
     "rules": [
       {
-        "name": "Rosa de selección",
-        "body": "Selección, importes y acciones principales comparten el rosa. El estado seleccionado combina texto y borde rosa con fondo vino.",
+        "name": "Rojo de selección",
+        "body": "Selección, importes y acciones principales comparten el rojo coral. El estado seleccionado combina texto y borde coral con fondo vino.",
         "section": "colors"
       },
       {
@@ -605,21 +620,24 @@
     "dos": [
       "**Do** conservar negro, carbón y bordes finos como base de las superficies.",
       "**Do** mantener Roboto Mono en la interfaz y Public Sans en el logotipo SVG.",
-      "**Do** compartir rosa entre selección, importes y acciones principales.",
+      "**Do** compartir rojo coral entre selección, importes y acciones principales.",
       "**Do** distinguir las acciones de WhatsApp con verde y texto oscuro.",
       "**Do** mantener dos columnas de catálogo en móvil y las ampliaciones de tres y cuatro columnas documentadas.",
       "**Do** conservar foco visible, etiquetas accesibles, cifras tabulares y movimiento reducido.",
       "**Do** mostrar fotografías reales, imágenes de demo aprobadas e identificadas, o el bloque de iniciales cuando no estén disponibles.",
       "**Do** conservar la etiqueta «Imagen ilustrativa», el texto alternativo y la procedencia de las imágenes demo; las fotografías reales del personal no llevan esa etiqueta.",
       "**Do** separar el guardado de ficha de los ajustes de existencias y mostrar el resultado junto a la variante afectada.",
-      "**Do** mantener número, cliente, fecha, estado y total en las filas de pedidos, reorganizados según el ancho disponible."
+      "**Do** mantener número, cliente, fecha, estado y total en las filas de pedidos, reorganizados según el ancho disponible.",
+      "**Do** distinguir selección local, vista previa, pedido registrado y confirmación con sus títulos, estados y acciones reales.",
+      "**Do** identificar los pedidos públicos por folio sin solicitar contacto; conservar nombre y teléfono en el flujo del personal."
     ],
     "donts": [
       "**Don't** restaurar la identidad anterior de fondo blanco, acciones verde profundo y filas abiertas.",
       "**Don't** redondear tarjetas, campos o botones; el círculo pertenece al contador.",
       "**Don't** extender el halo de la marca a paneles, tarjetas o controles.",
       "**Don't** fabricar mercancía ni afirmaciones comerciales, ni presentar imágenes ilustrativas de demo como fotografías comerciales reales.",
-      "**Don't** presentar la solicitud o la vista previa como un mensaje enviado, un pedido registrado o un pago."
+      "**Don't** presentar la selección o la vista previa como un pedido ya registrado, ni la apertura de WhatsApp como prueba de envío.",
+      "**Don't** presentar un pedido pendiente o confirmado como un pago, una reserva o un descuento de existencias."
     ]
   }
 }

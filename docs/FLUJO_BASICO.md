@@ -2,7 +2,7 @@
 
 ## Iniciar la web
 
-Requiere Node.js 22.12 o posterior. En la carpeta existente:
+Requiere Node.js 22.12 o posterior. En PowerShell:
 
 ```powershell
 cd C:\Users\angel\OneDrive\Documents\GaboStoreDatos
@@ -10,105 +10,74 @@ $env:PORT='3001'
 npm run dev
 ```
 
-Abrir http://127.0.0.1:3001. Se usa 3001 en esta demostración porque 3000 estaba ocupado. Sin `PORT`, el valor predeterminado es 3000. La API escucha únicamente en el equipo local. `dev` compila y arranca; después de editar código, detener con Ctrl+C y ejecutar de nuevo. `npm start` reutiliza la compilación existente.
+Abrir http://127.0.0.1:3001. La API escucha únicamente en el equipo local. `dev` compila y arranca; después de editar código, detener con Ctrl+C y ejecutarlo otra vez. `npm start` reutiliza la compilación web existente.
 
-## Demostración pública: catálogo → detalle → carrito → mensaje
+## Cliente: catálogo → carrito → vista previa → registro
 
-1. **Catálogo:** buscar por nombre y filtrar por categoría; ambas opciones se combinan. Abrir un artículo. Los cuatro artículos iniciales tienen imágenes generadas identificadas como ilustrativas de demo. Las fotografías del personal se muestran cuando existen; si faltan o fallan, aparecen las iniciales. Las categorías se desplazan horizontalmente en pantallas pequeñas.
-2. **Detalle:** seleccionar una variante disponible y una cantidad entera positiva. Las variantes normales agotadas están deshabilitadas. Pulsar **Agregar al carrito**. Añadir otra vez la misma variante acumula cantidades, respetando las existencias. Los artículos sobre pedido ocultan el precio público y requieren consulta de disponibilidad.
-3. **Mi pedido:** abrir el icono de carrito. Cambiar cantidades, quitar líneas y capturar un correo válido. Recargar la pestaña: la selección y el correo se conservan en `sessionStorage`. El correo es de contacto y no crea una cuenta. El envío aparece como **A confirmar**.
-4. **Mensaje listo:** pulsar **Generar mensaje de WhatsApp**. Antes de preparar el texto, la web vuelve a consultar precios y disponibilidad. Si una selección dejó de estar disponible, se conserva y se pide corregirla. Revisar artículos, variantes, cantidades, importes y correo. Para artículos sobre pedido, el precio queda por confirmar y el total se identifica como parcial.
+1. Consultar el catálogo, combinar búsqueda y categoría y abrir un artículo. Las tres imágenes generadas para los cuatro artículos semilla llevan **Imagen ilustrativa**; las fotos reales del personal no llevan esa etiqueta. Si una foto falla, aparecen iniciales.
+2. Seleccionar una variante disponible y una cantidad entera positiva. **Agregar al carrito** acumula la misma variante. Las variantes normales agotadas están deshabilitadas.
+3. Abrir **Mi pedido**, cambiar cantidades o quitar líneas. No se pide nombre, teléfono ni correo. La selección se conserva al recargar la misma pestaña. El envío aparece como **A confirmar**.
+4. Pulsar **Generar mensaje de WhatsApp**. La web actualiza precios y disponibilidad. Si algo cambió, conserva la selección y pide corregirla. Esta vista previa no escribe en la base de datos.
+5. Con WhatsApp configurado, pulsar **Registrar pedido y abrir WhatsApp**. El backend guarda un pedido PENDIENTE completo, obtiene precios del servidor y devuelve su número. Después se abre el mensaje con ese número. La persona debe enviarlo manualmente dentro de WhatsApp.
+6. El personal tendrá **120 horas desde el registro** para confirmar el pedido. No representa un pago, reserva ni descuento de existencias. Abrir WhatsApp no demuestra que se haya enviado el mensaje.
 
-El recorrido público solo consulta el catálogo. No crea clientes, carritos ni pedidos en Supabase. La solicitud local tampoco se convierte automáticamente en un pedido al iniciar sesión como empleado. Se conserva en la pestaña mientras esté abierta; no se promete sincronización entre dispositivos ni recuperación después de cerrarla.
+El mismo contenido y clave de solicitud recuperan el mismo pedido al reintentar o recargar. Si falla el guardado, no se abre WhatsApp y la selección se conserva. Si el navegador bloquea la apertura después de guardar, se muestra el número y **Abrir mensaje guardado**. Editar artículos o cantidades prepara una solicitud nueva y no modifica el pedido anterior. Después del vencimiento, **Preparar nuevo pedido** conserva la selección y genera otra clave.
 
-**Mensaje listo** significa que existe una vista previa: el mensaje todavía no se ha enviado y el pedido no está registrado. **Abrir WhatsApp** abre el chat con texto precargado; la persona debe pulsar Enviar dentro de WhatsApp. El personal confirma la solicitud y registra el pedido real mediante su acceso.
+Los artículos sobre pedido mantienen el precio público oculto y el total parcial. Pueden registrarse como pendientes; la confirmación posterior exige la disponibilidad del proveedor. No hay consulta automática al proveedor.
 
 ### Configurar WhatsApp después
 
-En `.env`, configurar `GABOSTORE_WHATSAPP` con el número comercial internacional de GaboStore, solo dígitos, sin espacios ni guiones. No usar un número ficticio para la demostración. Reiniciar el servidor después de cambiarlo.
+En `.env`, establecer `GABOSTORE_WHATSAPP` con el número comercial internacional de GaboStore, solo dígitos, sin espacios ni guiones. Reiniciar el servidor. No se ha configurado un número comercial ficticio.
 
-Mientras falte un número válido, la vista previa funciona y **Abrir WhatsApp** permanece deshabilitado. `GET /api/config` entrega `whatsappNumero` normalizado o `null`, junto con la URL y clave pública ya utilizadas. No entrega claves secretas ni credenciales del personal. El enlace utiliza el formato oficial `https://wa.me/NUMERO?text=TEXTO_CODIFICADO`.
+El backend también necesita `SUPABASE_SECRET_KEY` para la operación limitada de registro público. Nunca se entrega al navegador ni se sube a Git. Si falta la configuración del registro, la API devuelve un error y no guarda pedidos. Sin número válido, la vista previa funciona y el botón de registro permanece deshabilitado.
 
-## Demostración del personal: registrar el pedido real
+`GET /api/config` conserva únicamente URL, clave pública y destino WhatsApp. La API de registro acepta solo clave de solicitud, variantes y cantidades; rechaza precios, datos de cliente o estado enviados por el navegador. Limita a diez intentos por minuto por dirección en el servidor local. No permite consultar pedidos privados por su número sin una sesión del personal.
 
-1. Entrar en **Personal**. Usar el correo y la contraseña de `.env.personal.local`. Es una cuenta EMPLEADO de demostración.
-2. Pulsar **Nuevo pedido**, capturar nombre, teléfono y correo y continuar a los artículos. Son datos de contacto, no una cuenta de cliente.
-3. En el detalle, seleccionar una variante y una cantidad. Añadir al carrito del personal. Este carrito está separado de la solicitud pública.
-4. Cambiar cantidades o quitar líneas. El servidor valida disponibilidad y conserva el precio capturado. Pulsar **Revisar pedido**.
-5. Comprobar cliente, variantes, cantidades y total. Para artículos sobre pedido, confirmar manualmente que ya se consultó su disponibilidad con el proveedor. Pulsar **Registrar pedido pendiente**.
-6. Anotar el número del pedido. Recargar la confirmación recupera el registro real. **Preparar otro pedido** obtiene un carrito nuevo.
-7. En Supabase, buscar ese ID en `pedidos` y como `pedido_id` en `items_pedido`. Verificar cantidades, precios y subtotales. `creado_por` guarda el UID del empleado autenticado.
+## Personal: registrar y confirmar pedidos
 
-Un pedido pendiente no representa una venta pagada, no reserva unidades y no descuenta existencias.
+1. Entrar en **Personal** con el correo y contraseña de `.env.personal.local`. El correo de acceso sigue vigente.
+2. **Nuevo pedido** solicita nombre y teléfono del cliente, sin correo. Es información de contacto, no una cuenta.
+3. Añadir variantes al carrito interno, cambiar cantidades y revisar el total. El servidor valida disponibilidad y conserva el precio capturado. El carrito está separado de la selección pública.
+4. **Revisar pedido** muestra artículos y cliente. Si hay artículos sobre pedido, confirmar manualmente la consulta al proveedor y pulsar **Registrar pedido pendiente**.
+5. Abrir **Pedidos** para consultar páginas de 20 registros, del más reciente al más antiguo. Los pedidos públicos sin cliente aparecen como **Pedido web**.
+6. Abrir un pedido pendiente y pulsar **Confirmar pedido**. El servidor vuelve a validar stock, plazo y confirmaciones del proveedor en una transacción. El resultado es CONFIRMADO, sin cambiar sus precios ni cantidades y sin descontar existencias.
 
-## Capas
+Los pedidos públicos muestran su plazo. Después de las 120 horas ya no pueden confirmarse aunque la limpieza todavía no los haya quitado. Los pedidos existentes antes de esta entrega y todos los registrados por el personal no caducan automáticamente. No se añadieron operaciones para otros cambios de estado.
 
-Para el personal: `web/` → API HTTP → `src/negocio/` → `src/repositories/` → Supabase.
+## Limpieza automática en Supabase
 
-- React recoge datos y muestra resultados; el servidor decide precios y autorización.
-- `ControlCatalogo` distingue la consulta pública de la interna.
-- `ControlCarrito` valida contacto, asociación de variante, cantidades y disponibilidad.
-- `ControlGeneracionPedido` vuelve a validar y construye un `PedidoNuevo` completo.
-- `PedidoRepository.guardar` persiste cabecera y detalles en una transacción. Reintentar el mismo carrito recupera el pedido sin duplicarlo.
-- El adaptador HTTP valida el JWT con Supabase Auth y exige ADMIN o EMPLEADO desde `app_metadata`. Cada petición usa un cliente con el token de su usuario.
+Las migraciones activan `pg_cron` y programan `gabostore-limpiar-pendientes-publicos` cada minuto. La función privada elimina físicamente solo pedidos con origen PUBLICO, estado PENDIENTE y plazo vencido, junto con sus detalles y carrito. Procesa hasta 500 por ejecución; los bloqueados pasan a una ejecución posterior.
 
-Para el público, `SolicitudConsulta` contiene únicamente selección y correo. Sus funciones calculan la vista previa con datos públicos actuales; `useSolicitudConsulta` mantiene el estado local. Ninguna de estas acciones llama a las operaciones de escritura del personal.
+Cron funciona con la aplicación local cerrada, siempre que el proyecto Supabase esté activo. Confirmación y limpieza bloquean la misma fila para evitar carreras. Las sesiones públicas, empleados y claves de servicio no pueden invocar la limpieza; tampoco se habilitaron borrados generales del historial.
 
-La ampliación añade una migración para el bucket y las políticas de Storage; las tablas del dominio se conservan. No publica la web ni despliega funciones Edge. El servidor Node sigue siendo el adaptador de prueba local.
+Se pueden revisar ejecuciones en **Integrations → Cron** de Supabase. Los confirmados, productos, variantes, clientes y el historial anterior permanecen. Las columnas de correo antiguas siguen opcionales para conservar sus valores históricos; los contratos nuevos no las capturan ni las muestran.
 
-## Dar de alta y editar productos
+## Alta y edición de productos
 
-1. Iniciar sesión y pulsar **Nuevo producto** en el catálogo.
-2. Capturar nombre, categoría y precio base en MXN. Marcar **Artículo sobre pedido** si corresponde: el público verá consulta de precio.
-3. Registrar al menos una variante con existencia inicial entera no negativa. Usar **Única** si no hay talla. **Añadir variante** permite varias tallas; no se admiten nombres repetidos aunque cambien mayúsculas o espacios.
-4. Opcionalmente elegir una fotografía del equipo. Se admiten JPEG, PNG y WebP de hasta **5 MiB**. La vista previa aparece antes de guardar; la carga se hace al pulsar **Crear producto**. Si falla, el formulario conserva sus datos para reintentar.
-5. Guardar y revisar el detalle. Un artículo normal sin existencias permanece visible para el personal, pero no aparece en el catálogo público.
-6. En el detalle, pulsar **Editar producto**. Cambiar la ficha o sustituir la imagen y pulsar **Guardar cambios**. Las variantes existentes se conservan.
-7. En **Existencias por variante**, elegir **Añadir** o **Retirar**, indicar las unidades y pulsar **Aplicar ajuste**. Esta acción se guarda por separado de la ficha. El ajuste es atómico y no permite existencias negativas.
+En el catálogo del personal, **Nuevo producto** permite capturar nombre, categoría, precio base, opción sobre pedido y al menos una variante con existencia inicial entera no negativa. Utilizar **Única** si no hay talla; las tallas no pueden repetirse aunque cambien mayúsculas o espacios exteriores.
 
-Modificar un precio no recalcula carritos ya capturados ni cambia los importes de pedidos históricos. La solicitud pública sí obtiene el precio actual al preparar su vista previa. Esta etapa no incorpora eliminación de productos o variantes.
+La fotografía es opcional: JPEG, PNG o WebP de hasta **5 MiB**. Se previsualiza y se carga al guardar. Si falla, se conservan los datos para reintentar. La imagen se guarda en el bucket público `catalogo`, con carga exclusiva del personal y un archivo nuevo por sustitución.
 
-## Consultar pedidos anteriores
+En el detalle, **Editar producto** actualiza la ficha y fotografía. **Existencias por variante** permite Añadir o Retirar unidades con **Aplicar ajuste**. Cada ajuste se guarda por separado y de forma atómica, sin permitir saldo negativo. Se conservan variantes e importes históricos; no hay eliminación de productos o variantes.
 
-En el acceso del personal, abrir **Pedidos** en la cabecera. La lista muestra número, cliente, fecha, estado y total, del más reciente al más antiguo. **Anterior** y **Siguiente** recorren páginas de 20 registros. Abrir un pedido recupera su detalle persistido; **Volver a pedidos** regresa a la lista. No se modifican estados desde esta pantalla.
+`npm run demo:imagenes` conserva las fotografías ya asignadas y no cambia stock o precios. Sus originales, WebP y prompts están en `assets/productos-demo/`.
 
-## Imágenes de demostración
-
-Las camisas y la gorra iniciales usan tres imágenes creadas con imagegen; los dos registros duplicados de Camisa comparten imagen. Sus originales, versiones WebP y prompts están en `assets/productos-demo/`. Las imágenes optimizadas pesan aproximadamente 40–90 kB cada una y se sirven desde Supabase Storage.
-
-`npm run demo:imagenes` realiza la carga para los cuatro artículos verificados del proyecto GaboStore. Requiere la clave privada de servidor en `.env`, conserva toda fotografía ya asignada y no modifica precios ni existencias. Repetirlo no sustituye las fotografías que haya añadido el personal. La etiqueta **Imagen ilustrativa** corresponde a las imágenes de la carpeta de demo de Storage.
-
-## Preparar otra copia
-
-1. Ejecutar `npm ci`.
-2. Copiar `.env.example` a `.env` y configurar URL y clave pública de Supabase.
-3. Configurar WhatsApp cuando se tenga el número comercial; es opcional para probar la vista previa.
-4. Usar una cuenta de personal existente con rol en `app_metadata`.
-5. Para una cuenta ficticia nueva, configurar la clave secreta exclusivamente en terminal/backend y ejecutar `npm run preparar:personal`. Crea una cuenta EMPLEADO, genera una contraseña y guarda el acceso en `.env.personal.local`, sin enviar correo. Se puede elegir el correo con `GABOSTORE_PERSONAL_EMAIL`.
-6. El script conserva cuentas existentes: si el correo ya está registrado y no se tiene el archivo de acceso, usar credenciales existentes o elegir otro correo. No restablece contraseñas.
-7. Ejecutar `npm run dev` con el puerto deseado.
-
-`.env` y `.env.personal.local` están ignorados por Git. Las claves secretas y contraseñas no forman parte del bundle de React.
-
-## Verificar
+## Pruebas
 
 ```powershell
 npm run typecheck
 npm test
 npm run build
 npm run build:web
-npm run verificar:flujo
-npm run verificar:catalogo
+npm run verificar:whatsapp
 ```
 
-Las pruebas locales verifican PostgreSQL con PGlite, repositorios, reglas de negocio, permisos HTTP, políticas de Storage y solicitud pública. Cubren alta/edición, variantes repetidas, stock negativo, formato/tamaño de imágenes, paginación, acumulación, correo, cambios de disponibilidad, precios ocultos y configuración de WhatsApp. No se conectan al proyecto remoto. El esquema Storage mínimo de PGlite permite probar las políticas SQL; no reemplaza la prueba de carga de archivos real.
+Las pruebas locales cubren datos, negocio, API, permisos, correo retirado, idempotencia, precios, stock, proveedor y vencimiento. PGlite aplica las migraciones de tablas, funciones y Storage; no tiene el proceso `pg_cron`, por lo que la programación y sus ejecuciones se verifican además en Supabase real.
 
-`verificar:flujo` autentica al personal y recorre HTTP → negocio → datos → Supabase real. Usa un puerto temporal y deja registros `DEMO FLUJO`. Comprueba precios del servidor, detalle completo, autor, reintento sin duplicados y conservación de existencias. Requiere dos artículos normales con al menos dos unidades disponibles.
+`verificar:whatsapp` requiere `.env` y `.env.personal.local`. Inicia un servidor temporal, registra un pedido público real de un artículo disponible, reintenta sin duplicarlo y realiza dos confirmaciones concurrentes con una sesión EMPLEADO. Deja ese pedido confirmado de demostración y verifica que el stock no cambió. Utiliza un destino sintáctico únicamente dentro de esa prueba; no configura el número comercial, no abre WhatsApp y no envía mensajes.
 
-En la revisión del 20 de octubre de 2026, el recorrido público conservó los mismos conteos de las cinco tablas de clientes, carritos y pedidos antes y después de preparar la vista previa. La prueba del personal guardó y recuperó el pedido **7**, carrito **10**, con dos líneas y total **$538.80**. Estos IDs pertenecen a esa ejecución. Se revisó el catálogo a 360, 390, 768, 1024 y 1440 px, además de detalle, carrito, mensaje y confirmación del personal en móvil y escritorio.
+También siguen disponibles `verificar:flujo`, `verificar:catalogo` y `verificar:conexion`. Cada prueba remota conserva sus registros de demostración, salvo los públicos pendientes que venzan.
 
-`verificar:catalogo` autentica a un empleado real y prueba carga de fotografía, rechazo de carga anónima, alta, edición, ajustes y conservación de un pedido anterior. Deja un artículo identificado como **DEMO CATALOGO**, con existencia final cero, para no incorporarlo al catálogo público. Cada ejecución conserva su registro y su imagen de prueba.
+Verificación del **26 de octubre de 2026**: el pedido público **12** se registró sin contacto, se recuperó en los reintentos y se confirmó sin modificar stock o importes. Un pedido de prueba vencido, **13**, y su carrito **16** fueron eliminados por Cron; el pedido confirmado y los diez pedidos anteriores del personal permanecieron. La regresión del personal guardó el pedido **15**, carrito **18**, sin correo, con dos líneas y total **$499.00**, manteniendo autor e inventario. Estos números corresponden a esas ejecuciones, no deben introducirse manualmente.
 
-Verificación de la ampliación del **21 de octubre de 2026**: 51 pruebas locales correctas. La prueba HTTP real creó el artículo **6**, con imagen y precio editado a **$60.25**; terminó con cero existencias. La prueba desde el navegador creó el artículo **7** con dos variantes, sustituyó su fotografía y conservó el precio editado de **$81.25** tras recargar; sus existencias también terminaron en cero. La regresión de pedidos guardó el pedido **10**, carrito **13**, con dos líneas y total **$538.80**. Después, generar una solicitud pública conservó los mismos conteos de clientes, carritos y pedidos. Son IDs de estas ejecuciones, no valores que deban introducirse manualmente.
-
-El flujo básico no incluye pagos, apartados, ventas, devoluciones, gestión de envíos, reportes, eliminación de artículos o administración de cuentas desde la web. La confirmación del proveedor es manual; no existe una consulta automática al proveedor.
+La entrega conserva React, TypeScript y Supabase con presentación → API → negocio → repositorios. La identidad utiliza rojo coral y marca roja clara sobre el fondo oscuro. No incluye hosting, pagos, reservas, tarifas de envío, cuentas de clientes ni estados administrativos adicionales.
