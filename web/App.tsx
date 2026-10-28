@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import type { ArticuloCatalogo } from '../src/negocio/ControlCatalogo.js';
 import type { PedidoDetalle } from '../src/negocio/ControlGeneracionPedido.js';
 import { solicitar, mensajeError } from './api.js';
@@ -18,7 +18,7 @@ import { cargarConfiguracion } from './configuracion.js';
 import { Icono, Logotipo } from './Icono.js';
 import { PantallaProducto } from './PantallaProducto.js';
 import { PantallaPedidos } from './PantallaPedidos.js';
-import { PantallaGestion } from './PantallaGestion.js';
+const PantallaGestion = lazy(() => import('./PantallaGestion.js').then(m => ({default:m.PantallaGestion})));
 
 export function App() {
   const sesion = useSesion();
@@ -109,7 +109,7 @@ export function App() {
       {carrito.error && <Aviso error>{carrito.error}</Aviso>}
       {sesion.personal && (ruta === '/carrito' || ruta === '/confirmar') && <ol className="pasos" aria-label="Etapas del pedido"><li><a href="#/">Artículos</a></li><li className={ruta === '/carrito' ? 'paso-actual' : ''}><a href="#/carrito">Carrito</a></li><li className={ruta === '/confirmar' ? 'paso-actual' : ''}>Confirmación</li></ol>}
       {error && !esCatalogo && <Aviso error>{error}</Aviso>}
-      {ruta.startsWith('/gestion/') ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error}/> : <PantallaGestion ruta={ruta} token={sesion.token!} personal={sesion.personal}/> : ruta === '/pedidos' ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error}/> : <PantallaPedidos token={sesion.token!}/> :
+      {ruta.startsWith('/gestion/') ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error}/> : <Suspense fallback={<Cargando/>}><PantallaGestion ruta={ruta} token={sesion.token!} personal={sesion.personal}/></Suspense> : ruta === '/pedidos' ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error}/> : <PantallaPedidos token={sesion.token!}/> :
         ruta.startsWith('/productos/') ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error}/> : <PantallaProducto key={ruta} token={sesion.token!} {...(ruta.match(/^\/productos\/(\d+)\/editar$/)?.[1] ? { id: Number(ruta.match(/^\/productos\/(\d+)\/editar$/)![1]) } : {})}/> :
         ruta === '/carrito' ? sesion.personal ? carrito.cargando ? <Cargando /> : <PantallaCarrito carrito={carrito.carrito} ocupado={carrito.ocupado} crear={carrito.crear} cambiar={carrito.cambiar} quitar={carrito.quitar} /> : <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> :
         ruta === '/confirmar' ? sesion.personal ? carrito.cargando ? <Cargando /> : <PantallaConfirmacionPedido carrito={carrito.carrito} registrando={registrando} registrar={registrar} /> : <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> :

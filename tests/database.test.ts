@@ -47,6 +47,18 @@ before(async () => {
 
 after(async () => { await db?.close(); });
 
+test('categorías únicas: permisos, cambio de nombre y baja conservan los artículos',async()=>{
+ const f=await fixture();const categoria=(await db.query<{categoria_id:number}>('select categoria_id from public.articulos where id=$1',[f.articulo])).rows[0]!.categoria_id;
+ await conRol('authenticated',{sub:'00000000-0000-4000-8000-000000000088',app_metadata:{rol:'EMPLEADO'}},()=>assert.rejects(db.query("insert into public.categorias(nombre) values('No permitido')"),codigoEsperado('42501')));
+ await conRol('authenticated',personal,async()=>{
+  await assert.rejects(db.query("insert into public.categorias(nombre) values(' ropa ')"),codigoEsperado('23505'));
+  await db.query("update public.categorias set nombre='Ropa actualizada',activo=false where id=$1",[categoria]);
+ });
+ assert.equal((await db.query<{categoria:string}>('select categoria from public.articulos where id=$1',[f.articulo])).rows[0]?.categoria,'Ropa actualizada');
+ await conRol('anon',{},async()=>assert.equal((await db.query('select * from public.obtener_catalogo($1)',[f.articulo])).rows.length,0));
+ await conRol('authenticated',personal,()=>db.query("update public.categorias set nombre='Ropa',activo=true where id=$1",[categoria]));
+});
+
 test('usuarios: solo ADMIN administra y desactivar invalida también un JWT anterior',async()=>{
  const empleado='00000000-0000-4000-8000-000000000099';
  await db.query("insert into auth.users(id,email,raw_app_meta_data) values($1,'empleado@example.com','{\"rol\":\"EMPLEADO\"}')",[empleado]);

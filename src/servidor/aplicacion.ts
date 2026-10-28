@@ -12,6 +12,8 @@ import type { FiltrosListadoPedidos } from '../filtrosPedidos.js';
 import { ControlPedidoPublico } from '../negocio/ControlPedidoPublico.js';
 import { ControlUsuarios, type UsuarioNuevo, type CambiosUsuario } from '../negocio/ControlUsuarios.js';
 import { UsuarioRepository } from '../repositories/UsuarioRepository.js';
+import {ControlMaestros,type RegistroMaestro} from '../negocio/ControlMaestros.js';
+import {MaestroRepository} from '../repositories/MaestroRepository.js';
 
 export interface OpcionesServidor {
   url: string;
@@ -146,6 +148,13 @@ export function crearServidor(opciones: OpcionesServidor) {
           if ((rol !== 'ADMIN' && rol !== 'EMPLEADO') || data.user.app_metadata.activo === false) throw new ErrorHTTP(403, 'Esta cuenta no tiene acceso de personal o está desactivada.');
           identidad = { id: data.user.id, email: data.user.email, rol };
           negocio = crearCapaNegocio(crearCapaDatos(conectar(token)));
+          const maestro = ruta.pathname.match(/^\/api\/personal\/(categorias)(?:\/(\d+))?$/);
+          if(maestro){
+            const control=new ControlMaestros(new MaestroRepository(conectar(token),'categorias'));
+            if(metodo==='GET'&&!maestro[2])return json(respuesta,await control.listar(Number(ruta.searchParams.get('desde')??0),ruta.searchParams.get('opciones')==='1'));
+            if(rol!=='ADMIN')throw new ErrorHTTP(403,'Solo el administrador puede modificar este registro.');
+            if((metodo==='POST'&&!maestro[2])||(metodo==='PATCH'&&maestro[2]))return json(respuesta,await control.guardar(maestro[2]?Number(maestro[2]):null,await cuerpo(peticion) as unknown as Omit<RegistroMaestro,'id'>),metodo==='POST'?201:200);
+          }
           const usuario = ruta.pathname.match(/^\/api\/personal\/usuarios(?:\/([\da-f-]+))?$/i);
           if (usuario) {
             if (rol !== 'ADMIN') throw new ErrorHTTP(403, 'Solo el administrador puede gestionar usuarios.');

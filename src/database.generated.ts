@@ -17,6 +17,7 @@ export type Database = {
       articulos: {
         Row: {
           categoria: string
+          categoria_id: number | null
           fotografia: string
           id: number
           nombre: string
@@ -25,6 +26,7 @@ export type Database = {
         }
         Insert: {
           categoria: string
+          categoria_id?: number | null
           fotografia?: string
           id?: never
           nombre: string
@@ -33,13 +35,22 @@ export type Database = {
         }
         Update: {
           categoria?: string
+          categoria_id?: number | null
           fotografia?: string
           id?: never
           nombre?: string
           precio_base?: number
           sobre_pedido?: boolean
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "articulos_categoria_id_fkey"
+            columns: ["categoria_id"]
+            isOneToOne: false
+            referencedRelation: "categorias"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       carritos: {
         Row: {
@@ -69,6 +80,33 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      categorias: {
+        Row: {
+          activo: boolean
+          creado_por: string | null
+          descripcion: string
+          fecha_creacion: string
+          id: number
+          nombre: string
+        }
+        Insert: {
+          activo?: boolean
+          creado_por?: string | null
+          descripcion?: string
+          fecha_creacion?: string
+          id?: never
+          nombre: string
+        }
+        Update: {
+          activo?: boolean
+          creado_por?: string | null
+          descripcion?: string
+          fecha_creacion?: string
+          id?: never
+          nombre?: string
+        }
+        Relationships: []
       }
       clientes: {
         Row: {
