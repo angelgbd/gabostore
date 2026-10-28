@@ -47,6 +47,26 @@ before(async () => {
 
 after(async () => { await db?.close(); });
 
+test('compra atómica: lote de un proveedor, artículos nuevos, stock y reintento sin duplicar',async()=>{
+ const f=await fixture(),proveedor=await id("insert into public.proveedores(nombre,telefono) values('Compra DEMO','6621234567') returning id");
+ const categoria=(await db.query<{categoria_id:number}>('select categoria_id from public.articulos where id=$1',[f.articulo])).rows[0]!.categoria_id;
+ const clave=crypto.randomUUID(),items=JSON.stringify([{varianteId:f.variante,cantidad:3,costoUnitario:50.1},{nuevoArticulo:{nombre:'Nuevo desde compra',categoriaId:categoria,precioBase:99,tallaMedida:'Única'},cantidad:2,costoUnitario:30}]);
+ await conRol('anon',{},()=>assert.rejects(db.query("select public.registrar_compra($1,$2,current_date,'',$3::jsonb)",[clave,proveedor,items]),codigoEsperado('42501')));
+ await conRol('authenticated',personal,async()=>{
+  const registrar=()=>id("select public.registrar_compra($1,$2,(now() at time zone 'America/Hermosillo')::date,'Factura DEMO',$3::jsonb) id",[clave,proveedor,items]);
+  const compra=await registrar();assert.equal(await registrar(),compra);
+  assert.equal((await db.query<{total:string}>('select total from public.compras where id=$1',[compra])).rows[0]?.total,'210.30');
+  assert.equal((await db.query<{existencia:number}>('select existencia from public.variantes where id=$1',[f.variante])).rows[0]?.existencia,8);
+  assert.equal((await db.query('select * from public.detalle_compra where compra_id=$1',[compra])).rows.length,2);
+  await assert.rejects(db.query("select public.registrar_compra($1,$2,current_date,'Otra',$3::jsonb)",[clave,proveedor,items]),codigoEsperado('55000'));
+  await assert.rejects(db.query('update public.compras set total=1 where id=$1',[compra]),codigoEsperado('42501'));
+ });
+ const previo=(await db.query<{n:number}>('select count(*)::int n from public.compras')).rows[0]!.n;
+ await conRol('authenticated',personal,()=>assert.rejects(db.query("select public.registrar_compra($1,$2,current_date,'',$3::jsonb)",[crypto.randomUUID(),proveedor,JSON.stringify([{varianteId:f.variante,cantidad:1,costoUnitario:3},{varianteId:999999,cantidad:1,costoUnitario:3}])])));
+ assert.equal((await db.query<{n:number}>('select count(*)::int n from public.compras')).rows[0]?.n,previo);
+ assert.equal((await db.query<{existencia:number}>('select existencia from public.variantes where id=$1',[f.variante])).rows[0]?.existencia,8);
+});
+
 test('proveedores: solo ADMIN registra y la baja es lógica',async()=>{
  const proveedor=await conRol('authenticated',personal,()=>id("insert into public.proveedores(nombre,telefono) values('Proveedor DEMO','6621234567') returning id"));
  await conRol('authenticated',{sub:'00000000-0000-4000-8000-000000000077',app_metadata:{rol:'EMPLEADO'}},async()=>{

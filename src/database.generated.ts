@@ -129,6 +129,108 @@ export type Database = {
         }
         Relationships: []
       }
+      compras: {
+        Row: {
+          clave: string
+          creado_por: string
+          fecha_recepcion: string
+          fecha_registro: string
+          id: number
+          proveedor_id: number
+          proveedor_nombre: string
+          referencia: string
+          solicitud: Json
+          total: number
+        }
+        Insert: {
+          clave: string
+          creado_por: string
+          fecha_recepcion: string
+          fecha_registro?: string
+          id?: never
+          proveedor_id: number
+          proveedor_nombre: string
+          referencia?: string
+          solicitud: Json
+          total: number
+        }
+        Update: {
+          clave?: string
+          creado_por?: string
+          fecha_recepcion?: string
+          fecha_registro?: string
+          id?: never
+          proveedor_id?: number
+          proveedor_nombre?: string
+          referencia?: string
+          solicitud?: Json
+          total?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "compras_proveedor_id_fkey"
+            columns: ["proveedor_id"]
+            isOneToOne: false
+            referencedRelation: "proveedores"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      detalle_compra: {
+        Row: {
+          articulo_id: number
+          cantidad: number
+          compra_id: number
+          costo_unitario: number
+          nombre: string
+          subtotal: number
+          talla_medida: string
+          variante_id: number
+        }
+        Insert: {
+          articulo_id: number
+          cantidad: number
+          compra_id: number
+          costo_unitario: number
+          nombre: string
+          subtotal?: number
+          talla_medida: string
+          variante_id: number
+        }
+        Update: {
+          articulo_id?: number
+          cantidad?: number
+          compra_id?: number
+          costo_unitario?: number
+          nombre?: string
+          subtotal?: number
+          talla_medida?: string
+          variante_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "detalle_compra_articulo_id_fkey"
+            columns: ["articulo_id"]
+            isOneToOne: false
+            referencedRelation: "articulos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "detalle_compra_compra_id_fkey"
+            columns: ["compra_id"]
+            isOneToOne: false
+            referencedRelation: "compras"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "detalle_compra_variante_id_fkey"
+            columns: ["variante_id"]
+            isOneToOne: false
+            referencedRelation: "variantes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       historial_precios: {
         Row: {
           articulo_id: number
@@ -486,6 +588,16 @@ export type Database = {
           sobre_pedido: boolean
           variantes: Json
         }[]
+      }
+      registrar_compra: {
+        Args: {
+          p_clave: string
+          p_fecha: string
+          p_items: Json
+          p_proveedor_id: number
+          p_referencia: string
+        }
+        Returns: number
       }
       registrar_pedido_publico: {
         Args: { p_clave: string; p_items: Json }

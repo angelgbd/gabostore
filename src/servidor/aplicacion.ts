@@ -14,6 +14,8 @@ import { ControlUsuarios, type UsuarioNuevo, type CambiosUsuario } from '../nego
 import { UsuarioRepository } from '../repositories/UsuarioRepository.js';
 import {ControlMaestros,type RegistroMaestro} from '../negocio/ControlMaestros.js';
 import {MaestroRepository} from '../repositories/MaestroRepository.js';
+import {ControlCompras,type CompraNueva} from '../negocio/ControlCompras.js';
+import {CompraRepository} from '../repositories/CompraRepository.js';
 
 export interface OpcionesServidor {
   url: string;
@@ -140,6 +142,11 @@ export function crearServidor(opciones: OpcionesServidor) {
         let negocio = negocioPublico;
         let identidad: { id: string; email: string | undefined; rol: string } | undefined;
         if (personal) {
+          const compraRuta=ruta.pathname.match(/^\/api\/personal\/compras(?:\/(\d+))?$/);
+          if(compraRuta){const control=new ControlCompras(new CompraRepository(conectar(peticion.headers.authorization!.slice(7))));
+            if(metodo==='GET')return json(respuesta,compraRuta[1]?await control.obtener(Number(compraRuta[1])):await control.listar(Number(ruta.searchParams.get('desde')??0)));
+            if(metodo==='POST'&&!compraRuta[1])return json(respuesta,await control.registrar(await cuerpo(peticion) as unknown as CompraNueva),201);
+          }
           const varianteGestion=ruta.pathname.match(/^\/api\/personal\/catalogo\/(\d+)\/variantes(?:\/(\d+))?$/);
           if(varianteGestion&&((metodo==='POST'&&!varianteGestion[2])||(metodo==='PATCH'&&varianteGestion[2]))){
             const datos=await cuerpo(peticion);
