@@ -64,6 +64,8 @@ La validación de esta entrega pasó 77 pruebas, TypeScript y ambas compilacione
 
 La revisión visual incluyó formularios y comprobantes en móvil y escritorio: 360, 390, 768, 1024 y 1440 px, además del ancho de 614 px de la ventana del usuario. Se comprobó que el documento no desborde horizontalmente y que el foco de teclado sea visible. Los módulos privados se cargan aparte del catálogo público. Esta ampliación conserva los colores, tipografía, componentes y fotografías del sistema de diseño existente.
 
+Al editar, consultar un comprobante o guardar, el foco y la vista se trasladan al contenido actualizado; los errores se enfocan conservando el formulario. La revisión de compra muestra cada artículo/variante, cantidad, costo y subtotal. El aviso de variante guardada permanece después de cambiar talla, recargo o estado.
+
 ## Fuera de esta entrega
 
 Los reportes específicos de existencias/lotes, apartados, anticipos, devolución, logística y gestión completa de pedidos corresponden al Release 2. Se conserva la funcionalidad de pedidos ya desarrollada, sin añadir esos procesos. No hay publicación en hosting ni pasarela de pagos.
