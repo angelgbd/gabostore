@@ -44,6 +44,7 @@ export class ControlGeneracionPedido {
     if (carrito.clienteId === null) throw new ErrorNegocio('Este carrito público ya fue registrado.');
     if (!carrito.items.length) throw new ErrorNegocio('Agrega al menos un artículo antes de registrar el pedido.');
     for (const item of carrito.items) {
+      if(item.activo===false)throw new ErrorNegocio("Hay un artículo o variante inactivo en el carrito.");
       if (item.sobrePedido && !confirmacionesProveedor.includes(item.varianteId)) {
         throw new ErrorNegocio(`Confirma con el proveedor la disponibilidad de ${item.nombre}, variante ${item.tallaMedida}.`, 'REQUIERE_CONFIRMACION');
       }

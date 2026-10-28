@@ -63,3 +63,9 @@ test('confirmación del personal recupera el pedido actualizado sin cambiar sus 
   const confirmado=await f.controlPedido.confirmar(anterior.id); assert.equal(confirmado.estado,'CONFIRMADO');
   assert.deepEqual(confirmado.items,anterior.items); assert.equal(confirmado.total,anterior.total);
 });
+
+test('dar de baja un artículo conserva la consulta de un pedido ya registrado',async()=>{
+ const f=escenarioPedido();await f.control.agregar(4,1,2,1);const p=await f.controlPedido.generar(4);
+ Object.assign(f.articulo,{activo:false});Object.assign(f.articulo.variantes[0]!,{activo:false,recargo:50});
+ const historico=await f.controlPedido.obtener(p.id);assert.equal(historico.total,p.total);assert.equal(historico.items[0]?.precioUnitario,p.items[0]?.precioUnitario);
+});

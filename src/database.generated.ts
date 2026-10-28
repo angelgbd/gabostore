@@ -16,8 +16,9 @@ export type Database = {
     Tables: {
       articulos: {
         Row: {
+          activo: boolean
           categoria: string
-          categoria_id: number | null
+          categoria_id: number
           fotografia: string
           id: number
           nombre: string
@@ -25,8 +26,9 @@ export type Database = {
           sobre_pedido: boolean
         }
         Insert: {
+          activo?: boolean
           categoria: string
-          categoria_id?: number | null
+          categoria_id: number
           fotografia?: string
           id?: never
           nombre: string
@@ -34,8 +36,9 @@ export type Database = {
           sobre_pedido?: boolean
         }
         Update: {
+          activo?: boolean
           categoria?: string
-          categoria_id?: number | null
+          categoria_id?: number
           fotografia?: string
           id?: never
           nombre?: string
@@ -125,6 +128,51 @@ export type Database = {
           telefono?: string
         }
         Relationships: []
+      }
+      historial_precios: {
+        Row: {
+          articulo_id: number
+          creado_por: string | null
+          fecha: string
+          id: number
+          importe: number
+          tipo: string
+          variante_id: number | null
+        }
+        Insert: {
+          articulo_id: number
+          creado_por?: string | null
+          fecha?: string
+          id?: never
+          importe: number
+          tipo: string
+          variante_id?: number | null
+        }
+        Update: {
+          articulo_id?: number
+          creado_por?: string | null
+          fecha?: string
+          id?: never
+          importe?: number
+          tipo?: string
+          variante_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "historial_precios_articulo_id_fkey"
+            columns: ["articulo_id"]
+            isOneToOne: false
+            referencedRelation: "articulos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "historial_precios_variante_id_fkey"
+            columns: ["variante_id"]
+            isOneToOne: false
+            referencedRelation: "variantes"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       items_carrito: {
         Row: {
@@ -263,21 +311,27 @@ export type Database = {
       }
       variantes: {
         Row: {
+          activo: boolean
           articulo_id: number
           existencia: number
           id: number
+          recargo: number
           talla_medida: string
         }
         Insert: {
+          activo?: boolean
           articulo_id: number
           existencia?: number
           id?: never
+          recargo?: number
           talla_medida: string
         }
         Update: {
+          activo?: boolean
           articulo_id?: number
           existencia?: number
           id?: never
+          recargo?: number
           talla_medida?: string
         }
         Relationships: [
@@ -313,9 +367,11 @@ export type Database = {
       ajustar_existencia: {
         Args: { p_cambio: number; p_variante_id: number }
         Returns: {
+          activo: boolean
           articulo_id: number
           existencia: number
           id: number
+          recargo: number
           talla_medida: string
         }[]
         SetofOptions: {
@@ -346,6 +402,16 @@ export type Database = {
       }
       es_admin: { Args: never; Returns: boolean }
       es_personal: { Args: never; Returns: boolean }
+      gestionar_variante: {
+        Args: {
+          p_activo: boolean
+          p_articulo_id: number
+          p_id: number
+          p_recargo: number
+          p_talla: string
+        }
+        Returns: number
+      }
       guardar_item_carrito: {
         Args: {
           p_cantidad: number

@@ -66,6 +66,7 @@ export class ControlCatalogo {
 
   private validarFicha(datos: CambiosArticulo): CambiosArticulo {
     const ficha: CambiosArticulo = {};
+    if(datos.activo!==undefined){if(typeof datos.activo!=='boolean')throw new ErrorNegocio('Estado del artículo inválido.');ficha.activo=datos.activo;}
     if (datos.nombre !== undefined) ficha.nombre = texto(datos.nombre, 'Nombre');
     if (datos.categoria !== undefined) ficha.categoria = texto(datos.categoria, 'Categoría');
     if (datos.precioBase !== undefined) { importe(datos.precioBase); ficha.precioBase = datos.precioBase; }
@@ -101,7 +102,7 @@ export class ControlCatalogo {
     return {
       ...articulo,
       precioBase: !personal && articulo.sobrePedido ? null : articulo.precioBase,
-      existenciaTotal: articulo.variantes.reduce((suma, variante) => suma + variante.existencia, 0),
+      existenciaTotal: articulo.variantes.reduce((suma, variante) => suma + (variante.activo===false?0:variante.existencia), 0),
     };
   }
 }

@@ -13,7 +13,7 @@ export function PantallaDetalleArticulo({ articulo, personal = false, tieneCarri
   const [agregado, setAgregado] = useState(false);
   const [error, setError] = useState('');
   const elegida = articulo.variantes.find(v => v.id === varianteId);
-  const puedeAgregar = !personal || tieneCarrito;
+  const puedeAgregar = articulo.activo!==false && (!personal || tieneCarrito);
   const rutaCarrito = personal ? '#/carrito' : '#/solicitud';
   async function enviar(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault(); setAgregado(false); setError('');
@@ -26,11 +26,11 @@ export function PantallaDetalleArticulo({ articulo, personal = false, tieneCarri
     <a className="volver" href="#/"><Icono nombre="volver" tamano={16}/>Detalle del artículo</a>
     <div className={`detalle-articulo${puedeAgregar ? ' detalle-con-accion' : ''}`}>
       <Fotografia ruta={articulo.fotografia} nombre={nombreArticulo(articulo.nombre)} />
-      <div className="detalle-informacion"><div className="detalle-encabezado"><h1>{nombreArticulo(articulo.nombre)}</h1><p className="precio-detalle">{dinero(articulo.precioBase)}</p></div><p className="etiqueta categoria-detalle">{articulo.categoria}</p>
+      <div className="detalle-informacion"><div className="detalle-encabezado"><h1>{nombreArticulo(articulo.nombre)}</h1><p className="precio-detalle">{dinero(articulo.precioBase===null?null:Math.round((articulo.precioBase+(elegida?.recargo??0))*100)/100)}</p></div><p className="etiqueta categoria-detalle">{articulo.categoria}</p>
         {personal && <a className="boton secundario editar-desde-detalle" href={`#/productos/${articulo.id}/editar`}>Editar producto</a>}
         {articulo.sobrePedido && <p className="nota">Artículo sobre pedido. Precio y disponibilidad sujetos a confirmación con el negocio.</p>}
         {puedeAgregar ? <form className="formulario agregar-articulo" onSubmit={e => { void enviar(e); }}>
-          <fieldset className="opciones-variantes"><legend>Talla / medida</legend><div className="variantes-selector">{articulo.variantes.map(v => <label className="opcion-variante" title={`${v.tallaMedida}: ${v.existencia ? `${v.existencia} disponibles` : 'Agotada'}`} key={v.id}><input type="radio" name="variante" value={v.id} checked={varianteId === v.id} disabled={ocupado || (!articulo.sobrePedido && !v.existencia)} required onChange={() => { setVarianteId(v.id); setCantidad(1); setAgregado(false); setError(''); }} /><strong>{v.tallaMedida}</strong><span className="sr-only">{v.existencia ? `${v.existencia} disponibles` : 'Agotada'}</span></label>)}</div></fieldset>
+          <fieldset className="opciones-variantes"><legend>Talla / medida</legend><div className="variantes-selector">{articulo.variantes.map(v => <label className="opcion-variante" title={`${v.tallaMedida}: ${v.existencia ? `${v.existencia} disponibles` : 'Agotada'}`} key={v.id}><input type="radio" name="variante" value={v.id} checked={varianteId === v.id} disabled={ocupado || v.activo===false || (!articulo.sobrePedido && !v.existencia)} required onChange={() => { setVarianteId(v.id); setCantidad(1); setAgregado(false); setError(''); }} /><strong>{v.tallaMedida}{Boolean(v.recargo)&&<small> +{dinero(v.recargo??0)}</small>}{v.activo===false&&<small> · Inactiva</small>}</strong><span className="sr-only">{v.existencia ? `${v.existencia} disponibles` : 'Agotada'}</span></label>)}</div></fieldset>
           <p className="disponibilidad-seleccion" aria-live="polite">{elegida ? articulo.sobrePedido ? 'Disponibilidad a confirmar con el proveedor.' : `${elegida.existencia} disponibles` : 'Selecciona una variante disponible.'}</p>
           <label className="etiqueta-cantidad" htmlFor="cantidad-articulo">Cantidad</label>
           <div className="cantidad-control cantidad-detalle"><button type="button" aria-label="Disminuir cantidad" disabled={ocupado || cantidad <= 1} onClick={() => cambiarCantidad(cantidad - 1)}><Icono nombre="menos" tamano={14}/></button><input id="cantidad-articulo" type="number" min="1" step="1" max={articulo.sobrePedido ? undefined : elegida?.existencia} value={cantidad} disabled={ocupado} onChange={e => cambiarCantidad(Number(e.target.value))} required /><button type="button" aria-label="Aumentar cantidad" disabled={ocupado || (!articulo.sobrePedido && Boolean(elegida) && cantidad >= (elegida?.existencia ?? 0))} onClick={() => cambiarCantidad(cantidad + 1)}><Icono nombre="mas" tamano={14}/></button></div>

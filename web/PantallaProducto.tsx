@@ -5,6 +5,9 @@ import { limiteFotografia, extensionesFotografia } from '../src/fotografias.js';
 import { solicitar, subirFotografia, mensajeError } from './api.js';
 import { Aviso, Cargando, ErrorCarga, Fotografia, nombreArticulo } from './componentes.js';
 import { Icono } from './Icono.js';
+import {GestionVariantes} from './GestionVariantes.js';
+import type {RegistroMaestro} from '../src/negocio/ControlMaestros.js';
+import './gestion.css';
 
 export function PantallaProducto({ token, id }: { token: string; id?: number }) {
   const [articulo, setArticulo] = useState<ArticuloCatalogo | null>(null);
@@ -25,6 +28,8 @@ function FormularioProducto({ token, articulo }: { token: string; articulo: Arti
   const [categoria, setCategoria] = useState(articulo?.categoria ?? '');
   const [precio, setPrecio] = useState(String(articulo?.precioBase ?? ''));
   const [sobrePedido, setSobrePedido] = useState(articulo?.sobrePedido ?? false);
+  const [activo,setActivo]=useState(articulo?.activo!==false);
+  const [categorias,setCategorias]=useState<RegistroMaestro[]>([]),[cargandoCategorias,setCargandoCategorias]=useState(true),[revisionCategorias,setRevisionCategorias]=useState(0);
   const [variantes, setVariantes] = useState<VarianteNueva[]>([{ tallaMedida: 'Única', existencia: 0 }]);
   const [fotografia, setFotografia] = useState(articulo?.fotografia ?? '');
   const [archivo, setArchivo] = useState<File | null>(null);
@@ -37,6 +42,7 @@ function FormularioProducto({ token, articulo }: { token: string; articulo: Arti
   const enCurso = useRef(false);
   const selector = useRef<HTMLInputElement>(null);
   const ocupado = Boolean(fase) || ajustando;
+  useEffect(()=>{let v=true;setCargandoCategorias(true);void solicitar<{registros:RegistroMaestro[]}>('personal/categorias?opciones=1',token).then(p=>{if(v)setCategorias(p.registros);}).catch(e=>{if(v)setError(mensajeError(e));}).finally(()=>{if(v)setCargandoCategorias(false);});return()=>{v=false;};},[token,revisionCategorias]);
   useEffect(() => {
     if (!archivo) { setPrevia(''); return; }
     const ruta = URL.createObjectURL(archivo); setPrevia(ruta);
@@ -64,7 +70,7 @@ function FormularioProducto({ token, articulo }: { token: string; articulo: Arti
       let ruta = subida || fotografia;
       if (archivo && !subida) { setFase('Subiendo imagen…'); ruta = await subirFotografia(archivo, token); setSubida(ruta); }
       setFase('Guardando producto…');
-      const ficha = { nombre, categoria, precioBase: Number(precio), sobrePedido, fotografia: ruta };
+      const ficha = { nombre, categoria, precioBase: Number(precio), sobrePedido, fotografia: ruta, ...(articulo?{activo}:{}) };
       const guardado = await solicitar<ArticuloCatalogo>(articulo ? `personal/catalogo/${articulo.id}` : 'personal/catalogo', token,
         articulo ? 'PATCH' : 'POST', articulo ? ficha : { ...ficha, variantes });
       location.hash = `#/articulo/${guardado.id}`;
@@ -77,9 +83,10 @@ function FormularioProducto({ token, articulo }: { token: string; articulo: Arti
     <form className="editor-producto" onSubmit={e => { void guardar(e); }} aria-busy={Boolean(fase)}>
       <fieldset className="ficha-producto" disabled={ocupado}><legend className="sr-only">Datos del producto</legend>
         <div className="campos-producto"><label className="campo-ancho">Nombre<input value={nombre} required onChange={e => setNombre(e.target.value)}/></label>
-          <label>Categoría<input value={categoria} required placeholder="Ej. Ropa" onChange={e => setCategoria(e.target.value)}/></label>
+          <label>Categoría<select value={categoria} required disabled={cargandoCategorias} onChange={e=>setCategoria(e.target.value)}><option value="">Seleccionar categoría</option>{categorias.map(c=><option key={c.id} value={c.nombre} disabled={!c.activo&&c.nombre!==articulo?.categoria}>{c.nombre}{!c.activo?' (inactiva)':''}</option>)}</select></label>
           <label>Precio base · MXN<input type="number" min="0" step="0.01" required value={precio} onChange={e => setPrecio(e.target.value)}/></label>
           <label className="check-producto campo-ancho"><input type="checkbox" checked={sobrePedido} onChange={e => setSobrePedido(e.target.checked)}/><span>Artículo sobre pedido</span></label>
+          {articulo&&<label className="check-producto campo-ancho"><input type="checkbox" checked={activo} onChange={e=>setActivo(e.target.checked)}/><span>Artículo activo · desmarcar da de baja sin borrar historial</span></label>}
         </div>
         {sobrePedido && <p className="nota">El público verá «Consultar precio». El personal confirma la disponibilidad con el proveedor antes de registrar el pedido.</p>}
         {!articulo && <section className="variantes-alta"><h2>Variantes</h2><p className="nota">Utiliza «Única» si el artículo no tiene talla o medida.</p>
@@ -94,9 +101,10 @@ function FormularioProducto({ token, articulo }: { token: string; articulo: Arti
         <p className="nota">Opcional · JPEG, PNG o WebP · hasta 5 MiB</p>{archivo && <p className="archivo-elegido">{archivo.name}</p>}
         {(archivo || fotografia) && <button className="boton texto" type="button" onClick={quitarFoto}>Quitar imagen de la ficha</button>}
       </fieldset>
-      <div className="guardar-producto">{error && <Aviso error>{error}</Aviso>}{fase && <p role="status" className="nota">{fase}</p>}<div className="acciones-editor"><button className="boton" type="submit" disabled={ocupado}>{fase || (articulo ? 'Guardar cambios' : 'Crear producto')}</button><button className="boton secundario" type="button" disabled={ocupado} onClick={() => { location.hash = articulo ? `#/articulo/${articulo.id}` : '#/'; }}>Cancelar</button></div></div>
+      <div className="guardar-producto">{!cargandoCategorias&&!categorias.length&&<Aviso error>No hay categorías disponibles. Solicita al administrador que registre una. <button type="button" className="boton texto" onClick={()=>setRevisionCategorias(n=>n+1)}>Reintentar categorías</button></Aviso>}{error && <Aviso error>{error}</Aviso>}{fase && <p role="status" className="nota">{fase}</p>}<div className="acciones-editor"><button className="boton" type="submit" disabled={ocupado||cargandoCategorias||!categorias.length}>{fase || (articulo ? 'Guardar cambios' : 'Crear producto')}</button><button className="boton secundario" type="button" disabled={ocupado} onClick={() => { location.hash = articulo ? `#/articulo/${articulo.id}` : '#/'; }}>Cancelar</button></div></div>
     </form>
     {existencias && <section className="existencias-producto"><h2>Existencias por variante</h2><p className="nota">Cada ajuste se guarda al aplicarlo. No modifica pedidos anteriores.</p><div className="lista-ajustes">{existencias.variantes.map(v => <AjusteVariante key={v.id} id={existencias.id} variante={v} token={token} bloqueado={ocupado} alOcupar={setAjustando} alActualizar={setExistencias}/>)}</div></section>}
+    {existencias&&<GestionVariantes articulo={existencias} token={token} actualizar={setExistencias} bloqueado={ocupado} ocupar={setAjustando}/>}
   </>;
 }
 

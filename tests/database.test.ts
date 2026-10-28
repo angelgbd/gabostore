@@ -47,6 +47,23 @@ before(async () => {
 
 after(async () => { await db?.close(); });
 
+test('artículos y variantes: baja lógica, recargo, tallas duplicadas e historial de precios',async()=>{
+ const f=await fixture();
+ await conRol('authenticated',personal,async()=>{
+  await db.query("select public.gestionar_variante($1,$2,'M',25,true)",[f.articulo,f.variante]);
+  await assert.rejects(db.query("select public.gestionar_variante($1,null,' m ',0,true)",[f.articulo]),codigoEsperado('23505'));
+  await assert.rejects(db.query("select public.gestionar_variante($1,$2,'M',-1,true)",[f.articulo,f.variante]),codigoEsperado('22023'));
+  const nuevo=await id("select public.gestionar_variante($1,null,'XL',10,true) id",[f.articulo]);
+  assert.equal((await db.query<{existencia:number}>('select existencia from public.variantes where id=$1',[nuevo])).rows[0]?.existencia,0);
+ });
+ const r=await conRol('service_role',{},()=>db.query<{r:{items:{precioUnitario:number}[]}}>('select public.registrar_pedido_publico($1,$2::jsonb) r',[crypto.randomUUID(),JSON.stringify([{variante_id:f.variante,cantidad:1}])]));
+ assert.equal(r.rows[0]?.r.items[0]?.precioUnitario,174.9);
+ await conRol('authenticated',personal,()=>db.query('update public.articulos set activo=false,precio_base=200 where id=$1',[f.articulo]));
+ await conRol('anon',{},async()=>assert.equal((await db.query('select * from public.obtener_catalogo($1)',[f.articulo])).rows.length,0));
+ assert.ok((await db.query('select * from public.historial_precios where articulo_id=$1',[f.articulo])).rows.length>=3);
+ await conRol('service_role',{},()=>assert.rejects(db.query('select public.registrar_pedido_publico($1,$2::jsonb)',[crypto.randomUUID(),JSON.stringify([{variante_id:f.variante,cantidad:1}])]),codigoEsperado('22023')));
+});
+
 test('categorías únicas: permisos, cambio de nombre y baja conservan los artículos',async()=>{
  const f=await fixture();const categoria=(await db.query<{categoria_id:number}>('select categoria_id from public.articulos where id=$1',[f.articulo])).rows[0]!.categoria_id;
  await conRol('authenticated',{sub:'00000000-0000-4000-8000-000000000088',app_metadata:{rol:'EMPLEADO'}},()=>assert.rejects(db.query("insert into public.categorias(nombre) values('No permitido')"),codigoEsperado('42501')));

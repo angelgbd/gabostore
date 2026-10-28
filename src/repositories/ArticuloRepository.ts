@@ -64,6 +64,7 @@ export class ArticuloRepository {
     identificador(id);
     if (cambios.precioBase !== undefined) importe(cambios.precioBase);
     const valores = {
+      ...(cambios.activo !== undefined ? {activo:cambios.activo} : {}),
       ...(cambios.nombre !== undefined ? { nombre: texto(cambios.nombre, 'nombre') } : {}),
       ...(cambios.categoria !== undefined ? { categoria: texto(cambios.categoria, 'categoria') } : {}),
       ...(cambios.precioBase !== undefined ? { precio_base: cambios.precioBase } : {}),
@@ -85,6 +86,15 @@ export class ArticuloRepository {
     }).select('*').single();
     comprobarError(error);
     return convertirVariante(requerido(data, 'No se obtuvo la variante creada.'));
+  }
+
+  async gestionarVariante(articuloId:number,id:number|null,tallaMedida:string,recargo:number,activo:boolean):Promise<Articulo>{
+    identificador(articuloId);if(id!==null)identificador(id);importe(recargo);
+    if(typeof tallaMedida!=='string'||!tallaMedida.trim()||tallaMedida.trim().length>80||typeof activo!=='boolean')throw new ErrorDatos('Revisa talla, recargo y estado de la variante.','VALIDACION');
+    // PostgreSQL admite NULL en p_id para el alta; los tipos generados omiten esa nulabilidad.
+    const{error}=await this.db.rpc('gestionar_variante',{p_articulo_id:articuloId,p_id:id as number,p_talla:tallaMedida.trim(),p_recargo:recargo,p_activo:activo});
+    if(error?.code==='23505')throw new ErrorDatos('Ya existe una variante con esa talla o medida.','VALIDACION');comprobarError(error);
+    return requerido(await this.obtenerPorId(articuloId),'Artículo no encontrado.');
   }
 
   async ajustarExistencia(varianteId: number, cambio: number): Promise<Variante> {

@@ -4,6 +4,7 @@ import { ErrorDatos } from './errors.js';
 
 export const convertirVariante = (fila: VarianteRow): Variante => ({
   id: fila.id, tallaMedida: fila.talla_medida, existencia: fila.existencia,
+  ...(fila.activo!==undefined?{activo:fila.activo}:{}),...(fila.recargo!==undefined?{recargo:Number(fila.recargo)}:{}),
 });
 export const convertirItem = (fila: ItemRow): ItemCarrito => ({
   varianteId: fila.variante_id, cantidad: fila.cantidad,
@@ -13,6 +14,7 @@ export function convertirArticulo(fila: ArticuloRow & { variantes: VarianteRow[]
   return {
     id: fila.id, nombre: fila.nombre, categoria: fila.categoria, precioBase: fila.precio_base,
     fotografia: fila.fotografia, sobrePedido: fila.sobre_pedido,
+    ...(fila.activo!==undefined?{activo:fila.activo}:{}),...(fila.categoria_id!==undefined?{categoriaId:fila.categoria_id}:{}),
     variantes: fila.variantes.map(convertirVariante).sort((a, b) => a.id - b.id),
   };
 }
@@ -37,7 +39,7 @@ export function convertirCatalogo(filas: CatalogoRow[]): Articulo[] {
           || typeof v.id !== 'number' || typeof v.talla_medida !== 'string' || typeof v.existencia !== 'number') {
         throw new ErrorDatos('Formato de variante inesperado.', 'FORMATO');
       }
-      return { id: v.id, tallaMedida: v.talla_medida, existencia: v.existencia };
+      return { id: v.id, tallaMedida: v.talla_medida, existencia: v.existencia,...(typeof v.recargo==='number'?{recargo:v.recargo}:{}) };
     });
     return {
       id: fila.articulo_id, nombre: fila.nombre, categoria: fila.categoria,

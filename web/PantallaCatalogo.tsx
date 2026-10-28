@@ -19,8 +19,8 @@ export function PantallaCatalogo({ articulos, busqueda, categoria, setBusqueda, 
     {visibles.length ? <div className="productos">{visibles.map(articulo => <a className="producto" href={`#/articulo/${articulo.id}`} key={articulo.id}>
       <Fotografia ruta={articulo.fotografia} nombre={nombreArticulo(articulo.nombre)} />
       <div className="producto-info"><div className="producto-nombre"><h2>{nombreArticulo(articulo.nombre)}</h2>{articulo.nombre.startsWith('DEMO') && <span className="etiqueta neutra">Demo</span>}</div>
-        <p className="categoria-texto">{articulo.categoria}</p>
-        <p className="tallas-catalogo">{articulo.variantes.filter(v => v.existencia > 0).map(v => v.tallaMedida).join(' / ') || 'Consultar disponibilidad'}</p>
+        <p className="categoria-texto">{articulo.categoria}</p>{articulo.activo===false&&<span className="etiqueta">Inactivo</span>}
+        <p className="tallas-catalogo">{articulo.variantes.filter(v => v.activo!==false && v.existencia > 0).map(v => v.tallaMedida).join(' / ') || 'Consultar disponibilidad'}</p>
         <div className="producto-precio"><strong>{dinero(articulo.precioBase)}</strong>{articulo.sobrePedido && <span className="etiqueta">Sobre pedido</span>}</div>
         <div className="producto-pie"><span>{articulo.existenciaTotal > 0 ? `${articulo.existenciaTotal} disponibles` : 'Sin existencias'}</span><span className="enlace">Ver variantes</span></div>
       </div>

@@ -9,6 +9,7 @@ export type DatosArticulosCarrito = Pick<ArticuloRepository, 'obtenerPorId' | 'o
 
 export type ContactoCliente = ClienteNuevo;
 export interface LineaCarrito extends ItemCarrito {
+  activo?:boolean;
   articuloId: number;
   nombre: string;
   tallaMedida: string;
@@ -54,7 +55,7 @@ export class ControlCarrito {
       const variante = articulo?.variantes.find(v => v.id === item.varianteId);
       if (!articulo || !variante) throw new ErrorNegocio('Una variante del carrito ya no está disponible.', 'NO_ENCONTRADO');
       return { ...item, articuloId: articulo.id, nombre: articulo.nombre, tallaMedida: variante.tallaMedida,
-        existencia: variante.existencia, sobrePedido: articulo.sobrePedido, fotografia: articulo.fotografia };
+        existencia: variante.existencia, sobrePedido: articulo.sobrePedido, fotografia: articulo.fotografia, activo: articulo.activo!==false && variante.activo!==false };
     }));
     return { ...carrito, cliente, items, total: totalPedido(items) };
   }
@@ -64,11 +65,11 @@ export class ControlCarrito {
     const carrito = await this.abierto(carritoId);
     const articulo = await this.articulos.obtenerPorId(articuloId);
     const variante = articulo?.variantes.find(v => v.id === varianteId);
-    if (!articulo || !variante) throw new ErrorNegocio('La variante no pertenece al artículo seleccionado.', 'NO_ENCONTRADO');
+    if (!articulo || !variante || articulo.activo===false || variante.activo===false) throw new ErrorNegocio('La variante no pertenece al artículo seleccionado.', 'NO_ENCONTRADO');
     const anterior = carrito.items.find(item => item.varianteId === varianteId);
     const nuevaCantidad = (anterior?.cantidad ?? 0) + cantidad;
     this.comprobarExistencia(nuevaCantidad, variante.existencia, articulo.sobrePedido);
-    await this.carritos.guardarItem(carritoId, varianteId, nuevaCantidad, anterior?.precioUnitario ?? articulo.precioBase);
+    await this.carritos.guardarItem(carritoId, varianteId, nuevaCantidad, anterior?.precioUnitario ?? Math.round((articulo.precioBase+(variante.recargo??0))*100)/100);
     return this.detalle(carritoId);
   }
 
@@ -78,7 +79,7 @@ export class ControlCarrito {
     if (!carrito.items.some(item => item.varianteId === varianteId)) throw new ErrorNegocio('La variante no está en este carrito.', 'NO_ENCONTRADO');
     const articulo = await this.articulos.obtenerPorVariante(varianteId);
     const variante = articulo?.variantes.find(v => v.id === varianteId);
-    if (!articulo || !variante) throw new ErrorNegocio('No se encontró la variante.', 'NO_ENCONTRADO');
+    if (!articulo || !variante || articulo.activo===false || variante.activo===false) throw new ErrorNegocio('No se encontró la variante.', 'NO_ENCONTRADO');
     this.comprobarExistencia(cantidad, variante.existencia, articulo.sobrePedido);
     await this.carritos.guardarItem(carritoId, varianteId, cantidad);
     return this.detalle(carritoId);

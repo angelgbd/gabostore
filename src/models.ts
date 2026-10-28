@@ -12,6 +12,8 @@ export interface Variante {
   id: number;
   tallaMedida: string;
   existencia: number;
+  activo?: boolean;
+  recargo?: number;
 }
 
 export interface Articulo {
@@ -22,6 +24,8 @@ export interface Articulo {
   fotografia: string;
   sobrePedido: boolean;
   variantes: Variante[];
+  activo?: boolean;
+  categoriaId?: number;
 }
 
 export interface Cliente {
@@ -78,5 +82,5 @@ export interface ArticuloNuevo {
   variantes?: VarianteNueva[];
 }
 
-export type CambiosArticulo = Partial<Omit<ArticuloNuevo, 'variantes'>>;
+export type CambiosArticulo = Partial<Omit<ArticuloNuevo, 'variantes'>> & {activo?:boolean};
 export type ClienteNuevo = Omit<Cliente, 'id'>;

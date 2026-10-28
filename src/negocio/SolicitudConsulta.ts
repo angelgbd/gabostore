@@ -29,7 +29,7 @@ export function leerSolicitud(almacenada: string | null): SolicitudConsulta {
 
 export function seleccionarConsulta(items: SeleccionConsulta[], articulo: ArticuloCatalogo, varianteId: number, cantidad: number): SeleccionConsulta[] {
   const variante = articulo.variantes.find(v => v.id === varianteId);
-  if (!variante || !cantidadValida(cantidad)) throw new Error('Selecciona una variante y una cantidad entera positiva.');
+  if (!variante || articulo.activo===false || variante.activo===false || !cantidadValida(cantidad)) throw new Error('Selecciona una variante y una cantidad entera positiva.');
   const anterior = items.find(i => i.varianteId === varianteId);
   const suma = (anterior?.cantidad ?? 0) + cantidad;
   if (!cantidadValida(suma)) throw new Error('La cantidad es demasiado grande.');
@@ -41,12 +41,12 @@ export function resumirConsulta(items: SeleccionConsulta[], articulos: ArticuloC
   const lineas = items.map(item => {
     const articulo = articulos.find(a => a.id === item.articuloId);
     const variante = articulo?.variantes.find(v => v.id === item.varianteId);
-    const problema = !articulo || !variante ? 'Este artículo o variante ya no está disponible. Quítalo de la solicitud.'
+    const problema = !articulo || !variante || articulo.activo===false || variante.activo===false ? 'Este artículo o variante ya no está disponible. Quítalo de la solicitud.'
       : !cantidadValida(item.cantidad) ? 'La cantidad debe ser un entero positivo.'
       : !articulo.sobrePedido && item.cantidad > variante.existencia ? `Ahora hay ${variante.existencia} unidades disponibles. Ajusta la cantidad.` : '';
     return { ...item, nombre: articulo?.nombre ?? 'Artículo no disponible', categoria: articulo?.categoria ?? '',
       tallaMedida: variante?.tallaMedida ?? 'No disponible', fotografia: articulo?.fotografia ?? '',
-      precioUnitario: articulo?.sobrePedido ? null : articulo?.precioBase ?? null,
+      precioUnitario: articulo?.sobrePedido ? null : articulo?.precioBase != null ? Math.round((articulo.precioBase+(variante?.recargo??0))*100)/100 : null,
       existencia: variante?.existencia ?? 0, sobrePedido: articulo?.sobrePedido ?? false, problema };
   });
   let centavos = 0;

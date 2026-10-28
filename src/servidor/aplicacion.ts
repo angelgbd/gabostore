@@ -41,6 +41,7 @@ function cadena(valor: unknown): string {
 
 function camposArticulo(datos: Record<string, unknown>): CambiosArticulo {
   const ficha: CambiosArticulo = {};
+  if(datos.activo!==undefined){if(typeof datos.activo!=='boolean')throw new ErrorHTTP(400,'Estado del artículo inválido.');ficha.activo=datos.activo;}
   if (datos.nombre !== undefined) ficha.nombre = cadena(datos.nombre);
   if (datos.categoria !== undefined) ficha.categoria = cadena(datos.categoria);
   if (datos.fotografia !== undefined) ficha.fotografia = cadena(datos.fotografia);
@@ -139,6 +140,11 @@ export function crearServidor(opciones: OpcionesServidor) {
         let negocio = negocioPublico;
         let identidad: { id: string; email: string | undefined; rol: string } | undefined;
         if (personal) {
+          const varianteGestion=ruta.pathname.match(/^\/api\/personal\/catalogo\/(\d+)\/variantes(?:\/(\d+))?$/);
+          if(varianteGestion&&((metodo==='POST'&&!varianteGestion[2])||(metodo==='PATCH'&&varianteGestion[2]))){
+            const datos=await cuerpo(peticion);
+            return json(respuesta,await crearCapaDatos(conectar(peticion.headers.authorization!.slice(7))).articulos.gestionarVariante(Number(varianteGestion[1]),varianteGestion[2]?Number(varianteGestion[2]):null,cadena(datos.tallaMedida),datos.recargo as number,datos.activo as boolean),metodo==='POST'?201:200);
+          }
           const cabecera = peticion.headers.authorization;
           if (!cabecera?.startsWith('Bearer ') || cabecera.length > 16_384) throw new ErrorHTTP(401, 'Inicia sesión con tu cuenta de personal.');
           const token = cabecera.slice(7);
