@@ -47,6 +47,16 @@ before(async () => {
 
 after(async () => { await db?.close(); });
 
+test('proveedores: solo ADMIN registra y la baja es lógica',async()=>{
+ const proveedor=await conRol('authenticated',personal,()=>id("insert into public.proveedores(nombre,telefono) values('Proveedor DEMO','6621234567') returning id"));
+ await conRol('authenticated',{sub:'00000000-0000-4000-8000-000000000077',app_metadata:{rol:'EMPLEADO'}},async()=>{
+  await assert.rejects(db.query("insert into public.proveedores(nombre,telefono) values('No permitido','6621234567')"),codigoEsperado('42501'));
+  assert.equal((await db.query('select id from public.proveedores where id=$1',[proveedor])).rows.length,1);
+ });
+ await conRol('authenticated',personal,()=>db.query('update public.proveedores set activo=false where id=$1',[proveedor]));
+ assert.equal((await db.query<{activo:boolean}>('select activo from public.proveedores where id=$1',[proveedor])).rows[0]?.activo,false);
+});
+
 test('artículos y variantes: baja lógica, recargo, tallas duplicadas e historial de precios',async()=>{
  const f=await fixture();
  await conRol('authenticated',personal,async()=>{

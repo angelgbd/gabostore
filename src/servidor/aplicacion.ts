@@ -154,9 +154,9 @@ export function crearServidor(opciones: OpcionesServidor) {
           if ((rol !== 'ADMIN' && rol !== 'EMPLEADO') || data.user.app_metadata.activo === false) throw new ErrorHTTP(403, 'Esta cuenta no tiene acceso de personal o está desactivada.');
           identidad = { id: data.user.id, email: data.user.email, rol };
           negocio = crearCapaNegocio(crearCapaDatos(conectar(token)));
-          const maestro = ruta.pathname.match(/^\/api\/personal\/(categorias)(?:\/(\d+))?$/);
+          const maestro = ruta.pathname.match(/^\/api\/personal\/(categorias|proveedores)(?:\/(\d+))?$/);
           if(maestro){
-            const control=new ControlMaestros(new MaestroRepository(conectar(token),'categorias'));
+            const control=new ControlMaestros(new MaestroRepository(conectar(token),maestro[1] as 'categorias'|'proveedores'),maestro[1]==='proveedores');
             if(metodo==='GET'&&!maestro[2])return json(respuesta,await control.listar(Number(ruta.searchParams.get('desde')??0),ruta.searchParams.get('opciones')==='1'));
             if(rol!=='ADMIN')throw new ErrorHTTP(403,'Solo el administrador puede modificar este registro.');
             if((metodo==='POST'&&!maestro[2])||(metodo==='PATCH'&&maestro[2]))return json(respuesta,await control.guardar(maestro[2]?Number(maestro[2]):null,await cuerpo(peticion) as unknown as Omit<RegistroMaestro,'id'>),metodo==='POST'?201:200);

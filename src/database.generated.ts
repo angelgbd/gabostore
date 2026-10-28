@@ -309,6 +309,39 @@ export type Database = {
           },
         ]
       }
+      proveedores: {
+        Row: {
+          activo: boolean
+          contacto: string
+          creado_por: string | null
+          direccion: string
+          fecha_creacion: string
+          id: number
+          nombre: string
+          telefono: string
+        }
+        Insert: {
+          activo?: boolean
+          contacto?: string
+          creado_por?: string | null
+          direccion?: string
+          fecha_creacion?: string
+          id?: never
+          nombre: string
+          telefono: string
+        }
+        Update: {
+          activo?: boolean
+          contacto?: string
+          creado_por?: string | null
+          direccion?: string
+          fecha_creacion?: string
+          id?: never
+          nombre?: string
+          telefono?: string
+        }
+        Relationships: []
+      }
       variantes: {
         Row: {
           activo: boolean

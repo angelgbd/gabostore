@@ -10,7 +10,7 @@ export class ControlMaestros {
   if(typeof entrada.nombre!=='string'||!entrada.nombre.trim()||entrada.nombre.trim().length>120||typeof entrada.activo!=='boolean')throw new ErrorNegocio('Introduce un nombre válido y el estado del registro.');
   const datos:Omit<RegistroMaestro,'id'>={nombre:entrada.nombre.trim(),activo:entrada.activo};
   for(const campo of (this.proveedor?['contacto','telefono','direccion']:['descripcion']) as ('contacto'|'telefono'|'direccion'|'descripcion')[]){const v=entrada[campo]??'';if(typeof v!=='string'||v.trim().length>500)throw new ErrorNegocio('Revisa los campos de texto (máximo 500 caracteres).');datos[campo]=v.trim();}
-  if(this.proveedor&&(!datos.telefono||!/^\+?[\d ()-]{7,30}$/.test(datos.telefono)))throw new ErrorNegocio('Introduce un teléfono válido del proveedor.');
+  if(this.proveedor&&(!datos.telefono||!/^\+?[\d ()-]{7,30}$/.test(datos.telefono)||datos.telefono.replace(/\D/g,'').length<7||datos.telefono.replace(/\D/g,'').length>15))throw new ErrorNegocio('Introduce un teléfono válido del proveedor.');
   return this.datos.guardar(id,datos);
  }
 }
