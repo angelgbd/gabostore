@@ -15,7 +15,7 @@ export interface ArticuloCatalogo extends Omit<Articulo, 'precioBase'> {
   precioBase: number | null;
   existenciaTotal: number;
 }
-export type EscrituraArticulos = Pick<ArticuloRepository, 'crear' | 'actualizar' | 'ajustarExistencia' | 'subirFotografia'>;
+export type EscrituraArticulos = Pick<ArticuloRepository, 'crear' | 'actualizar' | 'ajustarExistencia' | 'subirFotografia'> & Partial<Pick<ArticuloRepository,'gestionarVariante'>>;
 
 export class ControlCatalogo {
   constructor(private readonly articulos: ConsultaArticulos, private readonly escritura?: EscrituraArticulos) {}
@@ -57,6 +57,12 @@ export class ControlCatalogo {
 
   async subirFotografia(contenido: Uint8Array, tipo: string, usuarioId: string): Promise<string> {
     return this.escribir().subirFotografia(contenido, tipo, usuarioId);
+  }
+
+  async gestionarVariante(articuloId:number,id:number|null,talla:string,recargo:number,activo:boolean):Promise<ArticuloCatalogo>{
+    await this.detalle(articuloId,true);if(id!==null)idValido(id);importe(recargo);
+    const escritura=this.escribir();if(!escritura.gestionarVariante)throw new ErrorNegocio('La gestión de variantes no está disponible.');
+    return this.presentar(await escritura.gestionarVariante(articuloId,id,talla,recargo,activo),true);
   }
 
   private escribir(): EscrituraArticulos {

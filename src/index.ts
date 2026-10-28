@@ -2,12 +2,16 @@ import type { ClienteSupabase } from './supabase.js';
 import { ArticuloRepository } from './repositories/ArticuloRepository.js';
 import { CarritoRepository } from './repositories/CarritoRepository.js';
 import { PedidoRepository } from './repositories/PedidoRepository.js';
+import {CompraRepository} from './repositories/CompraRepository.js';
+import {VentaRepository} from './repositories/VentaRepository.js';
+import {MaestroRepository} from './repositories/MaestroRepository.js';
 
 export * from './models.js';
 export * from './database.types.js';
 export * from './errors.js';
 export * from './supabase.js';
 export { ArticuloRepository, CarritoRepository, PedidoRepository };
+export {CompraRepository,VentaRepository,MaestroRepository};
 export type { FiltroPedidos, PedidoResumen } from './repositories/PedidoRepository.js';
 export type { FiltrosListadoPedidos } from './filtrosPedidos.js';
 export * from './negocio/index.js';
@@ -17,5 +21,7 @@ export function crearCapaDatos(cliente: ClienteSupabase) {
     articulos: new ArticuloRepository(cliente),
     carritos: new CarritoRepository(cliente),
     pedidos: new PedidoRepository(cliente),
+    compras:new CompraRepository(cliente),ventas:new VentaRepository(cliente),
+    categorias:new MaestroRepository(cliente,'categorias'),proveedores:new MaestroRepository(cliente,'proveedores'),
   };
 }

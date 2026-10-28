@@ -35,7 +35,8 @@
     "verificar:conexion": "node --env-file=.env scripts/verificar-conexion.mjs",
     "verificar:flujo": "node --env-file=.env --env-file=.env.personal.local --import tsx scripts/verificar-flujo.ts",
     "verificar:catalogo": "node --env-file=.env --env-file=.env.personal.local --import tsx scripts/verificar-catalogo.ts",
-    "verificar:whatsapp": "node --env-file=.env --env-file=.env.personal.local --import tsx scripts/verificar-whatsapp.ts"
+    "verificar:whatsapp": "node --env-file=.env --env-file=.env.personal.local --import tsx scripts/verificar-whatsapp.ts",
+    "verificar:release1": "node --env-file=.env --env-file=.env.admin.local --env-file=.env.personal.local --import tsx scripts/verificar-release1.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.117.3",

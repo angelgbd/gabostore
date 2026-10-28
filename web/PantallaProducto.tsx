@@ -8,6 +8,7 @@ import { Icono } from './Icono.js';
 import {GestionVariantes} from './GestionVariantes.js';
 import type {RegistroMaestro} from '../src/negocio/ControlMaestros.js';
 import './gestion.css';
+import {cargarMaestros} from './cargarListados.js';
 
 export function PantallaProducto({ token, id }: { token: string; id?: number }) {
   const [articulo, setArticulo] = useState<ArticuloCatalogo | null>(null);
@@ -42,7 +43,7 @@ function FormularioProducto({ token, articulo }: { token: string; articulo: Arti
   const enCurso = useRef(false);
   const selector = useRef<HTMLInputElement>(null);
   const ocupado = Boolean(fase) || ajustando;
-  useEffect(()=>{let v=true;setCargandoCategorias(true);void solicitar<{registros:RegistroMaestro[]}>('personal/categorias?opciones=1',token).then(p=>{if(v)setCategorias(p.registros);}).catch(e=>{if(v)setError(mensajeError(e));}).finally(()=>{if(v)setCargandoCategorias(false);});return()=>{v=false;};},[token,revisionCategorias]);
+  useEffect(()=>{let v=true;setCargandoCategorias(true);void cargarMaestros('categorias',token).then(p=>{if(v)setCategorias(p);}).catch(e=>{if(v)setError(mensajeError(e));}).finally(()=>{if(v)setCargandoCategorias(false);});return()=>{v=false;};},[token,revisionCategorias]);
   useEffect(() => {
     if (!archivo) { setPrevia(''); return; }
     const ruta = URL.createObjectURL(archivo); setPrevia(ruta);

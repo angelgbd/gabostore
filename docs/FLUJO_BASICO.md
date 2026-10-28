@@ -1,5 +1,7 @@
 # Guía del flujo básico
 
+La ampliación del Release 1 está documentada en [RELEASE1.md](RELEASE1.md). Las limitaciones de alta y edición descritas abajo corresponden al flujo original; ahora existen categorías administradas, bajas lógicas, gestión posterior de variantes, compras y ventas.
+
 ## Iniciar la web
 
 Requiere Node.js 22.12 o posterior. En PowerShell:
@@ -58,7 +60,7 @@ En el catálogo del personal, **Nuevo producto** permite capturar nombre, catego
 
 La fotografía es opcional: JPEG, PNG o WebP de hasta **5 MiB**. Se previsualiza y se carga al guardar. Si falla, se conservan los datos para reintentar. La imagen se guarda en el bucket público `catalogo`, con carga exclusiva del personal y un archivo nuevo por sustitución.
 
-En el detalle, **Editar producto** actualiza la ficha y fotografía. **Existencias por variante** permite Añadir o Retirar unidades con **Aplicar ajuste**. Cada ajuste se guarda por separado y de forma atómica, sin permitir saldo negativo. Se conservan variantes e importes históricos; no hay eliminación de productos o variantes.
+En el detalle, **Editar producto** actualiza la ficha y fotografía. **Existencias por variante** permite Añadir o Retirar unidades con **Aplicar ajuste**. Cada ajuste se guarda por separado y de forma atómica, sin permitir saldo negativo. Se conservan variantes e importes históricos. El Release 1 permite baja lógica y reactivación de artículos/variantes, sin eliminación física.
 
 `npm run demo:imagenes` conserva las fotografías ya asignadas y no cambia stock o precios. Sus originales, WebP y prompts están en `assets/productos-demo/`.
 
@@ -82,4 +84,4 @@ También siguen disponibles `verificar:flujo`, `verificar:catalogo` y `verificar
 
 Verificación del **26 de octubre de 2026**: el pedido público **12** se registró sin contacto, se recuperó en los reintentos y se confirmó sin modificar stock o importes. Un pedido de prueba vencido, **13**, y su carrito **16** fueron eliminados por Cron; el pedido confirmado y los diez pedidos anteriores del personal permanecieron. La regresión del personal guardó el pedido **15**, carrito **18**, sin correo, con dos líneas y total **$499.00**, manteniendo autor e inventario. Estos números corresponden a esas ejecuciones, no deben introducirse manualmente.
 
-La entrega conserva React, TypeScript y Supabase con presentación → API → negocio → repositorios. La identidad utiliza rojo coral y marca roja clara sobre el fondo oscuro. No incluye hosting, pagos, reservas, tarifas de envío, cuentas de clientes ni estados administrativos adicionales.
+La entrega conserva React, TypeScript y Supabase con presentación → API → negocio → repositorios. La identidad utiliza rojo coral y marca roja clara sobre el fondo oscuro. No incluye hosting, pagos públicos, reservas, tarifas de envío, cuentas de clientes ni estados administrativos adicionales. El pago interno confirmado manualmente y las ventas pertenecen a la ampliación de Release 1.

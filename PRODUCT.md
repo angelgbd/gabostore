@@ -12,7 +12,7 @@ React y TypeScript elegidos por el usuario. Supabase/PostgreSQL y los repositori
 
 ## Users
 
-El cliente consulta el catálogo, prepara una selección local y registra un pedido pendiente al abrir WhatsApp. El personal registra pedidos propios y confirma los pedidos recibidos.
+El cliente consulta el catálogo, prepara una selección local y registra un pedido pendiente al abrir WhatsApp. ADMIN gestiona cuentas, categorías y proveedores. ADMIN y EMPLEADO mantienen artículos, variantes, compras por lote y ventas, además de registrar y confirmar pedidos.
 
 ## Product Purpose
 
@@ -26,13 +26,15 @@ WhatsApp se abre mediante un enlace con texto precargado, enviado manualmente po
 
 - El público consulta disponibilidad y variantes agotadas de artículos con alguna existencia.
 - El carrito público permanece en sessionStorage hasta registrarse mediante el backend. Solo el personal puede consultar los pedidos privados y modificar productos o carritos internos.
-- Se conservan los tres controles del diagrama lógico: ControlCatalogo, ControlCarrito y ControlGeneracionPedido.
+- Se conservan ControlCatalogo, ControlCarrito y ControlGeneracionPedido, ampliados con controles de usuarios, maestros, compras y ventas mediante repositorios inyectados.
 - Se usa un carrito nuevo por pedido. Cabecera y detalle se guardan en una sola transacción.
 - Las cantidades son enteras positivas. Los precios se obtienen desde los datos del servidor; no se aceptan precios del navegador.
 - Un pedido pendiente no registra un pago ni descuenta existencias.
 - El catálogo público oculta precios sobre pedido. Un pedido público puede quedar pendiente; el personal debe confirmar disponibilidad del proveedor para pasarlo a CONFIRMADO. El registro interno conserva su comprobación previa.
-- El personal puede dar de alta artículos con variantes, editar su ficha, subir una fotografía y ajustar existencias; también consulta los pedidos registrados con búsqueda por número y filtros combinables de estado y fechas. No elimina artículos o variantes y confirma pendientes desde su detalle.
-- Los cinco estados del último dominio aprobado se conservan. Pagos, anticipos, ventas, apartados, envíos, devoluciones y administración de cuentas quedan fuera de este flujo básico.
+- El personal da de alta y edita artículos, carga fotografías, gestiona variantes/recargos y aplica bajas lógicas y ajustes. Categorías y proveedores se registran y editan, se desactivan y reactivan; sus historiales se conservan. Los pedidos mantienen búsqueda y filtros y confirmación.
+- Cada compra registra un lote de un proveedor, costos, cantidades y artículos nuevos opcionales, y suma existencias atómicamente. La venta directa o desde pedido confirmado exige el importe completo, obtiene precios del servidor, descuenta existencias y conserva detalle e importes inmutables. Registrar una venta no procesa cobros bancarios.
+- Las cuentas usan Supabase Auth; solo ADMIN administra usuarios y no puede quitar su propio acceso. La autorización SQL verifica el rol y estado actuales de la cuenta para bloquear también JWT anteriores a una baja. Se conserva auditoría privada de operaciones, sin interfaz de bitácora.
+- El Release 1 comprende CU-01,02,03,04,05,06,08 y10. Los cinco estados del pedido se conservan. Apartados, anticipos, envíos, devoluciones y reportes específicos de existencias y lotes siguen fuera de esta entrega; no hay hosting ni checkout/pagos públicos.
 
 ## Brand Commitments
 

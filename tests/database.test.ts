@@ -47,6 +47,36 @@ before(async () => {
 
 after(async () => { await db?.close(); });
 
+test('venta: pago completo, precio del servidor, stock atómico, idempotencia e historial inmutable',async()=>{
+ const f=await fixture(),clave=crypto.randomUUID(),items=JSON.stringify([{varianteId:f.variante,cantidad:2}]);
+ await conRol('anon',{},()=>assert.rejects(db.query("select public.registrar_venta($1,null,$2::jsonb,299.80,'EFECTIVO')",[clave,items]),codigoEsperado('42501')));
+ await conRol('authenticated',personal,async()=>{
+  await assert.rejects(db.query("select public.registrar_venta($1,null,$2::jsonb,10,'EFECTIVO')",[clave,items]),codigoEsperado('22023'));
+  assert.equal((await db.query<{existencia:number}>('select existencia from public.variantes where id=$1',[f.variante])).rows[0]?.existencia,5);
+  const registrar=()=>id("select public.registrar_venta($1,null,$2::jsonb,299.80,'EFECTIVO') id",[clave,items]);const venta=await registrar();assert.equal(await registrar(),venta);
+  assert.equal((await db.query<{existencia:number}>('select existencia from public.variantes where id=$1',[f.variante])).rows[0]?.existencia,3);
+  await assert.rejects(db.query("select public.registrar_venta($1,null,$2::jsonb,599.60,'EFECTIVO')",[crypto.randomUUID(),JSON.stringify([{varianteId:f.variante,cantidad:4}])]),codigoEsperado('22023'));
+  await assert.rejects(db.query("select public.registrar_venta($1,null,$2::jsonb,1,'EFECTIVO')",[crypto.randomUUID(),JSON.stringify([{varianteId:f.variante,cantidad:1,precioUnitario:1}])]),codigoEsperado('22023'));
+  await db.query('update public.articulos set precio_base=200 where id=$1',[f.articulo]);
+  assert.equal((await db.query<{precio_unitario:string}>('select precio_unitario from public.detalle_venta where venta_id=$1',[venta])).rows[0]?.precio_unitario,'149.90');
+  await assert.rejects(db.query('delete from public.ventas where id=$1',[venta]),codigoEsperado('42501'));
+ });
+ await assert.rejects(db.query('update public.ventas set total=0 where clave=$1',[clave]),codigoEsperado('55000'));
+});
+
+test('venta desde pedido confirmado conserva sus importes y solo se concreta una vez',async()=>{
+ const f=await fixture();await conRol('authenticated',personal,async()=>{
+  await db.query('select public.guardar_item_carrito($1,$2,1,149.90)',[f.carrito,f.variante]);
+  const pedido=await id('select public.crear_pedido_desde_carrito($1) id',[f.carrito]);
+  await assert.rejects(db.query("select public.registrar_venta($1,$2,'[]'::jsonb,149.90,'TRANSFERENCIA')",[crypto.randomUUID(),pedido]),codigoEsperado('22023'));
+  await db.query('select public.confirmar_pedido($1)',[pedido]);await db.query('update public.articulos set precio_base=300 where id=$1',[f.articulo]);
+  const venta=await id("select public.registrar_venta($1,$2,'[]'::jsonb,149.90,'TRANSFERENCIA') id",[crypto.randomUUID(),pedido]);
+  assert.equal((await db.query<{total:string}>('select total from public.ventas where id=$1',[venta])).rows[0]?.total,'149.90');
+  await assert.rejects(db.query("select public.registrar_venta($1,$2,'[]'::jsonb,149.90,'TRANSFERENCIA')",[crypto.randomUUID(),pedido]),codigoEsperado('55000'));
+  await assert.rejects(db.query("update public.pedidos set estado='CANCELADO' where id=$1",[pedido]),codigoEsperado('55000'));
+ });
+});
+
 test('compra atómica: lote de un proveedor, artículos nuevos, stock y reintento sin duplicar',async()=>{
  const f=await fixture(),proveedor=await id("insert into public.proveedores(nombre,telefono) values('Compra DEMO','6621234567') returning id");
  const categoria=(await db.query<{categoria_id:number}>('select categoria_id from public.articulos where id=$1',[f.articulo])).rows[0]!.categoria_id;

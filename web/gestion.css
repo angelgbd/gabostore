@@ -1,12 +1,14 @@
 .gestion-enlaces{display:flex;gap:24px;overflow-x:auto;border-bottom:1px solid var(--linea);padding-bottom:16px;margin-bottom:28px}
 .gestion-enlaces a{white-space:nowrap}.gestion-enlaces [aria-current=page]{color:var(--acento)}
 .gestion-layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;align-items:start}
+.gestion-layout .check-producto,.operacion-form .check-producto,.variante-editor .check-producto{min-height:44px}
 .operacion-form{max-width:1040px}.operacion-form>fieldset{display:grid;gap:24px;border:0;margin:0;padding:0;min-width:0}.campos-operacion{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.campo-doble{grid-column:1/-1}.linea-operacion{border-block-start:1px solid var(--linea);padding-top:24px;display:grid;gap:20px}.titulo-linea{display:flex;align-items:center;justify-content:space-between;gap:16px}.revision-operacion{background:var(--superficie);padding:24px;display:grid;gap:20px}.historial-operaciones{margin-top:48px}.historial-operaciones h2{margin-bottom:20px}.recibo-operacion{max-width:1000px;display:grid;gap:20px}
 @media(max-width:599px){.campos-operacion{grid-template-columns:minmax(0,1fr)}.revision-operacion{padding:20px}.acciones-editor{flex-wrap:wrap}}
 .variante-editor{padding:24px 0;border-bottom:1px solid var(--linea);display:grid;gap:16px}.variante-editor fieldset{border:0;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.variante-editor h3{grid-column:1/-1}.variante-editor .check-producto{grid-column:1/-1}.variante-editor .boton{justify-self:start}
 .lista-gestion{list-style:none;padding:0;margin:0;border-top:1px solid var(--linea)}
 .lista-gestion li{padding:20px 0;border-bottom:1px solid var(--linea);display:flex;justify-content:space-between;align-items:center;gap:16px}
 .lista-gestion li>div{min-width:0}.lista-gestion strong,.lista-gestion p{overflow-wrap:anywhere}.lista-gestion p{color:var(--secundario);font-size:13px;margin:4px 0 8px}
+.lista-gestion li>strong{white-space:nowrap;flex-shrink:0}
 .panel-gestion{background:var(--superficie);padding:24px}.panel-gestion h2{margin-bottom:20px}.panel-gestion fieldset{border:0;padding:0;margin:0;display:grid;gap:20px;min-width:0}.panel-gestion input,.panel-gestion select{background:var(--fondo)}
 @media(max-width:899px){.gestion-layout{grid-template-columns:minmax(0,1fr);gap:28px}}
 @media(max-width:600px){.cabecera-interior{flex-wrap:wrap}.cabecera-interior nav{margin-left:auto;flex-wrap:wrap;justify-content:flex-end;gap:12px}.panel-gestion{padding:20px}.gestion-enlaces{gap:20px}}

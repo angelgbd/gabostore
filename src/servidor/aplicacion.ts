@@ -12,10 +12,9 @@ import type { FiltrosListadoPedidos } from '../filtrosPedidos.js';
 import { ControlPedidoPublico } from '../negocio/ControlPedidoPublico.js';
 import { ControlUsuarios, type UsuarioNuevo, type CambiosUsuario } from '../negocio/ControlUsuarios.js';
 import { UsuarioRepository } from '../repositories/UsuarioRepository.js';
-import {ControlMaestros,type RegistroMaestro} from '../negocio/ControlMaestros.js';
-import {MaestroRepository} from '../repositories/MaestroRepository.js';
-import {ControlCompras,type CompraNueva} from '../negocio/ControlCompras.js';
-import {CompraRepository} from '../repositories/CompraRepository.js';
+import type {RegistroMaestro} from '../negocio/ControlMaestros.js';
+import type {CompraNueva} from '../negocio/ControlCompras.js';
+import type {VentaNueva} from '../negocio/ControlVentas.js';
 
 export interface OpcionesServidor {
   url: string;
@@ -142,16 +141,6 @@ export function crearServidor(opciones: OpcionesServidor) {
         let negocio = negocioPublico;
         let identidad: { id: string; email: string | undefined; rol: string } | undefined;
         if (personal) {
-          const compraRuta=ruta.pathname.match(/^\/api\/personal\/compras(?:\/(\d+))?$/);
-          if(compraRuta){const control=new ControlCompras(new CompraRepository(conectar(peticion.headers.authorization!.slice(7))));
-            if(metodo==='GET')return json(respuesta,compraRuta[1]?await control.obtener(Number(compraRuta[1])):await control.listar(Number(ruta.searchParams.get('desde')??0)));
-            if(metodo==='POST'&&!compraRuta[1])return json(respuesta,await control.registrar(await cuerpo(peticion) as unknown as CompraNueva),201);
-          }
-          const varianteGestion=ruta.pathname.match(/^\/api\/personal\/catalogo\/(\d+)\/variantes(?:\/(\d+))?$/);
-          if(varianteGestion&&((metodo==='POST'&&!varianteGestion[2])||(metodo==='PATCH'&&varianteGestion[2]))){
-            const datos=await cuerpo(peticion);
-            return json(respuesta,await crearCapaDatos(conectar(peticion.headers.authorization!.slice(7))).articulos.gestionarVariante(Number(varianteGestion[1]),varianteGestion[2]?Number(varianteGestion[2]):null,cadena(datos.tallaMedida),datos.recargo as number,datos.activo as boolean),metodo==='POST'?201:200);
-          }
           const cabecera = peticion.headers.authorization;
           if (!cabecera?.startsWith('Bearer ') || cabecera.length > 16_384) throw new ErrorHTTP(401, 'Inicia sesión con tu cuenta de personal.');
           const token = cabecera.slice(7);
@@ -163,7 +152,7 @@ export function crearServidor(opciones: OpcionesServidor) {
           negocio = crearCapaNegocio(crearCapaDatos(conectar(token)));
           const maestro = ruta.pathname.match(/^\/api\/personal\/(categorias|proveedores)(?:\/(\d+))?$/);
           if(maestro){
-            const control=new ControlMaestros(new MaestroRepository(conectar(token),maestro[1] as 'categorias'|'proveedores'),maestro[1]==='proveedores');
+            const control=maestro[1]==='proveedores'?negocio.proveedores:negocio.categorias;
             if(metodo==='GET'&&!maestro[2])return json(respuesta,await control.listar(Number(ruta.searchParams.get('desde')??0),ruta.searchParams.get('opciones')==='1'));
             if(rol!=='ADMIN')throw new ErrorHTTP(403,'Solo el administrador puede modificar este registro.');
             if((metodo==='POST'&&!maestro[2])||(metodo==='PATCH'&&maestro[2]))return json(respuesta,await control.guardar(maestro[2]?Number(maestro[2]):null,await cuerpo(peticion) as unknown as Omit<RegistroMaestro,'id'>),metodo==='POST'?201:200);
@@ -187,6 +176,23 @@ export function crearServidor(opciones: OpcionesServidor) {
         const articulo = ruta.pathname.match(/^\/api\/(?:personal\/)?catalogo\/(\d+)$/);
         if (metodo === 'GET' && articulo) return json(respuesta, await negocio.catalogo.detalle(Number(articulo[1]), personal));
         if (personal) {
+          const ventaPedido=ruta.pathname.match(/^\/api\/personal\/ventas\/pedido\/(\d+)$/);
+          const ventaRuta=ruta.pathname.match(/^\/api\/personal\/ventas(?:\/(\d+))?$/);
+          if(ventaPedido||ventaRuta){const control=negocio.ventas;
+            if(metodo==='GET'&&ventaPedido)return json(respuesta,await control.porPedido(Number(ventaPedido[1])));
+            if(metodo==='GET'&&ventaRuta)return json(respuesta,ventaRuta[1]?await control.obtener(Number(ventaRuta[1])):await control.listar(Number(ruta.searchParams.get('desde')??0)));
+            if(metodo==='POST'&&ventaRuta&&!ventaRuta[1])return json(respuesta,await control.registrar(await cuerpo(peticion) as unknown as VentaNueva),201);
+          }
+          const compraRuta=ruta.pathname.match(/^\/api\/personal\/compras(?:\/(\d+))?$/);
+          if(compraRuta){const control=negocio.compras;
+            if(metodo==='GET')return json(respuesta,compraRuta[1]?await control.obtener(Number(compraRuta[1])):await control.listar(Number(ruta.searchParams.get('desde')??0)));
+            if(metodo==='POST'&&!compraRuta[1])return json(respuesta,await control.registrar(await cuerpo(peticion) as unknown as CompraNueva),201);
+          }
+          const varianteGestion=ruta.pathname.match(/^\/api\/personal\/catalogo\/(\d+)\/variantes(?:\/(\d+))?$/);
+          if(varianteGestion&&((metodo==='POST'&&!varianteGestion[2])||(metodo==='PATCH'&&varianteGestion[2]))){
+            const datos=await cuerpo(peticion);
+            return json(respuesta,await negocio.catalogo.gestionarVariante(Number(varianteGestion[1]),varianteGestion[2]?Number(varianteGestion[2]):null,cadena(datos.tallaMedida),datos.recargo as number,datos.activo as boolean),metodo==='POST'?201:200);
+          }
           if (metodo === 'POST' && ruta.pathname === '/api/personal/imagenes') {
             const archivo = await imagen(peticion);
             return json(respuesta, { fotografia: await negocio.catalogo.subirFotografia(archivo.contenido, archivo.tipo, identidad!.id) }, 201);

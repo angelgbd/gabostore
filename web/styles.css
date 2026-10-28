@@ -24,6 +24,7 @@ p{max-width:70ch}
 .saltar:focus{top:12px}
 .cabecera{background:#0a0e10;border-bottom:1px solid var(--linea);position:sticky;top:0;z-index:20}
 .cabecera-interior{max-width:1280px;padding:12px 24px;margin:auto;min-height:92px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+@media(max-width:800px){.cabecera-interior{flex-wrap:wrap}.cabecera-interior nav{margin-left:auto;flex-wrap:wrap;justify-content:flex-end;gap:12px}}
 .marca{display:inline-flex;flex-shrink:0;color:#ffb0b4;text-decoration:none}
 .logotipo{display:block;width:176px;height:64px;filter:drop-shadow(0 1px 5px #ff526440)}
 nav{display:flex;align-items:center;gap:24px;min-width:0}

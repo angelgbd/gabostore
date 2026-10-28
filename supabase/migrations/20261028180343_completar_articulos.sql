@@ -34,6 +34,7 @@ language plpgsql security definer set search_path='' as $$
 declare a public.articulos%rowtype;v_id bigint;
 begin
  if not public.es_personal() then raise exception 'Acceso de personal requerido.' using errcode='42501';end if;
+ perform pg_advisory_xact_lock(2802001);
  select * into a from public.articulos where id=p_articulo_id for update;
  if not found then raise exception 'Artículo no encontrado.' using errcode='P0002';end if;
  if p_talla is null or length(btrim(p_talla)) not between 1 and 80 or p_recargo is null or p_recargo<0 or p_recargo<>round(p_recargo,2) or a.precio_base+p_recargo>99999999.99 or p_activo is null then raise exception 'Talla, recargo o estado inválidos.' using errcode='22023';end if;

@@ -17,7 +17,7 @@ Implementación con **Supabase/PostgreSQL, TypeScript y React**. Conserva los tr
 - Permisos de acceso para el personal y protección de datos de clientes, carritos y pedidos.
 - Ajustes atómicos de existencias, validaciones y errores identificables.
 
-La capa de negocio implementa `ControlCatalogo`, `ControlCarrito`, `ControlGeneracionPedido`, `ControlPedidoPublico` y `SolicitudConsulta`. El público registra al abrir WhatsApp; el personal consulta y confirma pedidos. La identidad oscura usa acentos rojos y se adapta a móvil y escritorio. No incluye pagos, ventas, reservas, tarifas de envío, devoluciones ni administración de cuentas.
+La capa de negocio implementa `ControlCatalogo`, `ControlCarrito`, `ControlGeneracionPedido`, `ControlPedidoPublico` y `SolicitudConsulta`. El público registra al abrir WhatsApp; el personal consulta y confirma pedidos. La identidad oscura usa acentos rojos y se adapta a móvil y escritorio. El Release 1 añade administración de usuarios, categorías y proveedores, bajas lógicas y variantes, compras por lote y ventas con pago completo registrado manualmente. Reservas, tarifas/envíos, devoluciones y reportes específicos quedan para Release 2. Consulta la [guía de Release 1](docs/RELEASE1.md).
 
 ## Ejecutar la aplicación web
 
@@ -26,11 +26,11 @@ cd C:\Users\angel\OneDrive\Documents\GaboStoreDatos
 npm run dev
 ```
 
-Abrir **http://127.0.0.1:3000**. La conexión y una cuenta EMPLEADO de demostración ya están preparadas en esta carpeta. El correo y contraseña están en `.env.personal.local`, un archivo privado ignorado por Git.
+Abrir **http://127.0.0.1:3000**. La conexión y una cuenta EMPLEADO de demostración ya están preparadas en esta carpeta. El correo y contraseña están en `.env.personal.local`, un archivo privado ignorado por Git. La cuenta ADMIN separada está en `.env.admin.local` (preparación idempotente: `npm run preparar:admin`).
 
 La demostración de esta entrega está abierta en **http://127.0.0.1:3001** porque el puerto 3000 estaba ocupado. Para iniciarla en ese puerto, ejecutar `$env:PORT='3001'` antes de `npm run dev`.
 
-La vista previa pública funciona sin configurar WhatsApp. Para habilitar **Abrir WhatsApp**, definir `GABOSTORE_WHATSAPP` en `.env` con el número comercial internacional, solo dígitos, y reiniciar el servidor. Un valor ausente o inválido mantiene el botón deshabilitado. El usuario envía el mensaje manualmente; preparar o abrir la consulta no registra un pedido.
+La vista previa pública funciona sin configurar WhatsApp. Para habilitar **Abrir WhatsApp**, definir `GABOSTORE_WHATSAPP` en `.env` con el número comercial internacional, solo dígitos, y reiniciar el servidor. Un valor ausente o inválido mantiene el botón deshabilitado. El usuario envía el mensaje manualmente; la vista previa no escribe; **Registrar pedido y abrir WhatsApp** guarda el pedido pendiente antes de abrir el mensaje.
 
 La [guía del flujo básico](docs/FLUJO_BASICO.md) explica la prueba paso a paso, la separación de capas, las credenciales y la configuración en otro equipo. No se ha publicado la aplicación ni se han desplegado nuevas funciones Edge; el servidor HTTP es el adaptador de prueba local.
 
@@ -40,8 +40,8 @@ La [guía del flujo básico](docs/FLUJO_BASICO.md) explica la prueba paso a paso
 - `src/database.generated.ts`: tipos generados desde el esquema real de Supabase.
 - `src/database.types.ts`: alias de los tipos utilizados por los repositorios.
 - `src/supabase.ts`: configuración del cliente de Supabase.
-- `src/repositories/`: los tres repositorios.
-- `src/negocio/`: los tres controles, las reglas del flujo básico y la solicitud pública independiente de `PedidoNuevo`.
+- `src/repositories/`: persistencia de artículos, carritos, pedidos, maestros, compras, ventas y administración de Auth desde el backend.
+- `src/negocio/`: controles inyectados del flujo básico y del Release 1; solicitud pública independiente de `PedidoNuevo`.
 - `src/servidor/`: API HTTP que valida la sesión y el rol del personal.
 - `web/`: presentación React/TypeScript; `web-dist/` es una salida generada.
 - `web/public/fonts/`: Roboto Mono y Public Sans alojadas localmente, con sus licencias OFL; proceden del repositorio oficial de Google Fonts.

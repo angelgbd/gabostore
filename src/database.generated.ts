@@ -231,6 +231,61 @@ export type Database = {
           },
         ]
       }
+      detalle_venta: {
+        Row: {
+          articulo_id: number
+          cantidad: number
+          nombre: string
+          precio_unitario: number
+          subtotal: number
+          talla_medida: string
+          variante_id: number
+          venta_id: number
+        }
+        Insert: {
+          articulo_id: number
+          cantidad: number
+          nombre: string
+          precio_unitario: number
+          subtotal?: number
+          talla_medida: string
+          variante_id: number
+          venta_id: number
+        }
+        Update: {
+          articulo_id?: number
+          cantidad?: number
+          nombre?: string
+          precio_unitario?: number
+          subtotal?: number
+          talla_medida?: string
+          variante_id?: number
+          venta_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "detalle_venta_articulo_id_fkey"
+            columns: ["articulo_id"]
+            isOneToOne: false
+            referencedRelation: "articulos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "detalle_venta_variante_id_fkey"
+            columns: ["variante_id"]
+            isOneToOne: false
+            referencedRelation: "variantes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "detalle_venta_venta_id_fkey"
+            columns: ["venta_id"]
+            isOneToOne: false
+            referencedRelation: "ventas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       historial_precios: {
         Row: {
           articulo_id: number
@@ -479,6 +534,50 @@ export type Database = {
           },
         ]
       }
+      ventas: {
+        Row: {
+          clave: string
+          creado_por: string
+          fecha: string
+          id: number
+          importe_pagado: number
+          metodo_pago: string
+          pedido_id: number | null
+          solicitud: Json
+          total: number
+        }
+        Insert: {
+          clave: string
+          creado_por: string
+          fecha?: string
+          id?: never
+          importe_pagado: number
+          metodo_pago: string
+          pedido_id?: number | null
+          solicitud: Json
+          total: number
+        }
+        Update: {
+          clave?: string
+          creado_por?: string
+          fecha?: string
+          id?: never
+          importe_pagado?: number
+          metodo_pago?: string
+          pedido_id?: number | null
+          solicitud?: Json
+          total?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ventas_pedido_id_fkey"
+            columns: ["pedido_id"]
+            isOneToOne: true
+            referencedRelation: "pedidos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -602,6 +701,17 @@ export type Database = {
       registrar_pedido_publico: {
         Args: { p_clave: string; p_items: Json }
         Returns: Json
+      }
+      registrar_venta: {
+        Args: {
+          p_clave: string
+          p_confirmaciones?: number[]
+          p_importe: number
+          p_items: Json
+          p_metodo: string
+          p_pedido_id: number
+        }
+        Returns: number
       }
     }
     Enums: {

@@ -16,8 +16,9 @@ import { PantallaSolicitud } from './PantallaSolicitud.js';
 import { PantallaMensaje } from './PantallaMensaje.js';
 import { cargarConfiguracion } from './configuracion.js';
 import { Icono, Logotipo } from './Icono.js';
-import { PantallaProducto } from './PantallaProducto.js';
+const PantallaProducto=lazy(()=>import('./PantallaProducto.js').then(m=>({default:m.PantallaProducto})));
 import { PantallaPedidos } from './PantallaPedidos.js';
+import {cargarCatalogoCompleto} from './cargarListados.js';
 const PantallaGestion = lazy(() => import('./PantallaGestion.js').then(m => ({default:m.PantallaGestion})));
 
 export function App() {
@@ -50,7 +51,7 @@ export function App() {
   }, []);
   useEffect(() => {
     if (ruta !== '/') window.scrollTo(0, 0);
-    document.title = `GaboStore · ${ruta === '/pedidos' ? 'Pedidos' : ruta === '/productos/nuevo' ? 'Nuevo producto' : ruta.startsWith('/productos/') ? 'Editar producto' : ruta === '/solicitud' ? 'Mi pedido' : ruta === '/mensaje' ? 'Mensaje de WhatsApp' : ruta === '/personal' ? 'Acceso del personal' : ruta === '/carrito' ? 'Carrito' : ruta === '/confirmar' ? 'Revisar pedido' : ruta.startsWith('/pedido/') ? 'Pedido registrado' : ruta.startsWith('/articulo/') ? 'Detalle del artículo' : 'Catálogo'}`;
+    document.title = `GaboStore · ${ruta.startsWith('/gestion/') ? 'Gestión' : ruta === '/pedidos' ? 'Pedidos' : ruta === '/productos/nuevo' ? 'Nuevo producto' : ruta.startsWith('/productos/') ? 'Editar producto' : ruta === '/solicitud' ? 'Mi pedido' : ruta === '/mensaje' ? 'Mensaje de WhatsApp' : ruta === '/personal' ? 'Acceso del personal' : ruta === '/carrito' ? 'Carrito' : ruta === '/confirmar' ? 'Revisar pedido' : ruta.startsWith('/pedido/') ? 'Pedido registrado' : ruta.startsWith('/articulo/') ? 'Detalle del artículo' : 'Catálogo'}`;
   }, [ruta]);
   useEffect(() => {
     if (ruta === '/' && !cargando && !sesion.iniciando) window.scrollTo(0, posicionCatalogo.current);
@@ -65,7 +66,7 @@ export function App() {
     if (pedidoId && !sesion.token) { setCargando(false); return; }
     const consulta = pedidoId ? solicitar<PedidoDetalle>(`personal/pedidos/${pedidoId}`, sesion.token).then(p => { if (actual) setPedido(p); })
       : id ? solicitar<ArticuloCatalogo>(`${prefijo}catalogo/${id}`, sesion.token).then(a => { if (actual) setDetalle(a); })
-      : solicitar<ArticuloCatalogo[]>(`${prefijo}catalogo`, sesion.token).then(a => { if (actual) setArticulos(a); });
+      : cargarCatalogoCompleto(Boolean(sesion.personal),sesion.token).then(a => { if (actual) setArticulos(a); });
     void consulta.catch(e => { if (actual) setError(mensajeError(e)); }).finally(() => { if (actual) setCargando(false); });
     return () => { actual = false; };
   }, [ruta, sesion.token, sesion.personal, sesion.iniciando]);
@@ -100,7 +101,7 @@ export function App() {
     <header className="cabecera"><div className="cabecera-interior"><a className="marca" href="#/" aria-label="GaboStore, catálogo"><Logotipo/></a>
       <nav aria-label="Navegación principal"><a className={`nav-catalogo${esCatalogo ? ' nav-activa' : ''}`} href="#/" aria-current={esCatalogo ? 'page' : undefined}>Catálogo</a>
         {sesion.personal && <a href="#/pedidos" className={ruta === '/pedidos' ? 'nav-activa' : ''} aria-current={ruta === '/pedidos' ? 'page' : undefined}>Pedidos</a>}
-        {sesion.personal && <a href="#/gestion/usuarios" className={ruta.startsWith('/gestion/')?'nav-activa':''}>Gestión</a>}
+        {sesion.personal && <a href={sesion.personal.rol==='ADMIN'?'#/gestion/usuarios':'#/gestion/compras'} className={ruta.startsWith('/gestion/')?'nav-activa':''}>Gestión</a>}
         <a className="nav-carrito" href={publico ? '#/solicitud' : '#/carrito'} aria-label={`${publico ? 'Mi pedido' : 'Carrito del personal'}, ${unidades} ${unidades === 1 ? 'artículo' : 'artículos'}`}><Icono nombre="carrito"/><span className="unidades">{unidades}</span></a>
         {sesion.personal ? <><span className="sesion-personal" title={sesion.personal.email} aria-label={`Personal: ${sesion.personal.email}`}>Personal</span><button className="cuenta-salir" disabled={carrito.ocupado || registrando} onClick={() => { void salir(); }}>Salir</button></> : <a href="#/personal" className="acceso-enlace">Personal<span className="sr-only">: acceso del personal</span></a>}
       </nav></div></header>
@@ -110,7 +111,7 @@ export function App() {
       {sesion.personal && (ruta === '/carrito' || ruta === '/confirmar') && <ol className="pasos" aria-label="Etapas del pedido"><li><a href="#/">Artículos</a></li><li className={ruta === '/carrito' ? 'paso-actual' : ''}><a href="#/carrito">Carrito</a></li><li className={ruta === '/confirmar' ? 'paso-actual' : ''}>Confirmación</li></ol>}
       {error && !esCatalogo && <Aviso error>{error}</Aviso>}
       {ruta.startsWith('/gestion/') ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error}/> : <Suspense fallback={<Cargando/>}><PantallaGestion ruta={ruta} token={sesion.token!} personal={sesion.personal}/></Suspense> : ruta === '/pedidos' ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error}/> : <PantallaPedidos token={sesion.token!}/> :
-        ruta.startsWith('/productos/') ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error}/> : <PantallaProducto key={ruta} token={sesion.token!} {...(ruta.match(/^\/productos\/(\d+)\/editar$/)?.[1] ? { id: Number(ruta.match(/^\/productos\/(\d+)\/editar$/)![1]) } : {})}/> :
+        ruta.startsWith('/productos/') ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error}/> : <Suspense fallback={<Cargando/>}><PantallaProducto key={ruta} token={sesion.token!} {...(ruta.match(/^\/productos\/(\d+)\/editar$/)?.[1] ? { id: Number(ruta.match(/^\/productos\/(\d+)\/editar$/)![1]) } : {})}/></Suspense> :
         ruta === '/carrito' ? sesion.personal ? carrito.cargando ? <Cargando /> : <PantallaCarrito carrito={carrito.carrito} ocupado={carrito.ocupado} crear={carrito.crear} cambiar={carrito.cambiar} quitar={carrito.quitar} /> : <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> :
         ruta === '/confirmar' ? sesion.personal ? carrito.cargando ? <Cargando /> : <PantallaConfirmacionPedido carrito={carrito.carrito} registrando={registrando} registrar={registrar} /> : <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> :
         ruta.startsWith('/pedido/') ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> : cargando ? <Cargando /> : error ? <ErrorCarga mensaje={error} /> : <PantallaConfirmacionPedido key={pedido?.id} carrito={null} pedido={pedido} registrando={registrando} registrar={registrar} confirmar={confirmarPedido} /> :
