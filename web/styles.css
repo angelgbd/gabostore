@@ -263,6 +263,13 @@ input[type=file]::file-selector-button{background:var(--suave);color:var(--tinta
 .importe-pedido{text-align:right;font-size:14px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .paginacion-pedidos{justify-content:space-between;gap:16px;margin-top:28px}
 .paginacion-pedidos p{color:var(--secundario);font-size:12px;text-align:center}
+.filtros-pedidos{display:grid;grid-template-columns:minmax(135px,1fr) minmax(170px,1.15fr) repeat(2,minmax(160px,1fr)) auto;gap:16px;align-items:end;border-block:1px solid var(--linea);padding-block:24px;margin-bottom:24px}
+.filtros-pedidos label{min-width:0}
+.acciones-filtros{display:flex;gap:12px;flex-wrap:wrap}
+.ayuda-filtros,.error-filtros{grid-column:1/-1}
+.ayuda-filtros{font-size:12px;color:var(--secundario)}
+@media(max-width:1199px){.filtros-pedidos{grid-template-columns:repeat(2,minmax(0,1fr))}.acciones-filtros{grid-column:1/-1}}
+@media(max-width:479px){.filtros-pedidos{gap:16px 12px}.filtros-pedidos input,.filtros-pedidos select{padding-inline:8px;font-size:13px}.acciones-filtros .boton{flex:1}}
 .error-lista{display:grid;justify-items:start;gap:20px}
 @media(max-width:1024px){.cabecera-lista-pedidos,.lista-pedidos a{grid-template-columns:95px minmax(0,1fr) 150px 100px 95px;gap:14px}}
 @media(max-width:767px){.cabecera-lista-pedidos{display:none}.lista-pedidos a{grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:20px 0}.numero-pedido{grid-column:1;grid-row:1}.importe-pedido{grid-column:2;grid-row:1}.cliente-pedido{grid-column:1/-1}.lista-pedidos time{grid-column:1}.estado-lista{grid-column:2;justify-self:end}.paginacion-pedidos{gap:10px;flex-wrap:wrap}.paginacion-pedidos .boton{padding-inline:12px}}

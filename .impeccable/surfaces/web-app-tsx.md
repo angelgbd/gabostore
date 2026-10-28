@@ -23,6 +23,10 @@ FORM: Conservar composición aprobada y aplicar solo la extensión autorizada. S
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
+## Filtros de pedidos · 28 de octubre de 2026
+
+Extensión Operate de `web/PantallaPedidos.tsx`, con identidad y filas actuales. Encima de los resultados: número exacto, estado y fechas inicial/final, Buscar y Limpiar filtros. En escritorio una fila; en móvil dos columnas con acciones debajo. Etiquetas visibles, controles nativos de 48px y foco coral. Las fechas incluyen días completos en Hermosillo. Aplicación explícita al enviar el formulario; filtros combinables en servidor antes de paginar, reinicio en primera página y recuperación de errores sin borrar los campos. Vacío filtrado explica cómo recuperar resultados. No hay nuevos estados, métricas, imágenes ni cambios de permisos. Revisión móvil, escritorio y ancho real del usuario. Se conserva DESIGN.md al reutilizar sus controles y tokens.
+
 ## Ampliación del personal · 21 de octubre de 2026
 
 Extensión Operate dentro de la identidad vigente. El plan aprobado incorpora alta/edición de productos, carga de una fotografía, ajustes atómicos de existencias y lista de pedidos de 20 registros. El catálogo del personal ofrece Nuevo producto y Pedidos; el detalle ofrece Editar producto. Formulario con ficha y variantes a la izquierda y fotografía a la derecha en escritorio; una columna en móvil. Ajustar existencias es una acción separada de guardar ficha, con resultado explícito por variante. La lista de pedidos usa filas alineadas con número, cliente, fecha, estado y total; cada pedido abre el detalle existente. Sin nuevas métricas, paneles de administración ni otra identidad visual. Las fotografías generadas de demo se identifican como ilustrativas. Se mantienen los anchos de revisión 360/390/768/1024/1440px y la protección del acceso del personal.

@@ -4,6 +4,7 @@ import { comprobarError, ErrorDatos, requerido } from '../errors.js';
 import { convertirPedido } from '../mappers.js';
 import { entero, identificador, importe, paginacion } from '../validation.js';
 import type { RegistroPublicoDatos, SolicitudPedidoPublico } from '../negocio/ControlPedidoPublico.js';
+import { validarFiltrosPedidos, type FiltrosListadoPedidos } from '../filtrosPedidos.js';
 
 export interface FiltroPedidos {
   clienteId?: number;
@@ -114,11 +115,17 @@ export class PedidoRepository {
     return (data ?? []).map(convertirPedido);
   }
 
-  async listarResumen(desde = 0, limite = 21): Promise<PedidoResumen[]> {
+  async listarResumen(desde = 0, limite = 21, filtro: FiltrosListadoPedidos = {}): Promise<PedidoResumen[]> {
     paginacion(limite, desde);
-    const { data, error } = await this.db.from('pedidos')
+    const fechas = validarFiltrosPedidos(filtro);
+    let consulta = this.db.from('pedidos')
       .select('id, fecha_creacion, estado, origen, vence_en, carrito:carritos!pedidos_carrito_id_fkey(cliente:clientes(id, nombre)), items_pedido(subtotal)')
       .order('fecha_creacion', { ascending: false }).order('id', { ascending: false }).range(desde, desde + limite - 1);
+    if (filtro.numero !== undefined) consulta = consulta.eq('id', filtro.numero);
+    if (filtro.estado !== undefined) consulta = consulta.eq('estado', filtro.estado);
+    if (fechas.inicio) consulta = consulta.gte('fecha_creacion', fechas.inicio);
+    if (fechas.fin) consulta = consulta.lte('fecha_creacion', fechas.fin);
+    const { data, error } = await consulta;
     comprobarError(error);
     return (data ?? []).map(pedido => {
       const centavos = pedido.items_pedido.reduce((suma, item) => suma + Math.round(Number(item.subtotal) * 100), 0);

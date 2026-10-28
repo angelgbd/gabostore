@@ -31,7 +31,7 @@ WhatsApp se abre mediante un enlace con texto precargado, enviado manualmente po
 - Las cantidades son enteras positivas. Los precios se obtienen desde los datos del servidor; no se aceptan precios del navegador.
 - Un pedido pendiente no registra un pago ni descuenta existencias.
 - El catálogo público oculta precios sobre pedido. Un pedido público puede quedar pendiente; el personal debe confirmar disponibilidad del proveedor para pasarlo a CONFIRMADO. El registro interno conserva su comprobación previa.
-- El personal puede dar de alta artículos con variantes, editar su ficha, subir una fotografía y ajustar existencias; también consulta los pedidos registrados. No elimina artículos o variantes y confirma pendientes desde su detalle.
+- El personal puede dar de alta artículos con variantes, editar su ficha, subir una fotografía y ajustar existencias; también consulta los pedidos registrados con búsqueda por número y filtros combinables de estado y fechas. No elimina artículos o variantes y confirma pendientes desde su detalle.
 - Los cinco estados del último dominio aprobado se conservan. Pagos, anticipos, ventas, apartados, envíos, devoluciones y administración de cuentas quedan fuera de este flujo básico.
 
 ## Brand Commitments

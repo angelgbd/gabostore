@@ -39,7 +39,7 @@ El backend también necesita `SUPABASE_SECRET_KEY` para la operación limitada d
 2. **Nuevo pedido** solicita nombre y teléfono del cliente, sin correo. Es información de contacto, no una cuenta.
 3. Añadir variantes al carrito interno, cambiar cantidades y revisar el total. El servidor valida disponibilidad y conserva el precio capturado. El carrito está separado de la selección pública.
 4. **Revisar pedido** muestra artículos y cliente. Si hay artículos sobre pedido, confirmar manualmente la consulta al proveedor y pulsar **Registrar pedido pendiente**.
-5. Abrir **Pedidos** para consultar páginas de 20 registros, del más reciente al más antiguo. Los pedidos públicos sin cliente aparecen como **Pedido web**.
+5. Abrir **Pedidos** para consultar páginas de 20 registros, del más reciente al más antiguo. Los pedidos públicos sin cliente aparecen como **Pedido web**. Buscar por número exacto (con o sin `#`), seleccionar un estado o indicar fechas inicial/final y pulsar **Buscar**. Se pueden combinar los filtros. Las fechas incluyen el día completo en horario de Hermosillo. **Limpiar filtros** recupera el listado completo; cada búsqueda vuelve a la primera página y las siguientes conservan los filtros. Si no hay coincidencias, **Ver todos los pedidos** permite recuperarlo sin cambiar datos.
 6. Abrir un pedido pendiente y pulsar **Confirmar pedido**. El servidor vuelve a validar stock, plazo y confirmaciones del proveedor en una transacción. El resultado es CONFIRMADO, sin cambiar sus precios ni cantidades y sin descontar existencias.
 
 Los pedidos públicos muestran su plazo. Después de las 120 horas ya no pueden confirmarse aunque la limpieza todavía no los haya quitado. Los pedidos existentes antes de esta entrega y todos los registrados por el personal no caducan automáticamente. No se añadieron operaciones para otros cambios de estado.
@@ -73,6 +73,8 @@ npm run verificar:whatsapp
 ```
 
 Las pruebas locales cubren datos, negocio, API, permisos, correo retirado, idempotencia, precios, stock, proveedor y vencimiento. PGlite aplica las migraciones de tablas, funciones y Storage; no tiene el proceso `pg_cron`, por lo que la programación y sus ejecuciones se verifican además en Supabase real.
+
+La búsqueda de pedidos se prueba con filtros combinados, rangos inclusivos en Hermosillo, fechas inexistentes, años bisiestos, números manipulados, resultados vacíos y paginación de más de 20 coincidencias. El 28 de octubre de 2026 se verificó también mediante consultas de lectura sobre los 13 pedidos existentes en Supabase, conservando los importes y permisos.
 
 `verificar:whatsapp` requiere `.env` y `.env.personal.local`. Inicia un servidor temporal, registra un pedido público real de un artículo disponible, reintenta sin duplicarlo y realiza dos confirmaciones concurrentes con una sesión EMPLEADO. Deja ese pedido confirmado de demostración y verifica que el stock no cambió. Utiliza un destino sintáctico únicamente dentro de esa prueba; no configura el número comercial, no abre WhatsApp y no envía mensajes.
 

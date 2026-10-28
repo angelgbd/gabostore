@@ -3,6 +3,7 @@ import type { PedidoRepository } from '../repositories/PedidoRepository.js';
 import { paginacion } from '../validation.js';
 import { ControlCarrito, type LineaCarrito, totalPedido } from './ControlCarrito.js';
 import { ErrorNegocio, idValido } from './ErrorNegocio.js';
+import { validarFiltrosPedidos, type FiltrosListadoPedidos } from '../filtrosPedidos.js';
 
 export interface PedidoDetalle extends Omit<Pedido, 'items'> {
   cliente: Cliente | null;
@@ -14,9 +15,10 @@ export type DatosPedidos = Pick<PedidoRepository, 'guardar' | 'obtenerPorId' | '
 export class ControlGeneracionPedido {
   constructor(private readonly carritos: ControlCarrito, private readonly pedidos: DatosPedidos) {}
 
-  async listar(desde = 0) {
+  async listar(desde = 0, filtro: FiltrosListadoPedidos = {}) {
     paginacion(21, desde);
-    const pedidos = await this.pedidos.listarResumen(desde, 21);
+    validarFiltrosPedidos(filtro);
+    const pedidos = await this.pedidos.listarResumen(desde, 21, filtro);
     return { pedidos: pedidos.slice(0, 20), desde, hayMas: pedidos.length > 20 };
   }
 

@@ -7,7 +7,8 @@ import { crearCapaNegocio, ErrorNegocio } from '../negocio/index.js';
 import { ErrorDatos } from '../errors.js';
 import { numeroWhatsApp } from '../negocio/SolicitudConsulta.js';
 import { limiteFotografia, extensionesFotografia } from '../fotografias.js';
-import type { ArticuloNuevo, CambiosArticulo } from '../models.js';
+import type { ArticuloNuevo, CambiosArticulo, EstadoPedido } from '../models.js';
+import type { FiltrosListadoPedidos } from '../filtrosPedidos.js';
 import { ControlPedidoPublico } from '../negocio/ControlPedidoPublico.js';
 
 export interface OpcionesServidor {
@@ -180,7 +181,22 @@ export function crearServidor(opciones: OpcionesServidor) {
             if (typeof datos.cambio !== 'number') throw new ErrorHTTP(400, 'El ajuste debe ser un número entero.');
             return json(respuesta, await negocio.catalogo.ajustarExistencia(Number(existencias[1]), Number(existencias[2]), datos.cambio));
           }
-          if (metodo === 'GET' && ruta.pathname === '/api/personal/pedidos') return json(respuesta, await negocio.pedidos.listar(Number(ruta.searchParams.get('desde') ?? 0)));
+          if (metodo === 'GET' && ruta.pathname === '/api/personal/pedidos') {
+            const parametros = ruta.searchParams;
+            const filtro: FiltrosListadoPedidos = {};
+            for (const campo of ['desde', 'numero', 'estado', 'fechaDesde', 'fechaHasta']) {
+              if (parametros.getAll(campo).length > 1) throw new ErrorHTTP(400, 'No repitas los filtros de pedidos.');
+            }
+            const numeroPedido = parametros.get('numero');
+            if (numeroPedido !== null) {
+              if (!/^[1-9]\d*$/.test(numeroPedido)) throw new ErrorHTTP(400, 'El número de pedido debe ser un entero positivo.');
+              filtro.numero = Number(numeroPedido);
+            }
+            if (parametros.has('estado')) filtro.estado = parametros.get('estado') as EstadoPedido;
+            if (parametros.has('fechaDesde')) filtro.fechaDesde = parametros.get('fechaDesde')!;
+            if (parametros.has('fechaHasta')) filtro.fechaHasta = parametros.get('fechaHasta')!;
+            return json(respuesta, await negocio.pedidos.listar(Number(parametros.get('desde') ?? 0), filtro));
+          }
           const confirmar = ruta.pathname.match(/^\/api\/personal\/pedidos\/(\d+)\/confirmar$/);
           if (metodo === 'POST' && confirmar) {
             const datos = await cuerpo(peticion);
