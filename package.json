@@ -28,6 +28,7 @@
     "demo:datos": "node --env-file=.env --import tsx scripts/demo-pedido.ts",
     "demo:imagenes": "node --env-file=.env --import tsx scripts/cargar-imagenes-demo.ts",
     "preparar:personal": "node --env-file=.env --import tsx scripts/preparar-personal.ts",
+    "preparar:admin": "node --env-file=.env --import tsx scripts/preparar-admin.ts",
     "build:web": "vite build --config web/vite.config.ts",
     "start": "node --env-file=.env --import tsx scripts/servidor.ts",
     "dev": "npm run build:web && npm start",

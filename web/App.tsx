@@ -18,6 +18,7 @@ import { cargarConfiguracion } from './configuracion.js';
 import { Icono, Logotipo } from './Icono.js';
 import { PantallaProducto } from './PantallaProducto.js';
 import { PantallaPedidos } from './PantallaPedidos.js';
+import { PantallaGestion } from './PantallaGestion.js';
 
 export function App() {
   const sesion = useSesion();
@@ -55,7 +56,7 @@ export function App() {
     if (ruta === '/' && !cargando && !sesion.iniciando) window.scrollTo(0, posicionCatalogo.current);
   }, [ruta, cargando, sesion.iniciando]);
   useEffect(() => {
-    if (sesion.iniciando || ruta.startsWith('/productos/') || ['/pedidos', '/personal', '/carrito', '/confirmar', '/solicitud', '/mensaje'].includes(ruta)) return;
+    if (sesion.iniciando || ruta.startsWith('/gestion/') || ruta.startsWith('/productos/') || ['/pedidos', '/personal', '/carrito', '/confirmar', '/solicitud', '/mensaje'].includes(ruta)) return;
     let actual = true;
     setCargando(true); setError('');
     const id = ruta.match(/^\/articulo\/(\d+)$/)?.[1];
@@ -99,6 +100,7 @@ export function App() {
     <header className="cabecera"><div className="cabecera-interior"><a className="marca" href="#/" aria-label="GaboStore, catálogo"><Logotipo/></a>
       <nav aria-label="Navegación principal"><a className={`nav-catalogo${esCatalogo ? ' nav-activa' : ''}`} href="#/" aria-current={esCatalogo ? 'page' : undefined}>Catálogo</a>
         {sesion.personal && <a href="#/pedidos" className={ruta === '/pedidos' ? 'nav-activa' : ''} aria-current={ruta === '/pedidos' ? 'page' : undefined}>Pedidos</a>}
+        {sesion.personal && <a href="#/gestion/usuarios" className={ruta.startsWith('/gestion/')?'nav-activa':''}>Gestión</a>}
         <a className="nav-carrito" href={publico ? '#/solicitud' : '#/carrito'} aria-label={`${publico ? 'Mi pedido' : 'Carrito del personal'}, ${unidades} ${unidades === 1 ? 'artículo' : 'artículos'}`}><Icono nombre="carrito"/><span className="unidades">{unidades}</span></a>
         {sesion.personal ? <><span className="sesion-personal" title={sesion.personal.email} aria-label={`Personal: ${sesion.personal.email}`}>Personal</span><button className="cuenta-salir" disabled={carrito.ocupado || registrando} onClick={() => { void salir(); }}>Salir</button></> : <a href="#/personal" className="acceso-enlace">Personal<span className="sr-only">: acceso del personal</span></a>}
       </nav></div></header>
@@ -107,7 +109,7 @@ export function App() {
       {carrito.error && <Aviso error>{carrito.error}</Aviso>}
       {sesion.personal && (ruta === '/carrito' || ruta === '/confirmar') && <ol className="pasos" aria-label="Etapas del pedido"><li><a href="#/">Artículos</a></li><li className={ruta === '/carrito' ? 'paso-actual' : ''}><a href="#/carrito">Carrito</a></li><li className={ruta === '/confirmar' ? 'paso-actual' : ''}>Confirmación</li></ol>}
       {error && !esCatalogo && <Aviso error>{error}</Aviso>}
-      {ruta === '/pedidos' ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error}/> : <PantallaPedidos token={sesion.token!}/> :
+      {ruta.startsWith('/gestion/') ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error}/> : <PantallaGestion ruta={ruta} token={sesion.token!} personal={sesion.personal}/> : ruta === '/pedidos' ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error}/> : <PantallaPedidos token={sesion.token!}/> :
         ruta.startsWith('/productos/') ? !sesion.personal ? <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error}/> : <PantallaProducto key={ruta} token={sesion.token!} {...(ruta.match(/^\/productos\/(\d+)\/editar$/)?.[1] ? { id: Number(ruta.match(/^\/productos\/(\d+)\/editar$/)![1]) } : {})}/> :
         ruta === '/carrito' ? sesion.personal ? carrito.cargando ? <Cargando /> : <PantallaCarrito carrito={carrito.carrito} ocupado={carrito.ocupado} crear={carrito.crear} cambiar={carrito.cambiar} quitar={carrito.quitar} /> : <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> :
         ruta === '/confirmar' ? sesion.personal ? carrito.cargando ? <Cargando /> : <PantallaConfirmacionPedido carrito={carrito.carrito} registrando={registrando} registrar={registrar} /> : <AccesoPersonal iniciar={sesion.iniciar} errorSesion={sesion.error} /> :

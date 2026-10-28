@@ -10,6 +10,8 @@ import { limiteFotografia, extensionesFotografia } from '../fotografias.js';
 import type { ArticuloNuevo, CambiosArticulo, EstadoPedido } from '../models.js';
 import type { FiltrosListadoPedidos } from '../filtrosPedidos.js';
 import { ControlPedidoPublico } from '../negocio/ControlPedidoPublico.js';
+import { ControlUsuarios, type UsuarioNuevo, type CambiosUsuario } from '../negocio/ControlUsuarios.js';
+import { UsuarioRepository } from '../repositories/UsuarioRepository.js';
 
 export interface OpcionesServidor {
   url: string;
@@ -141,9 +143,18 @@ export function crearServidor(opciones: OpcionesServidor) {
           const { data, error } = await publico.auth.getUser(token);
           if (error || !data.user) throw new ErrorHTTP(error && error.status && error.status >= 500 ? 503 : 401, 'La sesión no es válida. Inicia sesión nuevamente.');
           const rol: unknown = data.user.app_metadata.rol;
-          if (rol !== 'ADMIN' && rol !== 'EMPLEADO') throw new ErrorHTTP(403, 'Esta cuenta no tiene acceso de personal.');
+          if ((rol !== 'ADMIN' && rol !== 'EMPLEADO') || data.user.app_metadata.activo === false) throw new ErrorHTTP(403, 'Esta cuenta no tiene acceso de personal o está desactivada.');
           identidad = { id: data.user.id, email: data.user.email, rol };
           negocio = crearCapaNegocio(crearCapaDatos(conectar(token)));
+          const usuario = ruta.pathname.match(/^\/api\/personal\/usuarios(?:\/([\da-f-]+))?$/i);
+          if (usuario) {
+            if (rol !== 'ADMIN') throw new ErrorHTTP(403, 'Solo el administrador puede gestionar usuarios.');
+            if (!clienteServidor) throw new ErrorHTTP(503, 'Falta configurar el backend para administrar usuarios.');
+            const control = new ControlUsuarios(new UsuarioRepository(conectar(token),clienteServidor));
+            if (metodo === 'GET' && !usuario[1]) return json(respuesta,await control.listar(Number(ruta.searchParams.get('desde') ?? 0)));
+            if (metodo === 'POST' && !usuario[1]) return json(respuesta,await control.crear(await cuerpo(peticion) as unknown as UsuarioNuevo,identidad.id),201);
+            if (metodo === 'PATCH' && usuario[1]) { await control.actualizar(usuario[1],await cuerpo(peticion) as unknown as CambiosUsuario); return json(respuesta,{guardado:true}); }
+          }
         }
         if (metodo === 'GET' && ruta.pathname === '/api/personal/sesion') return json(respuesta, identidad);
         if (metodo === 'GET' && (ruta.pathname === '/api/catalogo' || ruta.pathname === '/api/personal/catalogo')) {

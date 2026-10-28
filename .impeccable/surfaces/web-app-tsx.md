@@ -7,6 +7,10 @@ related_targets: ["web/styles.css"]
 
 # Flujo básico
 
+## Release 1 · 28 de octubre de 2026
+
+Ampliación Operate autorizada de la aplicación existente, implementación directa con código. La identidad oscura, coral y Roboto Mono se conserva. Gestión añade navegación secundaria horizontal por módulos; listas legibles y formulario inline a su lado en escritorio, una columna en móvil, sin métricas decorativas. Usuarios (ADMIN), categorías (ADMIN), proveedores (ADMIN), artículos (ambos roles), compras y ventas (ambos) mantienen formularios y controles nativos de48px. Importes y efecto en existencias se revisan antes de confirmar compras/ventas. Registro atómico, reintentos idempotentes y recuperación de errores sin perder campos. Bajas lógicas con reactivación e historial conservado. La cabecera se adapta a los nuevos enlaces. El catálogo público y WhatsApp existentes permanecen. Evidencia móvil360/390, tableta768/1024, escritorio1440 y tamaño real. No nuevas imágenes ni mundo visual; DESIGN se compara al finalizar y se preserva si no hay cambio de sistema.
+
 Modo Operate. Cuatro pantallas públicas: catálogo, detalle, solicitud local y mensaje de WhatsApp. El personal conserva su registro de pedidos. React/TypeScript; implementación directa con código y referencias fijadas por el usuario.
 
 ## Direction contract

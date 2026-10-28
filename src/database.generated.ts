@@ -263,6 +263,15 @@ export type Database = {
             Args: { p_cliente_id: number; p_correo_cliente: string }
             Returns: number
           }
+      actualizar_personal: {
+        Args: {
+          p_activo: boolean
+          p_id: string
+          p_nombre: string
+          p_rol: string
+        }
+        Returns: undefined
+      }
       ajustar_existencia: {
         Args: { p_cambio: number; p_variante_id: number }
         Returns: {
@@ -297,6 +306,7 @@ export type Database = {
         Args: { p_carrito_id: number }
         Returns: number
       }
+      es_admin: { Args: never; Returns: boolean }
       es_personal: { Args: never; Returns: boolean }
       guardar_item_carrito: {
         Args: {
@@ -327,6 +337,7 @@ export type Database = {
             }
             Returns: number
           }
+      listar_personal: { Args: { p_desde?: number }; Returns: Json }
       obtener_catalogo: {
         Args: { p_articulo_id?: number; p_desde?: number; p_limite?: number }
         Returns: {

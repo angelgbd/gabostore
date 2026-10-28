@@ -15,6 +15,7 @@ before(async () => {
     create role authenticated nologin;
     create role service_role nologin bypassrls;
     create schema auth;
+    create table auth.users(id uuid primary key,email text,raw_app_meta_data jsonb default '{}',raw_user_meta_data jsonb default '{}',banned_until timestamptz,created_at timestamptz default now(),updated_at timestamptz default now());
     create function auth.jwt() returns jsonb language sql stable as $$
       select coalesce(nullif(current_setting('request.jwt.claims', true), ''), '{}')::jsonb
     $$;
@@ -46,7 +47,22 @@ before(async () => {
 
 after(async () => { await db?.close(); });
 
+test('usuarios: solo ADMIN administra y desactivar invalida también un JWT anterior',async()=>{
+ const empleado='00000000-0000-4000-8000-000000000099';
+ await db.query("insert into auth.users(id,email,raw_app_meta_data) values($1,'empleado@example.com','{\"rol\":\"EMPLEADO\"}')",[empleado]);
+ await conRol('authenticated',personal,async()=>{
+  await assert.rejects(db.query("select public.actualizar_personal($1,'Admin','EMPLEADO',true)",[personal.sub]),codigoEsperado('22023'));
+  await db.query("select public.actualizar_personal($1,'Empleado','EMPLEADO',false)",[empleado]);
+ });
+ await db.query("select set_config('request.jwt.claims',$1,false)",[JSON.stringify({sub:empleado,app_metadata:{rol:'ADMIN'}})]);
+ await db.exec('set role authenticated');
+ try {assert.equal((await db.query<{ok:boolean}>('select public.es_personal() ok')).rows[0]?.ok,false);await assert.rejects(db.query('select public.listar_personal()'),codigoEsperado('42501'));}
+ finally {await db.exec('reset role');await claims({});}
+});
+
 async function claims(valor: object) {
+  const usuario = valor as {sub?:string;app_metadata?:object};
+  if (usuario.sub) await db.query("insert into auth.users(id,email,raw_app_meta_data) values($1,'fixture@example.com',$2::jsonb) on conflict(id) do update set raw_app_meta_data=excluded.raw_app_meta_data",[usuario.sub,JSON.stringify(usuario.app_metadata ?? {})]);
   await db.query("select set_config('request.jwt.claims', $1, false)", [JSON.stringify(valor)]);
 }
 
